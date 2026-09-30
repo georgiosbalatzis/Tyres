@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-it",
+  "season": 2026,
+  "round": 13,
+  "slug": "monza",
+  "eventCode": "it",
+  "race": {
+    "name": "Italian Grand Prix",
+    "officialName": null,
+    "location": "Monza, Italy",
+    "countryCode": "IT",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "monza",
+    "name": "Autodromo Nazionale Monza",
+    "lengthKm": 5.793,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
+  ],
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Pirelli headlines Italian Grand Prix weekend at Monza",
+    "articleUrl": "https://press.pirelli.com/pirelli-headlines-italian-grand-prix-weekend-at-monza/",
+    "publishedAt": "2026-09-01T14:36:31+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/d655c88f-75a9-4ad7-8ffa-2c0f89168fed/13-it26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/d655c88f-75a9-4ad7-8ffa-2c0f89168fed/13-it26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/pirelli-headlines-italian-grand-prix-weekend-at-monza/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    },
+    "compounds": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/pirelli-headlines-italian-grand-prix-weekend-at-monza/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits."
+    ]
+  }
+}

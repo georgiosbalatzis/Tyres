@@ -1,15 +1,125 @@
 {
   "note": "URLs already classified by update-pirelli.ts; delete an entry to force a re-check.",
   "entries": {
+    "https://press.pirelli.com/2026-grand-prix-of-czechia---qualifying/": {
+      "lastmod": "2026-06-22",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/2026-italian-grand-prix---photo-gallery/": {
+      "lastmod": "2026-09-03",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/57-gt3-cars-at-monza-for-one-of-the-most-anticipated-endurance-races-of-the-gtwc-europe-season/": {
+      "lastmod": "2026-05-27",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/60-cars-for-the-endurance-cup-at-paul-ricard/": {
+      "lastmod": "2026-04-09",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/a-new-look-motegi-presents-a-fresh-challenge-for-pirelli/": {
       "lastmod": "2026-09-29",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/a-new-pirelli-rear-medium-tyre-for-demanding-most-circuit/": {
+      "lastmod": "2026-05-12",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/a-new-pirelli-soft-rear-tyre-debuts-at-assen/": {
+      "lastmod": "2026-04-14",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/a-perfect-saturday-for-bulega-and-pirelli-in-hungary/": {
+      "lastmod": "2026-05-04",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/a-positive-star-spangled-debut-for-the-pirelli-scx-in-moto2/": {
+      "lastmod": "2026-03-31",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/a-saturday-to-remember-for-kimi-antonelli/": {
+      "lastmod": "2026-07-04",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/a-stir-of-the-soul-pirellis-500-gps-in-the-f1-world-championship-presented-within-the-context-of-the-barcelona-catalunya-grand-prix/": {
+      "lastmod": "2026-06-12",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/agius-sets-new-records-and-brings-home-the-win-in-moto2-perfect-weekend-for-quiles-in-moto3/": {
+      "lastmod": "2026-04-27",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/all-time-lap-records-smashed-at-cota/": {
+      "lastmod": "2026-03-29",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/alonso-and-quiles-on-pole-in-record-assen-heat/": {
+      "lastmod": "2026-06-29",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/alonso-victorious-in-a-nail-biting-moto2-race-while-quiles-wins-in-moto3-on-the-medium-sc2/": {
+      "lastmod": "2026-06-29",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/another-clean-sweep-for-bulega-with-standard-range-pirelli-tyres/": {
+      "lastmod": "2026-05-04",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/antonelli-claims-pole-in-japan-russell-completes-mercedes-front-row-lockout/": {
+      "lastmod": "2026-03-28",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/antonelli-on-pole-at-spa-francorchamps/": {
+      "lastmod": "2026-07-18",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/antonelli-quickest-on-friday-in-belgium/": {
+      "lastmod": "2026-07-17",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/antonelli-sets-the-pace-with-the-mclaren-pair-close-behind/": {
+      "lastmod": "2026-06-26",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/antonelli-tops-madring-opening-day-on-soft-tyres/": {
       "lastmod": "2026-09-11",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
+    },
+    "https://press.pirelli.com/antonelli-wins-again-in-miami-three-consecutive-victories-for-the-italian/": {
+      "lastmod": "2026-05-03",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/antonelli-wins-at-the-legendary-spa-francorchamps-circuit/": {
+      "lastmod": "2026-07-19",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/antonelli-wins-the-canadian-grand-prix-hamilton-and-verstappen-on-the-podium/": {
+      "lastmod": "2026-05-25",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
     },
     "https://press.pirelli.com/appointment-on-saturday-for-the-azerbaijan-grand-prix/": {
       "lastmod": "2026-09-21",
@@ -17,45 +127,489 @@
       "id": "2026-az",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/australian-pride-leads-the-standings-on-the-opening-day-of-the-season/": {
+      "lastmod": "2026-03-06",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bmws-van-der-linde-and-weerts-dominate-at-misano-with-a-clean-sweep/": {
+      "lastmod": "2026-07-19",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bronze-at-the-nuerburgring-24-hours-for-walkenhorst-teams-pirelli-equipped-aston-martin/": {
+      "lastmod": "2026-05-17",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bulega-also-conquers-aragon-with-the-standard-pirelli-sc0/": {
+      "lastmod": "2026-06-01",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bulega-beats-records-as-the-new-pirelli-scq-shines-in-the-superpole-race/": {
+      "lastmod": "2026-06-15",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bulega-completes-a-hat-trick-in-france-with-pirelli-scx/": {
+      "lastmod": "2026-09-07",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bulega-doubles-up-with-pirelli-scx-on-sunday-at-donington/": {
+      "lastmod": "2026-07-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bulega-steals-the-show-again-in-race-1-at-most-setting-new-records-with-pirelli/": {
+      "lastmod": "2026-05-18",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bulega-triumphant-on-saturday-at-aragon-on-2026-pirelli-standard-tyres/": {
+      "lastmod": "2026-06-01",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bulega-wins-in-australia-with-pirelli-slick-and-rain-tyres/": {
+      "lastmod": "2026-02-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bulega-wins-race-1-and-with-the-pirelli-scx-beats-the-record-set-in-2025-with-the-scq/": {
+      "lastmod": "2026-04-20",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bulega-wins-the-first-worldsbk-race-of-the-year-with-pirelli-medium-d0922-rear-tyre/": {
+      "lastmod": "2026-02-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/bulegas-ninth-symphony-at-assen-with-pirelli-range-rear-tyres/": {
+      "lastmod": "2026-04-20",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/dtm-tyre-strategy-set-to-prove-decisive-at-zandvoort/": {
+      "lastmod": "2026-05-21",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/dumas-wins-pikes-peak-2026--faggioli-third-after-technical-setback/": {
+      "lastmod": "2026-06-21",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/esteban-takes-moto3-pole-moto2-qualifying-postponed/": {
+      "lastmod": "2026-03-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/ferrari-fastest-in-both-qualifying-sessions/": {
+      "lastmod": "2026-06-05",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/ferrari-fastest-on-friday-in-hungary-best-on-both-soft-and-medium/": {
+      "lastmod": "2026-07-24",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/first-career-poles-for-ortola-in-moto2-and-uriarte-in-moto3/": {
+      "lastmod": "2026-07-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/first-moto2-win-for-salac-and-second-moto3-win-for-almansa/": {
+      "lastmod": "2026-08-10",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/for-bulega-15-out-of-15-wins-and-records-in-most-with-pirellis-standard-and-development-tyres/": {
+      "lastmod": "2026-05-18",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/for-le-mans-pirellis-allocation-is-unchanged-but-with-the-new-2026-scx/": {
+      "lastmod": "2026-05-04",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/formula-1-faces-its-spa-francorchamps-exam/": {
+      "lastmod": "2026-07-15",
+      "kind": "preview",
+      "id": "2026-be",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/formula-1-returns-to-the-track-in-miami/": {
+      "lastmod": "2026-04-27",
+      "kind": "preview",
+      "id": "2026-mi",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/george-russell-on-pole-at-spielberg/": {
+      "lastmod": "2026-06-27",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/george-russell-on-pole-in-barcelona/": {
+      "lastmod": "2026-06-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/george-russell-takes-first-sprint-qualifying-pole-of-2026/": {
+      "lastmod": "2026-03-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/george-russell-wins-in-austria-as-verstappen-celebrates-second-place-at-the-red-bull-ring/": {
+      "lastmod": "2026-06-28",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/golden-power-decree-adopted-to-protect-the-activities-carried-out-by-pirelli-abet-hts-in-the-dedence-sector/": {
       "lastmod": "2026-09-29",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
+    },
+    "https://press.pirelli.com/gonzalez-and-quiles-win-the-very-fast-and-hot-hungarian-races/": {
+      "lastmod": "2026-06-08",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
     },
     "https://press.pirelli.com/gonzalez-extends-moto2-championship-lead-quiles-medium-compound-strategy-pays-off-in-moto3/": {
       "lastmod": "2026-09-15",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/good-first-outing-for-the-dtms-p-zero-tyres-at-the-red-bull-ring/": {
+      "lastmod": "2026-04-26",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/gtwc-europe-2026-aston-martin-triumphs-at-paul-ricard-after-late-twist/": {
+      "lastmod": "2026-04-12",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/gtwc-heads-to-misano-for-sprint-racing-and-music-44-cars-on-track-to-contest-the-sprint-cup/": {
+      "lastmod": "2026-07-15",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/guevara-and-almansa-on-pole-new-all-time-lap-records-for-both-classes/": {
+      "lastmod": "2026-06-08",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/guevara-and-quiles-victories-with-unconventional-tyre-choices/": {
       "lastmod": "2026-09-22",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
+    },
+    "https://press.pirelli.com/guevara-takes-record-pole-in-moto2-with-pirelli-supersoft-fernandez-was-the-fastest-in-moto3/": {
+      "lastmod": "2026-05-11",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/hamilton-claims-sprint-pole-on-home-weekend/": {
+      "lastmod": "2026-07-03",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/head-to-heads-show-and-records-at-sachsenring-with-ortola-and-uriartes-wins/": {
+      "lastmod": "2026-07-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/hungarian-debut-for-the-pirelli-scx-for-moto2-riders/": {
+      "lastmod": "2026-06-01",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/in-brazil-pirelli-provides-each-rider-with-an-extra-set-of-tyres/": {
+      "lastmod": "2026-03-16",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/in-moto2-a-new-record-breaking-pirelli-supersoft-option-veijer-takes-pole-on-standard-scx/": {
+      "lastmod": "2026-04-27",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/in-moto2-guevara-takes-home-the-race-and-ortola-sets-the-record-lap-with-pirelli-scx-a-wet-triumph-for-quiles-in-moto3/": {
+      "lastmod": "2026-05-11",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/in-the-barcelona-heat-a-friday-focused-on-young-drivers/": {
+      "lastmod": "2026-06-12",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/in-the-netherlands-with-the-sprint-format/": {
+      "lastmod": "2026-08-18",
+      "kind": "preview",
+      "id": "2026-nl",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/italian-triumph-for-kimi-in-the-pirelli-grand-prix-at-monza/": {
+      "lastmod": "2026-09-06",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/kimi-antonelli-claims-his-first-grand-prix-victory/": {
+      "lastmod": "2026-03-15",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/kimi-antonelli-on-pole-after-a-thrilling-qualifying-session/": {
+      "lastmod": "2026-06-06",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/kimi-antonelli-wins-the-monaco-grand-prix/": {
+      "lastmod": "2026-06-07",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/leclerc-finishes-on-top-as-lengthy-bahrain-testing-concludes/": {
+      "lastmod": "2026-02-20",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/leclerc-paints-silverstone-red/": {
+      "lastmod": "2026-07-05",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/lecuona-ends-bulegas-winning-streak-with-pirellis-new-scx-range/": {
+      "lastmod": "2026-07-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
     },
     "https://press.pirelli.com/lecuona-stops-bulega-record-pole-with-pirelli-scq-race-1-with-scx/": {
       "lastmod": "2026-09-29",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/lopez-and-quiles-win-two-record-breaking-races/": {
+      "lastmod": "2026-08-31",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/mclaren-trophy-extends-official-tyre-supplier-partnership-with-pirelli-for-another-three-years/": {
+      "lastmod": "2026-05-28",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/melbourne-writes-the-first-chapter-of-the-new-f1-season/": {
+      "lastmod": "2026-03-02",
+      "kind": "preview",
+      "id": "2026-au",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/mercedes-dominates-the-first-qualifying-session-of-the-season/": {
+      "lastmod": "2026-03-07",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/mercedes-strike-twice-as-antonelli-breaks-record/": {
+      "lastmod": "2026-03-14",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/monza-heat-and-close-battles-ignite-the-gtwc-weekend/": {
+      "lastmod": "2026-05-31",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/new-successes-for-bulega-with-pirellis-softest-rear-tyres-in-the-range/": {
+      "lastmod": "2026-06-15",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/nicki-thiim-dominates-at-the-norisring-aston-martin-claims-its-first-dtm-victory/": {
+      "lastmod": "2026-07-05",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/norris-leads-the-way-after-the-miami-sprint-qualifying/": {
+      "lastmod": "2026-05-02",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/norris-on-pole-hard-tyre-set-to-be-central-to-tomorrows-battle/": {
       "lastmod": "2026-09-12",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
+    },
+    "https://press.pirelli.com/norris-on-pole-in-hungary-tyre-sets-will-shape-tomorrows-strategies/": {
+      "lastmod": "2026-07-25",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/norris-to-start-from-the-front-at-zandvoort-all-three-compounds-in-play-for-the-race/": {
+      "lastmod": "2026-08-22",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/norris-wins-in-hungary-with-a-late-charge-on-softs/": {
+      "lastmod": "2026-07-26",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/ortola-wins-in-moto2-on-soft-compounds-danish-in-moto3-on-mediums/": {
+      "lastmod": "2026-06-22",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/p-zero-hard-for-the-barum-rally-challenge-pirelli-tyres-for-the-top-two-in-the-standings-suninen-and-mabellini/": {
+      "lastmod": "2026-08-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/piastri-ends-friday-fastest-at-the-japanese-grand-prix/": {
+      "lastmod": "2026-03-27",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pierre-gasly-flies-on-the-soft-tyre-to-seize-pole-at-monza/": {
+      "lastmod": "2026-09-05",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli--c-spa-shareholders-meeting-held-2026-06-25/": {
+      "lastmod": "2026-06-25",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-2025-results-majority-approved/": {
+      "lastmod": "2026-04-16",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
     },
     "https://press.pirelli.com/pirelli-a-bespoke-p-zero-to-enhance-the-performance--of-the-brabus-bodo-cabriolet/": {
       "lastmod": "2026-09-28",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/pirelli-acquires-a-2499-stake-in-ridesense-a-start-up-spun-out-from-the-university-of-naples-federico-ii-and-the-megaride-group/": {
+      "lastmod": "2026-07-02",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-also-wins-the-antibes-race-with-tom-pieri-in-the-fia-ehrc/": {
+      "lastmod": "2026-05-17",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-and-suninen-crowned-2026-fia-erc-champions-double-title-with-one-round-to-spare-thanks-to-the-finns-second-place-and-max-mcraes-fourth-at-rali-ceredigion/": {
+      "lastmod": "2026-09-06",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-and-the-abet-group-sign-agreement-for-the-joint-development-of-remote-controlled-ground-rescue-vehicles/": {
+      "lastmod": "2026-08-05",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-and-toyota-gazoo-racing-world-rally-team-together-in-american-rallying/": {
+      "lastmod": "2026-03-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-and-univrses-signed-a-partnership-to-enhance-cyber-tyre-technology-by-integrating-the-swedish-companys-aibased-computer-vision-systems/": {
+      "lastmod": "2026-05-07",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-at-pikes-peak-with-faggioli-and-dumas/": {
+      "lastmod": "2026-06-19",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-at-the-catalan-gp-with-a-new-soft-rear-for-moto2/": {
+      "lastmod": "2026-05-11",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-at-the-spa-24-hours-with-a-team-of-140-personnel-serving-140-entri/": {
+      "lastmod": "2026-06-25",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-at-the-us-gp-the-scx-returns-to-the-moto2-allocation/": {
+      "lastmod": "2026-03-24",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-awarded-in-china-for-employer-branding-talent-development-and-recruiting/": {
+      "lastmod": "2026-07-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-begins-its-third-season-as-exclusive-supplier-of-moto2-and-moto3-in-thailand/": {
+      "lastmod": "2026-02-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-board-approves-consolidated-results-to-31-march-2026/": {
+      "lastmod": "2026-05-07",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-board-majority-approves-consolidated-results-to-30-june-2026/": {
+      "lastmod": "2026-07-29",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-board-majority-nominates-marco-tronchetti-provera-executive-chairman-and-giovanni-tronchetti-provera-vice-chairman/": {
+      "lastmod": "2026-06-30",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/pirelli-board-of-directors-majority-approves-us-multi-year-investment-plan-of-approximately-1-billion/": {
       "lastmod": "2026-09-22",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/pirelli-brings-a-new-front-tyre-and-scx-rear-for-moto2-at-aragon/": {
+      "lastmod": "2026-08-24",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/pirelli-brings-a-new-moto2-front-tyre-to-misano/": {
       "lastmod": "2026-09-07",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
+    },
+    "https://press.pirelli.com/pirelli-brings-the-p-zero-family-to-goodwood/": {
+      "lastmod": "2026-07-10",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-cinturato-2-wins-and-3-podium-places-in-tests-conducted-during-the-first-two-months-of-the-year/": {
+      "lastmod": "2026-03-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-cnrcmarco-polo-appeals-to-the-regional-administrative-court/": {
+      "lastmod": "2026-06-08",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-completes-motogp-2027-tyre-test--the-first-open-also-to-contracted-riders---in-brno/": {
+      "lastmod": "2026-06-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-confirms-for-brno-the-winning-allocation-from-last-season/": {
+      "lastmod": "2026-06-15",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
     },
     "https://press.pirelli.com/pirelli-continues-evaluation-of-new-moto2-soft-front-tyres-in-austria/": {
       "lastmod": "2026-09-15",
@@ -67,20 +621,322 @@
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/pirelli-dario-marrafuschi-appointed-new-head-of-motorsport-replacing-mario-isola/": {
+      "lastmod": "2026-02-26",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-debuts-a-new-front-tyre-at-portimo/": {
+      "lastmod": "2026-03-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-deploys-a-scx-tyre-with-a-new-compound-at-the-spanish-gp/": {
+      "lastmod": "2026-04-20",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-design-presents-at-milan-design-week-branded-versions-of-the-kutyna-chair-and-the-laflaminia-lamp-created-by-archimora/": {
+      "lastmod": "2026-04-21",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-dominates-the-rally-di-roma-capitale-with-dapra-suninen-and-basso/": {
+      "lastmod": "2026-07-05",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-double-podium-at-the-barum-rally-suninen-second-mabellini-claims-third-place-on-the-power-stage/": {
+      "lastmod": "2026-08-16",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-drives-the-certification-of-recycled-steel-for-tyres-production-promoting-the-iscc-plus-pilot-project-with-xingda/": {
+      "lastmod": "2026-06-05",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-expiration-of-the-shareholders-agreement-between-china-national--tire--rubber-corporation-ltd-marco-polo-international-italy-srl-camfin--spa-and-marco-tronchetti-provera--c-spa/": {
+      "lastmod": "2026-05-19",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-extends-its-presence-in-formula-1-to-2028/": {
+      "lastmod": "2026-06-11",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-focuses-on-the-scx-rear-tyre-in-return-to-balaton/": {
+      "lastmod": "2026-04-27",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-focuses-on-the-soft-range-tyres-for-the-cathedral-of-speed/": {
+      "lastmod": "2026-06-24",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-goes-supersoft-at-mugello/": {
+      "lastmod": "2026-05-25",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-headlines-italian-grand-prix-weekend-at-monza/": {
+      "lastmod": "2026-09-01",
+      "kind": "preview",
+      "id": "2026-it",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-heads-to-silverstone-with-the-new-rear-sc0-for-moto2/": {
+      "lastmod": "2026-08-03",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-heads-to-the-rali-ceredigion-challenge-as-erc-leader-medium-and-soft-p-zero-tyres-for-the-top-two-in-the-standings-suninen-and-mabellini/": {
+      "lastmod": "2026-09-03",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-launches-cinturato-gravel-rh-and-rm/": {
+      "lastmod": "2026-06-15",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-launches-p-zero-race-tlr-sl-r-the-fastest-and-most-aerodynamic-road-tyre-in-the-range/": {
+      "lastmod": "2026-03-24",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-new-measures-to-marco-polocnrc-by-golden-power--pmo-decree/": {
+      "lastmod": "2026-04-11",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-north-america-launches-the-groups-first-closedloop-recycling-initiative-turning-scrap-tires-into-new-tires/": {
+      "lastmod": "2026-07-22",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-on-the-road-with-cyber-tyre-1500-kilometers-driving-the-pagani-utopia-roadster/": {
+      "lastmod": "2026-05-18",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-opens-the-moto2-and-moto3-season-with-new-all-time-lap-records/": {
+      "lastmod": "2026-03-02",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-p-zero-compounds-deliver-record-breaking-acceleration-for-the-porsche-cayenne-electric/": {
+      "lastmod": "2026-08-03",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-p-zero-r-and-p-zero-trofeo-rs-from-sportscar-experience-to-the-new-aftermarket-range-for-ultra-high-performance-tyres/": {
+      "lastmod": "2026-03-20",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-p-zero-r-from-motorsport-experience-the-tyre-for-the-new-porsche-911-turbo-s/": {
+      "lastmod": "2026-04-14",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-p-zero-r-with-motorsport-dna-for-the-new-audi-rs-5-and-rs-3-competition-limited/": {
+      "lastmod": "2026-04-08",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-p-zero-trofeo-rs-fitted-porsche-taycan-turbo-gt-sets-nuerburgring-record-with-manthey-kit/": {
+      "lastmod": "2026-06-09",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-p-zero-trofeo-rs-is-the-worlds-fastest-tyre-according-to-tyre-reviews/": {
+      "lastmod": "2026-04-20",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-publication-of-the-minutes-of-the-ordinary-shareholders-meeting-held-on-25-june-2026/": {
+      "lastmod": "2026-07-16",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-pyrum-synthos-and-basf-partner-to-transform-endoflife-and-scrap-tyres-into-recycled-materials-for-new-products/": {
+      "lastmod": "2026-07-22",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-receives-supplier-of-the-year-award-from-hyundai-motor-group/": {
+      "lastmod": "2026-03-24",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-reconfirmed-as-global-leader-in-the-auto-components-and-automobiles-sectors-of-the-sp-dow-jones-best-in-class-dj-bic-indices/": {
+      "lastmod": "2026-05-02",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-relies-exclusively-on-the-2026-standard-range-tyres-for-donington/": {
+      "lastmod": "2026-07-07",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-scx-and-sc0-for-bulegas-second-consecutive-hat-trick/": {
+      "lastmod": "2026-03-30",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-secures-its-84th-motocross-world-championship-title-with-2026-mxgp-world-champion-jeffrey-herlings/": {
+      "lastmod": "2026-09-07",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-shareholders-agreements-2026-03-02/": {
+      "lastmod": "2026-03-02",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-shareholders-agreements-updated-to-transpose-the-quota-increased-by-camfin/": {
+      "lastmod": "2026-03-16",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-shareholders-meeting-called-for-25-june-2026/": {
+      "lastmod": "2026-05-08",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-signs-luna-rossas-tyres/": {
+      "lastmod": "2026-08-11",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-slates-of-candidates-for-the-renewal-of-the-board-of-directors-published/": {
+      "lastmod": "2026-06-03",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/pirelli-successfully-completes-another-stage-in-the-development-of-tyres-for-the-2027-fim-grand-prix-world-championship/": {
       "lastmod": "2026-09-22",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
+    },
+    "https://press.pirelli.com/pirelli-takes-on-the-norisring-challenge-for-the-fourth-round-of-the-dtm/": {
+      "lastmod": "2026-07-02",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-the-board-of-directors-resolved-to-call-the-shareholders-meeting--for--25-june/": {
+      "lastmod": "2026-04-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
     },
     "https://press.pirelli.com/pirelli-to-bring-a-new-supersoft-development-tyre-to-the-italian-round/": {
       "lastmod": "2026-09-22",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/pirelli-two-custom-p-zero-tyres-for-bmw-ix3-both-with-elect-technology/": {
+      "lastmod": "2026-05-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-two-slates-of-candidates-for-the-board-of-directors-presented/": {
+      "lastmod": "2026-06-01",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-unveils-exclusive-tyres-for-the-dtm/": {
+      "lastmod": "2026-04-22",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-variation-of-company-events/": {
+      "lastmod": "2026-03-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-will-start-cyber-tyre-production-in-georgia-underlining-the-strategic-importance-of-the-us-market/": {
+      "lastmod": "2026-05-06",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirelli-with-p-zero-trofeo-rs-the-bentley-supersports-achieves-13-g-of-lateral-acceleration/": {
+      "lastmod": "2026-09-01",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pirellis-new-scorpion-at-tyres-debut-with-heikkilaes-victory-at-the-rally-scandinavia/": {
+      "lastmod": "2026-05-25",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/pole-positions-for-guevara-in-moto2-and-ogden-in-moto3-at-silverstone/": {
+      "lastmod": "2026-08-10",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/porsche-completes-comeback-in-the-hottest-24-hours-of-spa-in-history/": {
+      "lastmod": "2026-06-28",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/press-release---nota-pirelli/": {
+      "lastmod": "2026-06-04",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/rally-di-roma-capitale-pirelli-fields-34-crews-for-one-of-the-key-rounds-of-the-erc/": {
+      "lastmod": "2026-07-02",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/rally-poland-pirelli-heads-to-the-erc-round-as-championship-leader/": {
+      "lastmod": "2026-07-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/record-breaking-gonzalez-in-moto2-with-the-new-pirelli-scx-2026-almansa-takes-pole-in-moto3/": {
+      "lastmod": "2026-06-01",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/record-breaking-moto2-pole-for-agius-sixth-moto3-pole-for-almansa/": {
       "lastmod": "2026-09-15",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
+    },
+    "https://press.pirelli.com/record-breaking-pole-on-pirelli-scq-and-race-1-victory-on-scx-for-bulega/": {
+      "lastmod": "2026-09-07",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/record-pole-positions-for-lopez-in-moto2-and-almansa-in-moto3/": {
+      "lastmod": "2026-08-31",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/record-pole-with-pirelli-scx-and-race-1-victory-on-sc0-for-bulega/": {
+      "lastmod": "2026-03-29",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/red-bull-at-home-the-spielberg-weekend/": {
+      "lastmod": "2026-06-23",
+      "kind": "preview",
+      "id": "2026-at",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/review-of-preliminary-results-to-31-december-2025-and-2026-budget/": {
+      "lastmod": "2026-02-25",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/russell-fastest-on-friday-as-soft-shows-promise-for-the-race/": {
+      "lastmod": "2026-09-04",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
     },
     "https://press.pirelli.com/russell-keeps-the-red-bulls-at-bay-and-conquers-baku-on-softs/": {
       "lastmod": "2026-09-26",
@@ -92,15 +948,50 @@
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/russell-secures-pole-in-a-thrilling-qualifying-session/": {
+      "lastmod": "2026-05-24",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/russell-takes-sprint-pole-antonelli-secures-mercedes-front-row/": {
+      "lastmod": "2026-05-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/russell-takes-sprint-pole-in-the-netherlands/": {
+      "lastmod": "2026-08-21",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/russell-untouchable-on-third-soft-tyre-run/": {
       "lastmod": "2026-09-25",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/russell-wins-the-australian-gp-after-a-spectacular-opening-phase/": {
+      "lastmod": "2026-03-08",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/santini-cycling-and-pirelli-present-the-2026-sport-club-collection/": {
+      "lastmod": "2026-05-19",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/scorpion-tyres-for-the-fast-gravel-roads-of-the-rally-scandinavia-second-round-of-the-fia-erc-european-rally-championship/": {
+      "lastmod": "2026-05-22",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/second-career-pole-positions-for-salac-in-moto2-and-uriarte-in-moto3/": {
       "lastmod": "2026-09-22",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
+    },
+    "https://press.pirelli.com/second-consecutive-grand-prix-victory-for-antonelli/": {
+      "lastmod": "2026-03-29",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
     },
     "https://press.pirelli.com/sepang-reopens-its-doors-to-formula-1-after-nine-years/": {
       "lastmod": "2026-09-29",
@@ -108,10 +999,86 @@
       "id": "2026-bh",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/six-months-on-formula-1-returns-to-barcelona/": {
+      "lastmod": "2026-06-09",
+      "kind": "preview",
+      "id": "2026-bc",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/sixty-pit-stops-in-norriss-winning-farewell-at-zandvoort/": {
+      "lastmod": "2026-08-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/solid-performance-for-pirelli-on-a-scorching-track/": {
+      "lastmod": "2026-03-03",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/sprint-victory-for-norris-and-pole-position-for-antonelli/": {
+      "lastmod": "2026-05-03",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/suninen-wins-fia-erc-rally-poland-and-strengthens-pirellis-lead-in-the-tyre-manufacturers-standings/": {
+      "lastmod": "2026-07-26",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/the-2026-pirelli-scq-rear-tyre-makes-its-debut-at-misano/": {
+      "lastmod": "2026-06-08",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/the-arma-dei-carabinieri-and-pirelli-sign-an-agreement-to-test-cyber-tyre-on-select-vehicles-of-the-rome-radiomobile-unit/": {
       "lastmod": "2026-09-21",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
+    },
+    "https://press.pirelli.com/the-challenges-of-silverstone-the-cradle-of-motorsport/": {
+      "lastmod": "2026-06-30",
+      "kind": "preview",
+      "id": "2026-gb",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/the-compounds-selected-for-belgium-and-hungary/": {
+      "lastmod": "2026-07-01",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/the-fia-european-rally-championship-gets-under-way-again-with-the-rally-sierra-morena-pirelli-defends-its-tyres-manufacturers-title/": {
+      "lastmod": "2026-04-17",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/the-first-sprint-in-montreal/": {
+      "lastmod": "2026-05-18",
+      "kind": "preview",
+      "id": "2026-ca",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/the-first-sprint-of-the-season-in-shanghai/": {
+      "lastmod": "2026-03-10",
+      "kind": "preview",
+      "id": "2026-cn",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/the-full-pirelli-range-for-spielberg-and-silverstone/": {
+      "lastmod": "2026-06-10",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/the-heat-is-on-in-budapest/": {
+      "lastmod": "2026-07-21",
+      "kind": "preview",
+      "id": "2026-hu",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/the-jewel-of-formula-1-history-and-glamour-at-the-monaco-gp/": {
+      "lastmod": "2026-06-02",
+      "kind": "preview",
+      "id": "2026-mc",
+      "checkedAt": "2026-09-30T18:14:57Z"
     },
     "https://press.pirelli.com/the-madring-makes-its-world-championship-debut-with-the-challenge-of-the-monumental/": {
       "lastmod": "2026-09-08",
@@ -119,15 +1086,81 @@
       "id": "2026-es",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/the-most-eagerly-awaited-cars-at-the-nuerburgring-24-hours-will-race-on-pirelli-tyres-and-in-pirelli-colours/": {
+      "lastmod": "2026-05-14",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/the-one-stop-strategy-rewards-antonelli-in-the-first-race-at-the-madring/": {
       "lastmod": "2026-09-14",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
     },
+    "https://press.pirelli.com/the-softest-trio-for-the-challenges-of-miami-and-montreal/": {
+      "lastmod": "2026-04-13",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
     "https://press.pirelli.com/the-superbike-world-championship-flies-the-italian-flag-once-again-bulega-crowned-world-champion-with-ducati-and-pirelli/": {
       "lastmod": "2026-09-29",
       "kind": "other",
       "checkedAt": "2026-09-30T15:35:48Z"
+    },
+    "https://press.pirelli.com/the-suzuka-challenge-with-the-hardest-trio-in-the-range/": {
+      "lastmod": "2026-03-24",
+      "kind": "preview",
+      "id": "2026-jp",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/the-tyre-compound-selections-for-monte-carlo-and-barcelona/": {
+      "lastmod": "2026-05-19",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/toda-joia-for-holgado-and-quiles-convincing-debut-for-pirelli-in-brazil/": {
+      "lastmod": "2026-03-23",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/two-photographers-for-the-pirelli-calendar-2027-india-as-the-protagonist/": {
+      "lastmod": "2026-05-04",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/two-pirelli-development-medium-rear-tyres-for-moto2-at-the-sachsenring/": {
+      "lastmod": "2026-07-06",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/tyre-compound-selections-for-baku-sepang-and-singapore/": {
+      "lastmod": "2026-08-27",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/tyre-compounds-selected-for-zandvoort-monza-and-madrid/": {
+      "lastmod": "2026-07-28",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/tyre-strategy-delivers-hamiltons-first-win-in-red-0/": {
+      "lastmod": "2026-06-14",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/with-pirelli-gonzalez-and-uriarte-win-record-breaking-moto2-and-moto3-races-at-mugello/": {
+      "lastmod": "2026-06-01",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/with-pirelli-soft-sc0-vietti-takes-pole-and-sets-the-moto2-lap-record/": {
+      "lastmod": "2026-05-18",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
+    },
+    "https://press.pirelli.com/with-standard-soft-compounds-gonzalez-takes-home-the-moto2-race-and-vietti-sets-a-new-lap-record/": {
+      "lastmod": "2026-05-18",
+      "kind": "other",
+      "checkedAt": "2026-09-30T18:14:57Z"
     }
   }
 }

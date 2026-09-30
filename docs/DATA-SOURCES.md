@@ -123,6 +123,14 @@ Archivo (variable, `wght` + `wdth` axes) by Omnibus-Type, SIL Open Font Licence
 | `needs-review` | Automated ingestion found the article but some fields are missing or ambiguous |
 | `fixture` | Development-only record. Never deployed (`build-data` rejects fixtures unless `--allow-fixtures`) |
 
-All six races in the initial dataset (2025 Singapore, 2025 Abu Dhabi, 2026
-Monza, 2026 Madrid, 2026 Baku, 2026 Bahrain-at-Sepang) were transcribed on
-2026-09-30 from the official infographics and are marked `transcribed`.
+As of 2026-09-30 the dataset holds 18 races: 2025 Singapore and Abu Dhabi, and every
+2026 preview published so far (rounds 1–16; the April Bahrain and Saudi Arabian rounds
+were not held, and the Bahrain GP runs as round 16 at Sepang). All were transcribed from
+the official graphics and are marked `transcribed` until a person verifies them
+(`npm run data:review`). Known source quirks, recorded in each record's notes:
+
+- Monaco's media file is numbered `05-mc26`, the same as Canada's `05-ca26`; the record uses
+  round 6 from the calendar order (`data:build` now warns about duplicate rounds).
+- The Monaco header omits the month ("05-07/2026"); June comes from the Pirelli calendar.
+- The Canada header gives 22–25 May, the calendar 22–24 May; the graphic is used.
+- The Melbourne graphic has no expected running pressure.

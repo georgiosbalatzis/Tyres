@@ -1,0 +1,94 @@
+{
+  "race": {
+    "officialName": "Formula 1 Lenovo Austrian Grand Prix 2026",
+    "startDate": "2026-06-26",
+    "endDate": "2026-06-28"
+  },
+  "circuit": {
+    "name": "Red Bull Ring",
+    "lengthKm": 4.326,
+    "laps": 71,
+    "raceDistanceKm": 307.018,
+    "lapRecord": {
+      "time": "1:07.924",
+      "driver": "Oscar Piastri",
+      "year": 2025
+    },
+    "pitStopLoss": {
+      "seconds": 20,
+      "kind": "average"
+    }
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
+  ],
+  "characteristics": {
+    "traction": 2,
+    "braking": 3,
+    "tyreStress": 3,
+    "asphaltAbrasion": 3,
+    "asphaltGrip": 3,
+    "lateral": 3,
+    "trackEvolution": 3
+  },
+  "setup": {
+    "minimumStartingPressurePsi": {
+      "front": 24,
+      "rear": 24
+    },
+    "expectedRunningPressurePsi": {
+      "front": 24.5,
+      "rear": 24.5
+    },
+    "camberLimitDeg": {
+      "front": -3.25,
+      "rear": -2.25
+    }
+  },
+  "provenance": {
+    "event": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/e2984438-bec0-4093-96e5-55b2a7b47f9b/08-at26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:30:00Z",
+      "note": "Round from the media file name; dates from the graphic header."
+    },
+    "circuit": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/e2984438-bec0-4093-96e5-55b2a7b47f9b/08-at26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:30:00Z"
+    },
+    "compounds": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/e2984438-bec0-4093-96e5-55b2a7b47f9b/08-at26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:30:00Z"
+    },
+    "characteristics": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/e2984438-bec0-4093-96e5-55b2a7b47f9b/08-at26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:30:00Z"
+    },
+    "setup": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/e2984438-bec0-4093-96e5-55b2a7b47f9b/08-at26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:30:00Z",
+      "note": "Pirelli marks pressures as subject to change after FP2."
+    }
+  },
+  "validation": {
+    "status": "transcribed",
+    "notes": [
+      "Transcribed from the official preview graphic by an AI-assisted pass on 2026-09-30; awaiting human confirmation."
+    ]
+  }
+}

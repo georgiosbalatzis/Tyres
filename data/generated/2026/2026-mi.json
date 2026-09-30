@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-mi",
+  "season": 2026,
+  "round": 4,
+  "slug": "miami",
+  "eventCode": "mi",
+  "race": {
+    "name": "Miami Grand Prix",
+    "officialName": null,
+    "location": "Miami, United States",
+    "countryCode": "US",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "miami",
+    "name": "Miami International Autodrome",
+    "lengthKm": null,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": null,
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Formula 1 returns to the track in Miami",
+    "articleUrl": "https://press.pirelli.com/formula-1-returns-to-the-track-in-miami/",
+    "publishedAt": "2026-04-27T18:26:03+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/6ab43f44-be2d-4324-bddf-03df1fefc8fa/04-mi26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/6ab43f44-be2d-4324-bddf-03df1fefc8fa/04-mi26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/formula-1-returns-to-the-track-in-miami/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, circuit length, compounds."
+    ]
+  }
+}

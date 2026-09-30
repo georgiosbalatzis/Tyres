@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-au",
+  "season": 2026,
+  "round": 1,
+  "slug": "albert-park",
+  "eventCode": "au",
+  "race": {
+    "name": "Australian Grand Prix",
+    "officialName": null,
+    "location": "Melbourne, Australia",
+    "countryCode": "AU",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "albert-park",
+    "name": "Albert Park Circuit",
+    "lengthKm": null,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": null,
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Melbourne writes the first chapter of the new F1 season",
+    "articleUrl": "https://press.pirelli.com/melbourne-writes-the-first-chapter-of-the-new-f1-season/",
+    "publishedAt": "2026-03-02T12:35:09+01:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/a5b68358-8cb9-43b4-b130-3b50c4e2266d/01-au26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/a5b68358-8cb9-43b4-b130-3b50c4e2266d/01-au26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/melbourne-writes-the-first-chapter-of-the-new-f1-season/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, circuit length, compounds."
+    ]
+  }
+}

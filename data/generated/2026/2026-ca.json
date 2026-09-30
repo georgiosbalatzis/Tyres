@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-ca",
+  "season": 2026,
+  "round": 5,
+  "slug": "montreal",
+  "eventCode": "ca",
+  "race": {
+    "name": "Canada Grand Prix",
+    "officialName": null,
+    "location": "Montreal, Canada",
+    "countryCode": "CA",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "montreal",
+    "name": "Circuit Gilles Villeneuve",
+    "lengthKm": 4.361,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
+  ],
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "The first Sprint in Montreal",
+    "articleUrl": "https://press.pirelli.com/the-first-sprint-in-montreal/",
+    "publishedAt": "2026-05-18T15:23:25+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/cf78ad78-d9e3-4a1f-963b-87db5336af59/05-ca26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/cf78ad78-d9e3-4a1f-963b-87db5336af59/05-ca26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/the-first-sprint-in-montreal/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    },
+    "compounds": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/the-first-sprint-in-montreal/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits."
+    ]
+  }
+}

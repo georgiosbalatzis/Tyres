@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-jp",
+  "season": 2026,
+  "round": 3,
+  "slug": "suzuka",
+  "eventCode": "jp",
+  "race": {
+    "name": "Japanese Grand Prix",
+    "officialName": null,
+    "location": "Suzuka, Japan",
+    "countryCode": "JP",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "suzuka",
+    "name": "Suzuka International Racing Course",
+    "lengthKm": null,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": null,
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "The Suzuka challenge with the hardest trio in the range",
+    "articleUrl": "https://press.pirelli.com/the-suzuka-challenge-with-the-hardest-trio-in-the-range/",
+    "publishedAt": "2026-03-24T09:33:38+01:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/25412429-70ad-4b91-b7f2-a5ee4dcd75d2/03-jp26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/25412429-70ad-4b91-b7f2-a5ee4dcd75d2/03-jp26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/the-suzuka-challenge-with-the-hardest-trio-in-the-range/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, circuit length, compounds."
+    ]
+  }
+}

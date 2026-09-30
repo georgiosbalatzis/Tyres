@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-bc",
+  "season": 2026,
+  "round": 7,
+  "slug": "barcelona",
+  "eventCode": "bc",
+  "race": {
+    "name": "Barcelona-Catalunya Grand Prix",
+    "officialName": null,
+    "location": "Barcelona, Spain",
+    "countryCode": "ES",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "barcelona",
+    "name": "Circuit de Barcelona-Catalunya",
+    "lengthKm": 4.657,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": null,
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Six months on, Formula 1 returns to Barcelona",
+    "articleUrl": "https://press.pirelli.com/six-months-on-formula-1-returns-to-barcelona/",
+    "publishedAt": "2026-06-09T09:55:00+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/65f2e108-642b-474a-b1df-38bb2d2e4ba6/07-bc26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/65f2e108-642b-474a-b1df-38bb2d2e4ba6/07-bc26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/six-months-on-formula-1-returns-to-barcelona/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, compounds."
+    ]
+  }
+}

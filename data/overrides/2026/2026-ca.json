@@ -1,0 +1,95 @@
+{
+  "race": {
+    "officialName": "Formula 1 Lenovo Grand Prix du Canada 2026",
+    "startDate": "2026-05-22",
+    "endDate": "2026-05-25"
+  },
+  "circuit": {
+    "name": "Circuit Gilles-Villeneuve",
+    "lengthKm": 4.361,
+    "laps": 70,
+    "raceDistanceKm": 305.27,
+    "lapRecord": {
+      "time": "1:13.078",
+      "driver": "Valtteri Bottas",
+      "year": 2019
+    },
+    "pitStopLoss": {
+      "seconds": 18,
+      "kind": "average"
+    }
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
+  ],
+  "characteristics": {
+    "traction": 4,
+    "braking": 5,
+    "tyreStress": 3,
+    "asphaltAbrasion": 1,
+    "asphaltGrip": 2,
+    "lateral": 1,
+    "trackEvolution": 5
+  },
+  "setup": {
+    "minimumStartingPressurePsi": {
+      "front": 25.5,
+      "rear": 26
+    },
+    "expectedRunningPressurePsi": {
+      "front": 26,
+      "rear": 26.5
+    },
+    "camberLimitDeg": {
+      "front": -3.25,
+      "rear": -2
+    }
+  },
+  "provenance": {
+    "event": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/cf78ad78-d9e3-4a1f-963b-87db5336af59/05-ca26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:45:00Z",
+      "note": "Round from the media file name; dates from the graphic header."
+    },
+    "circuit": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/cf78ad78-d9e3-4a1f-963b-87db5336af59/05-ca26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:45:00Z"
+    },
+    "compounds": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/cf78ad78-d9e3-4a1f-963b-87db5336af59/05-ca26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:45:00Z"
+    },
+    "characteristics": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/cf78ad78-d9e3-4a1f-963b-87db5336af59/05-ca26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:45:00Z"
+    },
+    "setup": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/cf78ad78-d9e3-4a1f-963b-87db5336af59/05-ca26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:45:00Z",
+      "note": "Pirelli marks pressures as subject to change after FP2."
+    }
+  },
+  "validation": {
+    "status": "transcribed",
+    "notes": [
+      "Transcribed from the official preview graphic by an AI-assisted pass on 2026-09-30; awaiting human confirmation.",
+      "The graphic header reads 22-25/05; the Pirelli F1 calendar lists 22 May - 24 May. The weekend-specific graphic is used."
+    ]
+  }
+}

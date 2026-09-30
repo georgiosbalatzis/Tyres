@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-cn",
+  "season": 2026,
+  "round": 2,
+  "slug": "shanghai",
+  "eventCode": "cn",
+  "race": {
+    "name": "Chinese Grand Prix",
+    "officialName": null,
+    "location": "Shanghai, China",
+    "countryCode": "CN",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "shanghai",
+    "name": "Shanghai International Circuit",
+    "lengthKm": null,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": null,
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "The first Sprint of the season in Shanghai",
+    "articleUrl": "https://press.pirelli.com/the-first-sprint-of-the-season-in-shanghai/",
+    "publishedAt": "2026-03-10T09:00:00+01:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2176/2e85d891-f9f0-4737-874f-91798c26e70e/02-cn26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2176/2e85d891-f9f0-4737-874f-91798c26e70e/02-cn26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/the-first-sprint-of-the-season-in-shanghai/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, circuit length, compounds."
+    ]
+  }
+}

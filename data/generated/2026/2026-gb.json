@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-gb",
+  "season": 2026,
+  "round": 9,
+  "slug": "silverstone",
+  "eventCode": "gb",
+  "race": {
+    "name": "British Grand Prix",
+    "officialName": null,
+    "location": "Silverstone, United Kingdom",
+    "countryCode": "GB",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "silverstone",
+    "name": "Silverstone Circuit",
+    "lengthKm": 5.891,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": null,
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "The challenges of Silverstone, the cradle of motorsport",
+    "articleUrl": "https://press.pirelli.com/the-challenges-of-silverstone-the-cradle-of-motorsport/",
+    "publishedAt": "2026-06-30T16:28:12+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/451586f7-ad2c-43e5-9d50-1d4420b7fdf2/09-gb26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/451586f7-ad2c-43e5-9d50-1d4420b7fdf2/09-gb26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/the-challenges-of-silverstone-the-cradle-of-motorsport/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, compounds."
+    ]
+  }
+}

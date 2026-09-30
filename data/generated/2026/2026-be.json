@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-be",
+  "season": 2026,
+  "round": 10,
+  "slug": "spa",
+  "eventCode": "be",
+  "race": {
+    "name": "Belgian Grand Prix",
+    "officialName": null,
+    "location": "Stavelot, Belgium",
+    "countryCode": "BE",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "spa",
+    "name": "Circuit de Spa-Francorchamps",
+    "lengthKm": 7.004,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": null,
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Formula 1 faces its Spa-Francorchamps exam",
+    "articleUrl": "https://press.pirelli.com/formula-1-faces-its-spa-francorchamps-exam/",
+    "publishedAt": "2026-07-15T11:23:00+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/9d732a6a-39e5-472a-963e-934140d5c7a4/10-be26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/9d732a6a-39e5-472a-963e-934140d5c7a4/10-be26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/formula-1-faces-its-spa-francorchamps-exam/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, compounds."
+    ]
+  }
+}

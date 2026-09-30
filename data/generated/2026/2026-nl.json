@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-nl",
+  "season": 2026,
+  "round": 12,
+  "slug": "zandvoort",
+  "eventCode": "nl",
+  "race": {
+    "name": "Dutch Grand Prix",
+    "officialName": null,
+    "location": "Zandvoort, Netherlands",
+    "countryCode": "NL",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "zandvoort",
+    "name": "Circuit Zandvoort",
+    "lengthKm": 4.259,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": null,
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "In the Netherlands with the Sprint format",
+    "articleUrl": "https://press.pirelli.com/in-the-netherlands-with-the-sprint-format/",
+    "publishedAt": "2026-08-18T15:32:13+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2176/9d1c71a9-e61d-48e2-9704-73f936670af6/12-nl26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2176/9d1c71a9-e61d-48e2-9704-73f936670af6/12-nl26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/in-the-netherlands-with-the-sprint-format/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, compounds."
+    ]
+  }
+}

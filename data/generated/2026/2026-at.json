@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-at",
+  "season": 2026,
+  "round": 8,
+  "slug": "spielberg",
+  "eventCode": "at",
+  "race": {
+    "name": "Austrian Grand Prix",
+    "officialName": null,
+    "location": "Spielberg, Austria",
+    "countryCode": "AT",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "spielberg",
+    "name": "Red Bull Ring",
+    "lengthKm": 4.326,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
+  ],
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Red Bull at home: the Spielberg weekend",
+    "articleUrl": "https://press.pirelli.com/red-bull-at-home-the-spielberg-weekend/",
+    "publishedAt": "2026-06-23T16:22:44+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/e2984438-bec0-4093-96e5-55b2a7b47f9b/08-at26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/e2984438-bec0-4093-96e5-55b2a7b47f9b/08-at26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/red-bull-at-home-the-spielberg-weekend/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    },
+    "compounds": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/red-bull-at-home-the-spielberg-weekend/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits."
+    ]
+  }
+}

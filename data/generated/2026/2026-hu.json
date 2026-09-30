@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-hu",
+  "season": 2026,
+  "round": 11,
+  "slug": "hungaroring",
+  "eventCode": "hu",
+  "race": {
+    "name": "Hungarian Grand Prix",
+    "officialName": null,
+    "location": "Budapest, Hungary",
+    "countryCode": "HU",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "hungaroring",
+    "name": "Hungaroring",
+    "lengthKm": 4.381,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": null,
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "The heat is on in Budapest",
+    "articleUrl": "https://press.pirelli.com/the-heat-is-on-in-budapest/",
+    "publishedAt": "2026-07-21T11:30:00+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/3045e266-733c-450c-9267-d3c28ee88892/11-hu26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T18:14:57Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/3045e266-733c-450c-9267-d3c28ee88892/11-hu26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T18:14:57Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/the-heat-is-on-in-budapest/",
+      "retrievedAt": "2026-09-30T18:14:57Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, compounds."
+    ]
+  }
+}
