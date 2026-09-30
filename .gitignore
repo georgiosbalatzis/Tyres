@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.cache/
+public/data/
+test-results/
+playwright-report/
+review-report.md
+*.log
+.DS_Store
+.vscode/*
+.idea/workspace.xml
+.idea/shelf/
+.playwright-mcp/

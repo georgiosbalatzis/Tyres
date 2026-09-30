@@ -1,0 +1,515 @@
+import type { CarView, Corner } from '../domain/derivedMetrics.ts';
+import {
+  type Manifest,
+  type ManifestRace,
+  Manifest as ManifestSchema,
+  parseWith,
+  RaceRecord,
+  TrackShape as TrackSchema,
+  type TrackShape,
+} from '../domain/schema.ts';
+import { allRaces, neighbours, pickLatest, raceForYearChange, racesInYear } from '../domain/selection.ts';
+import { parseLocation, racePath, resolveRequest } from '../domain/urlState.ts';
+import type { Viewer } from '../three/viewer.ts';
+import { html, setHtml } from './html.ts';
+import { describe, SITE_NAME } from './page.ts';
+import {
+  compounds,
+  DEFAULT_VIEW,
+  dataTable,
+  fallbackVisual,
+  heroWord,
+  identity,
+  type Mode,
+  ratings,
+  readout,
+  setup,
+  sortedCompounds,
+  specs,
+  titleBlock,
+  type ViewState,
+} from './templates.ts';
+
+const BASE = import.meta.env.BASE_URL;
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+const $ = <T extends Element = HTMLElement>(sel: string) => document.querySelector(sel) as T;
+
+interface State {
+  manifest: Manifest | null;
+  record: RaceRecord;
+  track: TrackShape | null;
+  view: ViewState;
+  viewer: Viewer | null;
+  navToken: number;
+}
+
+let state: State;
+const raceCache = new Map<string, Promise<RaceRecord>>();
+const trackCache = new Map<string, Promise<TrackShape | null>>();
+
+/* ------------------------------------------------------------------ notices */
+
+function notice(message: string | null) {
+  const el = $('#notice');
+  if (message) setHtml(el, html`<p>${message}</p>`);
+  else el.replaceChildren();
+}
+
+function announce(message: string) {
+  $('#announcer').textContent = message;
+}
+
+/* ------------------------------------------------------------------ data loading */
+
+async function fetchJson(url: string): Promise<unknown> {
+  const res = await fetch(url, { headers: { Accept: 'application/json' } });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+function loadRace(id: string): Promise<RaceRecord> {
+  if (!raceCache.has(id)) {
+    const p = fetchJson(`${BASE}data/races/${encodeURIComponent(id)}.json`).then((json) => {
+      const parsed = parseWith(RaceRecord, json);
+      if (!parsed.ok) throw new Error('the race file failed validation');
+      return parsed.value;
+    });
+    p.catch(() => raceCache.delete(id));
+    raceCache.set(id, p);
+  }
+  return raceCache.get(id)!;
+}
+
+function loadTrack(id: string | null): Promise<TrackShape | null> {
+  if (!id) return Promise.resolve(null);
+  if (!trackCache.has(id)) {
+    trackCache.set(
+      id,
+      fetchJson(`${BASE}data/tracks/${encodeURIComponent(id)}.json`)
+        .then((json) => {
+          const parsed = parseWith(TrackSchema, json);
+          return parsed.ok ? parsed.value : null;
+        })
+        .catch(() => {
+          // Network failure: don't remember it, so the next visit to this circuit retries.
+          trackCache.delete(id);
+          return null;
+        }),
+    );
+  }
+  return trackCache.get(id)!;
+}
+
+/* ------------------------------------------------------------------ rendering */
+
+function renderRace(animate: boolean) {
+  const { record: r, view } = state;
+  const figuresBefore = readFigures();
+  setHtml($('#r-identity'), identity(r));
+  setHtml($('#r-specs'), specs(r));
+  setHtml($('#r-ratings'), ratings(r));
+  setHtml($('#r-setup'), setup(r));
+  setHtml($('#r-compounds'), compounds(r, view.mode === 'tyres' ? view.compound : null));
+  setHtml($('#r-source'), titleBlock(r));
+  setHtml($('#r-data'), dataTable(r));
+  $('#r-hero').textContent = heroWord(r);
+  renderView();
+  if (animate && !reducedMotion.matches) {
+    tweenFigures(figuresBefore);
+    const list = $('#r-ratings .rating-list');
+    list?.classList.add('is-entering');
+    requestAnimationFrame(() => requestAnimationFrame(() => list?.classList.remove('is-entering')));
+  }
+}
+
+function renderView() {
+  const { record: r, track, view } = state;
+  const stage = $('#main');
+  stage.dataset.mode = view.mode;
+  for (const b of document.querySelectorAll<HTMLButtonElement>('.mode')) {
+    b.setAttribute('aria-pressed', String(b.dataset.mode === view.mode));
+  }
+  ($('#r-data') as HTMLElement).hidden = view.mode !== 'data';
+  setHtml($('#r-readout'), readout(r, track, view));
+  setHtml($('#r-fallback'), fallbackVisual(r, track, view));
+  for (const b of document.querySelectorAll<HTMLButtonElement>('.compound')) {
+    b.setAttribute('aria-pressed', String(view.mode === 'tyres' && b.dataset.compound === view.compound));
+  }
+  state.viewer?.setState(view);
+}
+
+function readFigures(): Map<string, string> {
+  const m = new Map<string, string>();
+  for (const el of document.querySelectorAll<HTMLElement>('[data-figure]'))
+    m.set(el.dataset.figure!, el.textContent ?? '');
+  return m;
+}
+
+/** Numeric figures count from their previous value to the new one; text values just swap. */
+function tweenFigures(before: Map<string, string>) {
+  for (const el of document.querySelectorAll<HTMLElement>('[data-figure]')) {
+    const to = el.textContent ?? '';
+    const from = before.get(el.dataset.figure!) ?? '';
+    const a = Number.parseFloat(from);
+    const b = Number.parseFloat(to);
+    if (!/^\d+(\.\d+)?$/.test(to) || Number.isNaN(a) || a === b) continue;
+    const digits = to.split('.')[1]?.length ?? 0;
+    const t0 = performance.now();
+    const step = (now: number) => {
+      const t = Math.min(1, (now - t0) / 550);
+      const e = 1 - (1 - t) ** 3;
+      el.textContent = t < 1 ? (a + (b - a) * e).toFixed(digits) : to;
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+}
+
+function updateHead() {
+  const r = state.record;
+  document.title = `${r.race.name} ${r.season} tyres and circuit | ${SITE_NAME}`;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', describe(r));
+  document
+    .querySelector('link[rel="canonical"]')
+    ?.setAttribute('href', new URL(racePath(BASE, r), location.origin).href);
+}
+
+/* ------------------------------------------------------------------ navigation controls */
+
+function summaryOf(id: string): ManifestRace | null {
+  return state.manifest ? (allRaces(state.manifest).find((r) => r.id === id) ?? null) : null;
+}
+
+/** Compact enough for a phone-width select: "R16 Bahrain GP, Sepang". */
+function optionLabel(r: ManifestRace) {
+  const venue = r.slug
+    .split('-')
+    .map((w) => w[0]!.toUpperCase() + w.slice(1))
+    .join(' ');
+  return `${r.round ? `R${r.round} ` : ''}${r.name.replace(/ Grand Prix$/, ' GP')}, ${venue}`;
+}
+
+function syncControls() {
+  const m = state.manifest;
+  const yearSel = $<HTMLSelectElement>('#year');
+  const raceSel = $<HTMLSelectElement>('#race');
+  const prev = $<HTMLAnchorElement>('#prev');
+  const next = $<HTMLAnchorElement>('#next');
+  if (!m) {
+    yearSel.disabled = raceSel.disabled = true;
+    return;
+  }
+  const cur = summaryOf(state.record.id);
+  setHtml(yearSel, html`${m.years.map((y) => html`<option value="${y.year}">${y.year}</option>`)}`);
+  yearSel.value = String(state.record.season);
+  setHtml(
+    raceSel,
+    html`${racesInYear(m, state.record.season).map((r) => html`<option value="${r.id}">${optionLabel(r)}</option>`)}`,
+  );
+  raceSel.value = state.record.id;
+  raceSel.disabled = false;
+  yearSel.disabled = false;
+
+  const { prev: p, next: n } = cur ? neighbours(m, cur) : { prev: null, next: null };
+  const hadFocus = document.activeElement;
+  for (const [el, race, word] of [
+    [prev, p, 'Previous'],
+    [next, n, 'Next'],
+  ] as const) {
+    if (race) {
+      el.href = racePath(BASE, race);
+      el.removeAttribute('aria-disabled');
+      el.setAttribute('aria-label', `${word}: ${race.name} ${race.season}`);
+      el.dataset.race = race.id;
+    } else {
+      el.removeAttribute('href');
+      el.setAttribute('aria-disabled', 'true');
+      el.setAttribute('role', 'link');
+      el.removeAttribute('aria-label');
+      delete el.dataset.race;
+    }
+  }
+  // Reaching the first/last race disables the step that was just used: keep keyboard focus nearby.
+  if (hadFocus === prev || hadFocus === next) {
+    const target = hadFocus.hasAttribute('href') ? null : hadFocus === next ? prev : next;
+    if (target) (target.hasAttribute('href') ? target : raceSel).focus();
+  }
+  for (const a of document.querySelectorAll('.archive a')) {
+    if (a.getAttribute('href') === racePath(BASE, state.record)) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
+  }
+}
+
+async function goTo(id: string, opts: { history: 'push' | 'replace' | 'none' }) {
+  if (id === state.record.id) {
+    // Cancel any slower switch still in flight: the visitor's latest choice wins.
+    state.navToken++;
+    $('#main').classList.remove('is-switching');
+    syncControls();
+    if (opts.history !== 'none') writeHistory(opts.history);
+    return;
+  }
+  const token = ++state.navToken;
+  const stage = $('#main');
+  const host = $('#canvas-host');
+  stage.classList.add('is-switching');
+  if (!reducedMotion.matches) {
+    host.style.setProperty('--sweep-to', `${host.clientWidth}px`);
+    host.classList.remove('is-sweeping');
+    void host.offsetWidth;
+    host.classList.add('is-sweeping');
+  }
+  try {
+    const record = await loadRace(id);
+    const track = await loadTrack(record.circuit.trackId);
+    if (token !== state.navToken) return;
+    // Keep the selected tyre's weekend role (e.g. medium), not its compound number.
+    const role = state.record.compounds?.find((c) => c.compound === state.view.compound)?.raceLabel;
+    const list = sortedCompounds(record);
+    const compound =
+      list.find((c) => c.raceLabel === role)?.compound ?? list[1]?.compound ?? list[0]?.compound ?? null;
+    state.view = { ...state.view, compound };
+    state.record = record;
+    state.track = track;
+    renderRace(true);
+    syncControls();
+    updateHead();
+    if (opts.history !== 'none') writeHistory(opts.history);
+    state.viewer?.setRace(record, track, state.view);
+    announce(`Showing ${record.race.name} ${record.season}`);
+    notice(null);
+  } catch (err) {
+    if (token !== state.navToken) return;
+    const name = summaryOf(id)?.name ?? id;
+    notice(
+      `Couldn’t load ${name} (${(err as Error).message}). Still showing ${state.record.race.name} ${state.record.season}.`,
+    );
+    syncControls();
+  } finally {
+    if (token === state.navToken) requestAnimationFrame(() => stage.classList.remove('is-switching'));
+  }
+}
+
+function writeHistory(mode: 'push' | 'replace') {
+  const url = racePath(BASE, state.record);
+  const data = { raceId: state.record.id };
+  if (mode === 'push' && location.pathname === url && !location.search) return;
+  if (mode === 'push') history.pushState(data, '', url);
+  else history.replaceState(data, '', url);
+}
+
+/* ------------------------------------------------------------------ view state */
+
+function setView(patch: Partial<ViewState>) {
+  state.view = { ...state.view, ...patch };
+  renderView();
+}
+
+function onPick(sel: { corner?: Corner; compound?: string }) {
+  if (sel.corner) setView({ corner: state.view.corner === sel.corner ? null : sel.corner });
+  if (sel.compound) setView({ compound: sel.compound });
+}
+
+function bindEvents() {
+  $('#year').addEventListener('change', (e) => {
+    if (!state.manifest) return;
+    const year = Number((e.target as HTMLSelectElement).value);
+    const target = raceForYearChange(state.manifest, year, summaryOf(state.record.id));
+    if (target) void goTo(target.id, { history: 'push' });
+  });
+  $('#race').addEventListener(
+    'change',
+    (e) => void goTo((e.target as HTMLSelectElement).value, { history: 'push' }),
+  );
+
+  for (const id of ['#prev', '#next']) {
+    $(id).addEventListener('click', (e) => {
+      const race = (e.currentTarget as HTMLElement).dataset.race;
+      if (!race || !state.manifest) return;
+      e.preventDefault();
+      void goTo(race, { history: 'push' });
+    });
+  }
+
+  document.querySelector('.archive')?.addEventListener('click', (e: Event) => {
+    if (!(e instanceof MouseEvent)) return;
+    const a = (e.target as Element).closest('a');
+    if (!a || !state.manifest || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    const req = parseLocation(new URL(a.href).pathname, '', BASE);
+    const hit =
+      req.year && req.race
+        ? allRaces(state.manifest).find((r) => r.season === req.year && r.slug === req.race)
+        : null;
+    if (!hit) return;
+    e.preventDefault();
+    void goTo(hit.id, { history: 'push' });
+    $('#main').focus({ preventScroll: false });
+    window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+  });
+
+  window.addEventListener('popstate', () => {
+    if (!state.manifest) return;
+    const { race } = resolveRequest(
+      state.manifest,
+      parseLocation(location.pathname, location.search, BASE),
+      latestOf(state.manifest),
+    );
+    if (race) void goTo(race.id, { history: 'none' });
+  });
+
+  $('#main').addEventListener('click', (e) => {
+    const t = e.target as Element;
+    const mode = t.closest<HTMLElement>('.mode')?.dataset.mode as Mode | undefined;
+    if (mode) {
+      const compound =
+        mode === 'tyres' && !state.view.compound
+          ? (sortedCompounds(state.record)[1]?.compound ?? null)
+          : state.view.compound;
+      setView({ mode, compound });
+      announce(`${mode} view`);
+      return;
+    }
+    const view = t.closest<HTMLElement>('.chip')?.dataset.view as CarView | undefined;
+    if (view) return setView({ carView: view });
+    const corner = t.closest<HTMLElement>('.corner')?.dataset.corner as Corner | undefined;
+    if (corner) return onPick({ corner });
+    const compound = t.closest<HTMLElement>('.compound')?.dataset.compound;
+    if (compound) return setView({ mode: 'tyres', compound });
+    const action = t.closest<HTMLElement>('.tool')?.dataset.action;
+    if (action === 'reset') state.viewer?.resetCamera();
+    if (action === 'rotate') {
+      const btn = t.closest<HTMLElement>('.tool')!;
+      const on = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', String(on));
+      state.viewer?.setAutoRotate(on);
+    }
+  });
+}
+
+/* ------------------------------------------------------------------ 3D (progressive enhancement) */
+
+function setupViewer() {
+  const host = $('#canvas-host');
+  const loading = $('#loading-3d');
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  const start = async () => {
+    loading.hidden = false;
+    try {
+      const { createViewer } = await import('../three/viewer.ts');
+      state.viewer = createViewer(host, {
+        record: state.record,
+        track: state.track,
+        view: state.view,
+        reducedMotion: reducedMotion.matches,
+        onPick,
+        onReady: () => {
+          host.classList.add('has-3d');
+          $('#r-fallback').setAttribute('aria-hidden', 'true');
+          ($('#view-tools') as HTMLElement).hidden = false;
+          loading.hidden = true;
+        },
+        onFailure: (reason) => {
+          state.viewer = null;
+          host.classList.remove('has-3d');
+          $('#r-fallback').removeAttribute('aria-hidden');
+          ($('#view-tools') as HTMLElement).hidden = true;
+          setHtml(loading, html`${reason} Showing the flat drawing instead.`);
+          loading.hidden = false;
+        },
+      });
+    } catch (err) {
+      // WebGLRenderer throws when no context can be created (no GPU, blocked, or disabled).
+      const noGl = /webgl|context/i.test(String((err as Error)?.message));
+      host.dataset.webgl = noGl ? 'unavailable' : 'failed';
+      setHtml(
+        loading,
+        noGl
+          ? html`3D view unavailable on this device. Showing the flat drawing instead.`
+          : html`3D view couldn’t load. Showing the flat drawing instead.`,
+      );
+    }
+  };
+  if (conn?.saveData) {
+    setHtml(loading, html`<button type="button" class="chip" id="load-3d">Load 3D view</button>`);
+    loading.hidden = false;
+    $('#load-3d').addEventListener('click', () => void start(), { once: true });
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    io.disconnect();
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 200));
+    idle(() => void start());
+  });
+  io.observe(host);
+}
+
+/* ------------------------------------------------------------------ boot */
+
+const latestOf = (m: Manifest) => allRaces(m).find((r) => r.id === m.latest) ?? pickLatest(allRaces(m));
+
+export async function start() {
+  window.addEventListener('unhandledrejection', (e) => {
+    console.warn('Unhandled:', e.reason);
+    e.preventDefault();
+  });
+
+  const bootEl = document.getElementById('boot');
+  const boot = JSON.parse(bootEl?.textContent ?? '{}') as {
+    raceId?: string;
+    record?: unknown;
+    track?: unknown;
+    notFound?: boolean;
+  };
+  const rec = parseWith(RaceRecord, boot.record);
+  if (!rec.ok) {
+    notice('This page’s built-in race data is damaged. Loading the race list instead.');
+  }
+  const trk = boot.track ? parseWith(TrackSchema, boot.track) : null;
+
+  state = {
+    manifest: null,
+    record: rec.ok ? rec.value : (undefined as unknown as RaceRecord),
+    track: trk?.ok ? trk.value : null,
+    view: { ...DEFAULT_VIEW },
+    viewer: null,
+    navToken: 0,
+  };
+  bindEvents();
+
+  try {
+    const parsed = parseWith(ManifestSchema, await fetchJson(`${BASE}data/manifest.json`));
+    if (!parsed.ok) throw new Error('invalid');
+    state.manifest = parsed.value;
+  } catch {
+    notice(
+      'The race list couldn’t load, so other previews aren’t selectable right now. This page’s data is complete.',
+    );
+  }
+
+  if (state.manifest) {
+    const req = parseLocation(location.pathname, location.search, BASE);
+    const latest = latestOf(state.manifest);
+    const { race, notice: msg } = resolveRequest(state.manifest, req, latest);
+    if (!rec.ok && race) {
+      state.record = await loadRace(race.id).catch(() => undefined as unknown as RaceRecord);
+      state.track = state.record ? await loadTrack(state.record.circuit.trackId) : null;
+      if (state.record) {
+        renderRace(false);
+        updateHead();
+      }
+    }
+    if (!state.record) return;
+    if (race && race.id !== state.record.id) {
+      await goTo(race.id, { history: 'replace' });
+    } else if (location.search && race) {
+      writeHistory('replace');
+    }
+    if (msg && !boot.notFound) notice(msg);
+    history.replaceState({ raceId: state.record.id }, '');
+  }
+  if (!state.record) return;
+  syncControls();
+  setupViewer();
+}

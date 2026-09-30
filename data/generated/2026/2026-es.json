@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-es",
+  "season": 2026,
+  "round": 14,
+  "slug": "madring",
+  "eventCode": "es",
+  "race": {
+    "name": "Spanish Grand Prix",
+    "officialName": null,
+    "location": "Madrid, Spain",
+    "countryCode": "ES",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "madring",
+    "name": "Madring",
+    "lengthKm": 5.416,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C2"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C4"
+    }
+  ],
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "The Madring makes its World Championship debut with the challenge of the \"Monumental\"",
+    "articleUrl": "https://press.pirelli.com/the-madring-makes-its-world-championship-debut-with-the-challenge-of-the-monumental/",
+    "publishedAt": "2026-09-08T17:33:59+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/7e5470eb-db99-4fe4-b1da-06bddd739228/14-es26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T15:35:48Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/7e5470eb-db99-4fe4-b1da-06bddd739228/14-es26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T15:35:48Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/the-madring-makes-its-world-championship-debut-with-the-challenge-of-the-monumental/",
+      "retrievedAt": "2026-09-30T15:35:48Z"
+    },
+    "compounds": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/the-madring-makes-its-world-championship-debut-with-the-challenge-of-the-monumental/",
+      "retrievedAt": "2026-09-30T15:35:48Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits."
+    ]
+  }
+}

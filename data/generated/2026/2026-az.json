@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-az",
+  "season": 2026,
+  "round": 15,
+  "slug": "baku",
+  "eventCode": "az",
+  "race": {
+    "name": "Azerbaijan Grand Prix",
+    "officialName": null,
+    "location": "Baku, Azerbaijan",
+    "countryCode": "AZ",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "baku",
+    "name": "Baku City Circuit",
+    "lengthKm": 6.003,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
+  ],
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Appointment on Saturday for the Azerbaijan Grand Prix",
+    "articleUrl": "https://press.pirelli.com/appointment-on-saturday-for-the-azerbaijan-grand-prix/",
+    "publishedAt": "2026-09-21T15:28:49+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/7755fd41-5742-4793-9ea3-610786fa54d2/15-az26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T15:35:48Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/7755fd41-5742-4793-9ea3-610786fa54d2/15-az26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T15:35:48Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/appointment-on-saturday-for-the-azerbaijan-grand-prix/",
+      "retrievedAt": "2026-09-30T15:35:48Z"
+    },
+    "compounds": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/appointment-on-saturday-for-the-azerbaijan-grand-prix/",
+      "retrievedAt": "2026-09-30T15:35:48Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits."
+    ]
+  }
+}

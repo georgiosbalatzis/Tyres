@@ -1,0 +1,85 @@
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url("../assets/fonts/archivo-latin-var.woff2") format("woff2-variations");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Neutrals — chrome */
+  --c-carbon: #16181b;
+  --c-gunmetal: #1e2226;
+  --c-steel: #2b3036;
+  --c-rule: #3a4047;
+  /* Boundaries of interactive controls: ≥ 3:1 against gunmetal (WCAG 1.4.11). */
+  --c-control: #6b727b;
+  --c-paper: #ebe7df;
+  --c-graphite: #959ca5;
+  --c-probe: #9ccbdc;
+
+  /* Semantic — data only */
+  --c-hard: #f2f1ec;
+  --c-medium: #f5c518;
+  --c-soft: #e5322d;
+  /* Soft red lifted for text: ≥ 4.5:1 on gunmetal and steel. */
+  --c-soft-text: #ff6258;
+  --c-inter: #3fae49;
+  --c-wet: #2f7fd0;
+  --heat-1: #2f8f9d;
+  --heat-2: #7fb069;
+  --heat-3: #e9c46a;
+  --heat-4: #f08c3a;
+  --heat-5: #d9412b;
+  --c-nodata: #4a5058;
+
+  /* Type */
+  --font: "Archivo", "Archivo Fallback", system-ui, sans-serif;
+  --fs-caption: 0.8125rem;
+  --fs-body: 1rem;
+  --fs-lead: 1.125rem;
+  --fs-figure: clamp(1.5rem, 1.1rem + 0.9vw, 2.125rem);
+  --fs-title: clamp(1.75rem, 1.2rem + 1.6vw, 2.625rem);
+  --fs-hero: clamp(4.5rem, 2rem + 11vw, 13rem);
+
+  /* Space */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+
+  --gutter: clamp(1rem, 0.4rem + 1.6vw, 2rem);
+  --radius-control: 2px;
+  --rule: 1px solid var(--c-rule);
+  --control-border: 1px solid var(--c-control);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --t-fast: 140ms;
+  --t-mid: 320ms;
+  --t-hero: 700ms;
+}
+
+/* Metric-matched fallback so the swap to Archivo doesn't shift layout. */
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial");
+  size-adjust: 104%;
+  ascent-override: 88%;
+  descent-override: 22%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 1ms;
+    --t-mid: 1ms;
+    --t-hero: 1ms;
+  }
+}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#16181b" />
+    <title>F1 Stories — Tyre Intelligence</title>
+    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
+    <!--app:head-->
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to race data</a>
+    <div class="sheet">
+      <span class="reg reg-tl" aria-hidden="true"></span><span class="reg reg-tr" aria-hidden="true"></span>
+      <span class="reg reg-bl" aria-hidden="true"></span><span class="reg reg-br" aria-hidden="true"></span>
+
+      <header class="masthead">
+        <a class="brand" href="%BASE_URL%" aria-label="F1 Stories Tyre Intelligence, latest preview">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-name">F1 Stories</span>
+          <span class="brand-sub">Tyre intelligence</span>
+        </a>
+        <nav class="picker" aria-label="Choose a race preview">
+          <label class="field"><span class="field-label">Season</span><select id="year" disabled></select></label>
+          <label class="field field-race"><span class="field-label">Race</span><select id="race" disabled></select></label>
+          <!--app:stepper-->
+        </nav>
+      </header>
+
+      <div class="notice" id="notice" role="status" aria-live="polite"><!--app:notice--></div>
+
+      <main id="main" class="stage" tabindex="-1" data-mode="car"><!--app:main--></main>
+
+      <footer class="colophon">
+        <!--app:archive-->
+        <div class="legal">
+          <p>
+            Unofficial visualisation. Tyre and circuit data sourced from Pirelli Motorsport press previews; every page
+            links to its original source. Formula 1 and related marks belong to their respective owners. Not affiliated
+            with or endorsed by Pirelli, Formula 1 or the FIA.
+          </p>
+          <p>
+            Circuit outlines from bacinger/f1-circuits (MIT). Typeface Archivo (SIL Open Font Licence). Tyre colours in
+            car views are a derived visualisation of Pirelli’s 1–5 ratings, not measured data.
+          </p>
+        </div>
+      </footer>
+    </div>
+    <p class="visually-hidden" id="announcer" aria-live="polite"></p>
+    <!--app:boot-->
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

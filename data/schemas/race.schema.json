@@ -1,0 +1,669 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^\\d{4}-[a-z0-9-]{1,40}$"
+    },
+    "season": {
+      "type": "integer",
+      "minimum": 1950,
+      "maximum": 2100
+    },
+    "round": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "slug": {
+      "type": "string",
+      "maxLength": 40,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "eventCode": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-z]{2,3}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "race": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "officialName": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "location": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "countryCode": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Z]{2}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "officialName",
+        "location",
+        "countryCode",
+        "startDate",
+        "endDate"
+      ]
+    },
+    "circuit": {
+      "type": "object",
+      "properties": {
+        "trackId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lengthKm": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 10
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "laps": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 120
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raceDistanceKm": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 50,
+              "maximum": 450
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lapRecord": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "time": {
+                  "type": "string",
+                  "pattern": "^\\d:\\d{2}\\.\\d{3}$"
+                },
+                "driver": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80
+                },
+                "year": {
+                  "type": "integer",
+                  "minimum": 1950,
+                  "maximum": 2100
+                }
+              },
+              "required": [
+                "time",
+                "driver",
+                "year"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pitStopLoss": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "seconds": {
+                  "type": "number",
+                  "minimum": 5,
+                  "maximum": 60
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "estimate",
+                    "average",
+                    "unspecified"
+                  ]
+                }
+              },
+              "required": [
+                "seconds",
+                "kind"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "trackId",
+        "name",
+        "lengthKm",
+        "laps",
+        "raceDistanceKm",
+        "lapRecord",
+        "pitStopLoss"
+      ]
+    },
+    "compounds": {
+      "anyOf": [
+        {
+          "minItems": 1,
+          "maxItems": 6,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "raceLabel": {
+                "type": "string",
+                "pattern": "^[a-z][a-z-]{1,15}$"
+              },
+              "compound": {
+                "type": "string",
+                "pattern": "^C\\d{1,2}$|^[A-Z][A-Z0-9-]{0,11}$"
+              }
+            },
+            "required": [
+              "raceLabel",
+              "compound"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "characteristics": {
+      "type": "object",
+      "properties": {
+        "traction": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "braking": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tyreStress": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "asphaltAbrasion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "asphaltGrip": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lateral": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "trackEvolution": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "downforce": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "traction",
+        "braking",
+        "tyreStress",
+        "asphaltAbrasion",
+        "asphaltGrip",
+        "lateral",
+        "trackEvolution"
+      ]
+    },
+    "setup": {
+      "type": "object",
+      "properties": {
+        "minimumStartingPressurePsi": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "front": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": 10,
+                      "maximum": 40
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "rear": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": 10,
+                      "maximum": 40
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "front",
+                "rear"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expectedRunningPressurePsi": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "front": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": 10,
+                      "maximum": 40
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "rear": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": 10,
+                      "maximum": 40
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "front",
+                "rear"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "camberLimitDeg": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "front": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": -6,
+                      "maximum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "rear": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": -6,
+                      "maximum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "front",
+                "rear"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "minimumStartingPressurePsi",
+        "expectedRunningPressurePsi",
+        "camberLimitDeg"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "publisher": {
+          "type": "string",
+          "const": "Pirelli"
+        },
+        "articleTitle": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "articleUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "publishedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "previewAssetUrl": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retrievedAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+        }
+      },
+      "required": [
+        "publisher",
+        "articleTitle",
+        "articleUrl",
+        "publishedAt",
+        "previewAssetUrl",
+        "retrievedAt"
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "enum": [
+          "event",
+          "circuit",
+          "compounds",
+          "characteristics",
+          "setup"
+        ]
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": [
+              "article-jsonld",
+              "article-text",
+              "media-filename",
+              "infographic-transcription",
+              "manual"
+            ]
+          },
+          "sourceUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "method",
+          "sourceUrl",
+          "retrievedAt"
+        ]
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "verified",
+            "transcribed",
+            "needs-review",
+            "fixture"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          }
+        }
+      },
+      "required": [
+        "status",
+        "notes"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "season",
+    "round",
+    "slug",
+    "eventCode",
+    "race",
+    "circuit",
+    "compounds",
+    "characteristics",
+    "setup",
+    "source",
+    "provenance",
+    "validation"
+  ]
+}

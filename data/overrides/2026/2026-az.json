@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-az",
+  "season": 2026,
+  "round": 15,
+  "slug": "baku",
+  "eventCode": "az",
+  "race": {
+    "name": "Azerbaijan Grand Prix",
+    "officialName": "Formula 1 Qatar Airways Azerbaijan Grand Prix 2026",
+    "location": "Baku, Azerbaijan",
+    "countryCode": "AZ",
+    "startDate": "2026-09-24",
+    "endDate": "2026-09-26"
+  },
+  "circuit": {
+    "trackId": "baku",
+    "name": "Baku City Circuit",
+    "lengthKm": 6.003,
+    "laps": 51,
+    "raceDistanceKm": 306.049,
+    "lapRecord": { "time": "1:43.009", "driver": "Charles Leclerc", "year": 2019 },
+    "pitStopLoss": { "seconds": 19.5, "kind": "average" }
+  },
+  "compounds": [
+    { "raceLabel": "hard", "compound": "C3" },
+    { "raceLabel": "medium", "compound": "C4" },
+    { "raceLabel": "soft", "compound": "C5" }
+  ],
+  "characteristics": {
+    "traction": 5,
+    "braking": 4,
+    "tyreStress": 3,
+    "asphaltAbrasion": 1,
+    "asphaltGrip": 2,
+    "lateral": 1,
+    "trackEvolution": 5
+  },
+  "setup": {
+    "minimumStartingPressurePsi": { "front": 27.5, "rear": 27.5 },
+    "expectedRunningPressurePsi": { "front": 28.0, "rear": 28.0 },
+    "camberLimitDeg": { "front": -3.0, "rear": -1.75 }
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Appointment on Saturday for the Azerbaijan Grand Prix",
+    "articleUrl": "https://press.pirelli.com/appointment-on-saturday-for-the-azerbaijan-grand-prix/",
+    "publishedAt": "2026-09-21T15:28:49+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/7755fd41-5742-4793-9ea3-610786fa54d2/15-az26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T13:15:00Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/7755fd41-5742-4793-9ea3-610786fa54d2/15-az26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T13:15:00Z",
+      "note": "Dates from infographic header (24-26/09/2026)."
+    },
+    "circuit": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/7755fd41-5742-4793-9ea3-610786fa54d2/15-az26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T13:15:00Z",
+      "note": "Pit-stop loss printed without unit; seconds assumed from the other 2026 infographics."
+    },
+    "compounds": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/7755fd41-5742-4793-9ea3-610786fa54d2/15-az26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T13:15:00Z"
+    },
+    "characteristics": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/7755fd41-5742-4793-9ea3-610786fa54d2/15-az26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T13:15:00Z"
+    },
+    "setup": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/7755fd41-5742-4793-9ea3-610786fa54d2/15-az26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T13:15:00Z",
+      "note": "Pirelli marks pressures as subject to change after FP2."
+    }
+  },
+  "validation": {
+    "status": "transcribed",
+    "notes": [
+      "Transcribed from the official preview infographic by an AI-assisted pass on 2026-09-30; awaiting human confirmation."
+    ]
+  }
+}

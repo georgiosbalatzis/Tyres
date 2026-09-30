@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-bh",
+  "season": 2026,
+  "round": 16,
+  "slug": "sepang",
+  "eventCode": "bh",
+  "race": {
+    "name": "Bahrain Grand Prix",
+    "officialName": null,
+    "location": "Kuala Lumpur, Malaysia",
+    "countryCode": "MY",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "sepang",
+    "name": "Sepang International Circuit",
+    "lengthKm": 5.543,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C2"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C4"
+    }
+  ],
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Sepang reopens its doors to Formula 1 after nine years",
+    "articleUrl": "https://press.pirelli.com/sepang-reopens-its-doors-to-formula-1-after-nine-years/",
+    "publishedAt": "2026-09-29T10:36:03+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/e36282c6-9ff8-4235-83bc-61827c1980f6/16-bh26-preview-en.jpg",
+    "retrievedAt": "2026-09-30T15:35:48Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/e36282c6-9ff8-4235-83bc-61827c1980f6/16-bh26-preview-en.jpg",
+      "retrievedAt": "2026-09-30T15:35:48Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/sepang-reopens-its-doors-to-formula-1-after-nine-years/",
+      "retrievedAt": "2026-09-30T15:35:48Z"
+    },
+    "compounds": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/sepang-reopens-its-doors-to-formula-1-after-nine-years/",
+      "retrievedAt": "2026-09-30T15:35:48Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits."
+    ]
+  }
+}

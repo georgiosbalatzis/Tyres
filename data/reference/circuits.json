@@ -1,0 +1,213 @@
+{
+  "note": "Maps circuit names found in Pirelli text to our track ids and upstream bacinger/f1-circuits ids. Add a row when a new venue appears.",
+  "circuits": [
+    {
+      "trackId": "albert-park",
+      "name": "Albert Park Circuit",
+      "aliases": ["Albert Park", "Melbourne"],
+      "countryCode": "AU",
+      "location": "Melbourne, Australia",
+      "upstreamId": "au-1953"
+    },
+    {
+      "trackId": "shanghai",
+      "name": "Shanghai International Circuit",
+      "aliases": ["Shanghai"],
+      "countryCode": "CN",
+      "location": "Shanghai, China",
+      "upstreamId": "cn-2004"
+    },
+    {
+      "trackId": "suzuka",
+      "name": "Suzuka International Racing Course",
+      "aliases": ["Suzuka"],
+      "countryCode": "JP",
+      "location": "Suzuka, Japan",
+      "upstreamId": "jp-1962"
+    },
+    {
+      "trackId": "sakhir",
+      "name": "Bahrain International Circuit",
+      "aliases": ["Sakhir", "Bahrain International Circuit"],
+      "countryCode": "BH",
+      "location": "Sakhir, Bahrain",
+      "upstreamId": "bh-2002"
+    },
+    {
+      "trackId": "jeddah",
+      "name": "Jeddah Corniche Circuit",
+      "aliases": ["Jeddah"],
+      "countryCode": "SA",
+      "location": "Jeddah, Saudi Arabia",
+      "upstreamId": "sa-2021"
+    },
+    {
+      "trackId": "miami",
+      "name": "Miami International Autodrome",
+      "aliases": ["Miami"],
+      "countryCode": "US",
+      "location": "Miami, United States",
+      "upstreamId": "us-2022"
+    },
+    {
+      "trackId": "imola",
+      "name": "Autodromo Enzo e Dino Ferrari",
+      "aliases": ["Imola"],
+      "countryCode": "IT",
+      "location": "Imola, Italy",
+      "upstreamId": "it-1953"
+    },
+    {
+      "trackId": "monaco",
+      "name": "Circuit de Monaco",
+      "aliases": ["Monaco", "Monte Carlo"],
+      "countryCode": "MC",
+      "location": "Monte Carlo, Monaco",
+      "upstreamId": "mc-1929"
+    },
+    {
+      "trackId": "barcelona",
+      "name": "Circuit de Barcelona-Catalunya",
+      "aliases": ["Barcelona", "Catalunya", "Montmeló"],
+      "countryCode": "ES",
+      "location": "Barcelona, Spain",
+      "upstreamId": "es-1991"
+    },
+    {
+      "trackId": "madring",
+      "name": "Madring",
+      "aliases": ["Madring", "IFEMA"],
+      "countryCode": "ES",
+      "location": "Madrid, Spain",
+      "upstreamId": "es-2026"
+    },
+    {
+      "trackId": "montreal",
+      "name": "Circuit Gilles Villeneuve",
+      "aliases": ["Montreal", "Gilles Villeneuve"],
+      "countryCode": "CA",
+      "location": "Montreal, Canada",
+      "upstreamId": "ca-1978"
+    },
+    {
+      "trackId": "spielberg",
+      "name": "Red Bull Ring",
+      "aliases": ["Spielberg", "Red Bull Ring"],
+      "countryCode": "AT",
+      "location": "Spielberg, Austria",
+      "upstreamId": "at-1969"
+    },
+    {
+      "trackId": "silverstone",
+      "name": "Silverstone Circuit",
+      "aliases": ["Silverstone"],
+      "countryCode": "GB",
+      "location": "Silverstone, United Kingdom",
+      "upstreamId": "gb-1948"
+    },
+    {
+      "trackId": "spa",
+      "name": "Circuit de Spa-Francorchamps",
+      "aliases": ["Spa-Francorchamps", "Spa"],
+      "countryCode": "BE",
+      "location": "Stavelot, Belgium",
+      "upstreamId": "be-1925"
+    },
+    {
+      "trackId": "hungaroring",
+      "name": "Hungaroring",
+      "aliases": ["Hungaroring", "Budapest"],
+      "countryCode": "HU",
+      "location": "Budapest, Hungary",
+      "upstreamId": "hu-1986"
+    },
+    {
+      "trackId": "zandvoort",
+      "name": "Circuit Zandvoort",
+      "aliases": ["Zandvoort"],
+      "countryCode": "NL",
+      "location": "Zandvoort, Netherlands",
+      "upstreamId": "nl-1948"
+    },
+    {
+      "trackId": "monza",
+      "name": "Autodromo Nazionale Monza",
+      "aliases": ["Monza"],
+      "countryCode": "IT",
+      "location": "Monza, Italy",
+      "upstreamId": "it-1922"
+    },
+    {
+      "trackId": "baku",
+      "name": "Baku City Circuit",
+      "aliases": ["Baku"],
+      "countryCode": "AZ",
+      "location": "Baku, Azerbaijan",
+      "upstreamId": "az-2016"
+    },
+    {
+      "trackId": "sepang",
+      "name": "Sepang International Circuit",
+      "aliases": ["Sepang", "Kuala Lumpur"],
+      "countryCode": "MY",
+      "location": "Kuala Lumpur, Malaysia",
+      "upstreamId": "my-1999"
+    },
+    {
+      "trackId": "marina-bay",
+      "name": "Marina Bay Street Circuit",
+      "aliases": ["Marina Bay", "Singapore"],
+      "countryCode": "SG",
+      "location": "Singapore",
+      "upstreamId": "sg-2008"
+    },
+    {
+      "trackId": "austin",
+      "name": "Circuit of the Americas",
+      "aliases": ["Circuit of the Americas", "COTA", "Austin"],
+      "countryCode": "US",
+      "location": "Austin, United States",
+      "upstreamId": "us-2012"
+    },
+    {
+      "trackId": "mexico-city",
+      "name": "Autódromo Hermanos Rodríguez",
+      "aliases": ["Hermanos Rodríguez", "Hermanos Rodriguez", "Mexico City"],
+      "countryCode": "MX",
+      "location": "Mexico City, Mexico",
+      "upstreamId": "mx-1962"
+    },
+    {
+      "trackId": "interlagos",
+      "name": "Autódromo José Carlos Pace",
+      "aliases": ["Interlagos", "José Carlos Pace", "Sao Paulo", "São Paulo"],
+      "countryCode": "BR",
+      "location": "São Paulo, Brazil",
+      "upstreamId": "br-1940"
+    },
+    {
+      "trackId": "las-vegas",
+      "name": "Las Vegas Strip Circuit",
+      "aliases": ["Las Vegas"],
+      "countryCode": "US",
+      "location": "Las Vegas, United States",
+      "upstreamId": "us-2023"
+    },
+    {
+      "trackId": "lusail",
+      "name": "Lusail International Circuit",
+      "aliases": ["Lusail", "Losail", "Doha"],
+      "countryCode": "QA",
+      "location": "Lusail, Qatar",
+      "upstreamId": "qa-2004"
+    },
+    {
+      "trackId": "yas-marina",
+      "name": "Yas Marina Circuit",
+      "aliases": ["Yas Marina", "Abu Dhabi"],
+      "countryCode": "AE",
+      "location": "Abu Dhabi, United Arab Emirates",
+      "upstreamId": "ae-2009"
+    }
+  ]
+}

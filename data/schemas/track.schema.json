@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "points": {
+      "minItems": 20,
+      "maxItems": 5000,
+      "type": "array",
+      "items": {
+        "type": "array",
+        "prefixItems": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "items": false,
+        "minItems": 2,
+        "maxItems": 2
+      }
+    },
+    "lengthM": {
+      "type": "number",
+      "minimum": 500,
+      "maximum": 10000
+    },
+    "sectors": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3
+              },
+              "from": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5000
+              },
+              "to": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5000
+              }
+            },
+            "required": [
+              "index",
+              "from",
+              "to"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "upstreamId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      },
+      "required": [
+        "name",
+        "url",
+        "license",
+        "upstreamId"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "points",
+    "lengthM",
+    "sectors",
+    "source"
+  ]
+}

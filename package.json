@@ -1,0 +1,38 @@
+{
+  "name": "f1-stories-tyre-intelligence",
+  "version": "1.0.0",
+  "description": "Unofficial interactive visualisation of Pirelli Formula 1 race-weekend tyre data. Static site for GitHub Pages.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "npm run data:build && vite",
+    "build": "npm run data:build && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build",
+    "data:build": "node scripts/build-data.ts",
+    "data:update": "node scripts/update-pirelli.ts",
+    "data:check-sources": "node scripts/check-sources.ts",
+    "track:import": "node scripts/import-track.ts"
+  },
+  "dependencies": {
+    "three": "0.186.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.14",
+    "@playwright/test": "1.63.0",
+    "@types/node": "^26.6.3",
+    "@types/three": "^0.186.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.1",
+    "vitest": "5.0.3"
+  }
+}
