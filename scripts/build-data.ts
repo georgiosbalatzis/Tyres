@@ -100,6 +100,18 @@ export async function buildData({
     } else seen.set(key, r.id);
   }
 
+  // Two races claiming the same round usually means a mis-numbered media file upstream.
+  const rounds = new Map<string, string>();
+  for (const r of records) {
+    if (r.round == null) continue;
+    const key = `${r.season}/R${r.round}`;
+    if (rounds.has(key))
+      warnings.push(
+        `${r.id}: round ${r.round} also used by ${rounds.get(key)} — check the source and set "round" in an override`,
+      );
+    else rounds.set(key, r.id);
+  }
+
   // Tracks
   const trackFiles = await jsonFiles(path.join(DATA, 'tracks'));
   const tracks = new Map<string, TrackShape>();

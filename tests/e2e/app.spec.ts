@@ -21,7 +21,9 @@ test('prerendered HTML carries the full race data without JavaScript', async ({ 
   await expect(page.locator('#r-specs')).toContainText('5.543');
   await expect(page.locator('#r-compounds')).toContainText('C2');
   await expect(page.locator('#r-source a').first()).toHaveAttribute('href', /press\.pirelli\.com/);
-  await expect(page.locator('.archive a')).toHaveCount(6);
+  const manifest = await (await page.request.get(`${BASE}data/manifest.json`)).json();
+  const total = manifest.years.reduce((n: number, y: { races: unknown[] }) => n + y.races.length, 0);
+  await expect(page.locator('.archive a')).toHaveCount(total);
   await ctx.close();
 });
 

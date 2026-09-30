@@ -29,6 +29,7 @@ Useful commands:
 | `npm run test:e2e` | Playwright browser tests (desktop + mobile) against the production build |
 | `npm run build` | `data:build` + `vite build` → `dist/` including `/{year}/{slug}/` pages and `404.html` |
 | `npm run preview` | Serve `dist/` locally |
+| `npm run og` | Render a 1200×630 social card per race into `dist/og/` (needs Playwright Chromium; the deploy workflow runs it) |
 
 First Playwright run: `npx playwright install chromium`.
 
@@ -56,6 +57,16 @@ npm run data:build                  # merge + validate; prints conflicts and pro
 
 `review-report.md` lists what still needs a human. In CI, the scheduled workflow opens a PR with
 generated changes and posts the report to an issue labelled `data-review`.
+
+### Verifying transcribed values
+
+```bash
+npm run data:review                            # writes review-sheet.html: official graphic beside our values
+open review-sheet.html
+npm run data:verify -- 2026-bh --by "Your Name"   # only after checking every value
+```
+
+`data:verify` sets `validation.status` to `verified` with a dated note naming who checked it.
 
 ### Manual corrections (overrides)
 

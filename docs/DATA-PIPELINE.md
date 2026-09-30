@@ -75,6 +75,11 @@ Then `npm run data:build` merges, validates and writes the publishable dataset.
 - **B. Optional local tool:** any local vision-capable assistant may draft the
   override; drafts must use status `transcribed` and
   `provenance.*.method: "infographic-transcription"`.
+  `node scripts/lib/transcribe.ts <file.json>` turns a compact transcription list into
+  override files with consistent provenance (see the type at the top of that script).
+- **Verification:** `npm run data:review` renders `review-sheet.html` with each official
+  graphic beside the merged values; `npm run data:verify -- <id> --by "<name>"` is the only
+  place `verified` is set.
 - **C. Optional CI vision:** not implemented. If ever added it must be gated on a
   deliberately configured secret, write only `transcribed` drafts to a PR, and
   never to `main`.

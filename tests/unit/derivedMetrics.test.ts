@@ -58,3 +58,30 @@ describe('derived metrics (visualisation only)', () => {
     expect(HEAT_STOPS).not.toContain(NO_DATA_COLOUR);
   });
 });
+
+describe('circuit ribbon fit', () => {
+  it('keeps tall (north–south) layouts inside the depth budget', async () => {
+    const { ribbonGeometry } = await import('../../src/three/circuit.ts');
+    const tall = Array.from({ length: 40 }, (_, i) => {
+      const a = (i / 40) * Math.PI * 2;
+      return [Math.cos(a) * 300, Math.sin(a) * 1000] as [number, number];
+    });
+    const { geometry } = ribbonGeometry(
+      {
+        schemaVersion: 1,
+        id: 't',
+        name: 't',
+        points: tall,
+        lengthM: 4000,
+        sectors: null,
+        source: { name: 'x', url: 'https://x.test/', license: 'MIT', upstreamId: 'x' },
+      },
+      0,
+      0,
+    );
+    geometry.computeBoundingBox();
+    const box = geometry.boundingBox!;
+    expect(box.max.z - box.min.z).toBeLessThanOrEqual(3.41);
+    expect(box.max.x - box.min.x).toBeLessThanOrEqual(5.41);
+  });
+});

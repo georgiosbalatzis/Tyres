@@ -1,8 +1,12 @@
 import { BufferGeometry, Float32BufferAttribute, Group, type Material, Mesh } from 'three';
 import type { TrackShape } from '../domain/schema.ts';
 
-/** Scene size (in scene units) of the longest side of the circuit. */
-const EXTENT = 5.4;
+/**
+ * Fit box in scene units: width (x) and depth (z). Depth is smaller because the camera looks down at an
+ * angle, so a north–south layout (e.g. Monaco) would otherwise run off the bottom of the viewport.
+ */
+const EXTENT_X = 5.4;
+const EXTENT_Z = 3.4;
 
 /**
  * Raised technical ribbon along the track centre-line: a top surface plus both side walls,
@@ -14,7 +18,10 @@ export function ribbonGeometry(track: TrackShape, halfWidth: number, height: num
   const ys = pts.map((p) => p[1]);
   const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
   const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
-  const scale = EXTENT / Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys));
+  const scale = Math.min(
+    EXTENT_X / (Math.max(...xs) - Math.min(...xs)),
+    EXTENT_Z / (Math.max(...ys) - Math.min(...ys)),
+  );
   // Track y (north) maps to scene −Z so the map reads the right way up from the default camera.
   const P = pts.map(([x, y]) => [(x - cx) * scale, -(y - cy) * scale] as const);
   const n = P.length;

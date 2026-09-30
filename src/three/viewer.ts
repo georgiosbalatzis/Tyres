@@ -66,7 +66,7 @@ interface Framing {
 
 const FRAMING: Record<Exclude<Mode, 'data'>, Framing> = {
   car: { pos: [3.7, 2.5, 7.4], target: [0, 0.4, 0], min: 4.2, max: 13 },
-  circuit: { pos: [0, 6.4, 4.2], target: [0, 0, 0.15], min: 3.5, max: 13 },
+  circuit: { pos: [0, 5.3, 3.5], target: [0, 0, 0.1], min: 3, max: 12 },
   tyres: { pos: [0.5, 1.15, 3.9], target: [0, 0.34, 0], min: 2.2, max: 6.5 },
 };
 
