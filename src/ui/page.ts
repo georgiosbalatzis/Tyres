@@ -91,6 +91,11 @@ export function renderPage(template: string, ctx: PageContext): string {
     ? `Page not found | ${SITE_NAME}`
     : `${r.race.name} ${r.season} tyres and circuit | ${SITE_NAME}`;
   const description = describe(r);
+  // Per-race card rendered at deploy time by scripts/og-images.ts; the generic image covers the 404 page.
+  const ogImage = ctx.notFound ? `${siteUrl}og.png` : `${siteUrl}og/${r.season}/${r.slug}.png`;
+  const ogAlt = ctx.notFound
+    ? 'F1 Stories Tyre Intelligence: a generic Formula 1 car with tyres coloured by track demand'
+    : `Tyre summary for the ${r.season} ${r.race.name}: compounds, circuit outline and Pirelli track-demand ratings`;
   const event =
     r.race.startDate && r.race.endDate
       ? {
@@ -112,8 +117,10 @@ export function renderPage(template: string, ctx: PageContext): string {
     <meta property="og:title" content="${title}" />
     <meta property="og:description" content="${description}" />
     <meta property="og:url" content="${canonical}" />
-    <meta property="og:image" content="${`${siteUrl}og.png`}" />
-    <meta property="og:image:alt" content="F1 Stories Tyre Intelligence: a generic Formula 1 car with tyres coloured by track demand" />
+    <meta property="og:image" content="${ogImage}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="${ogAlt}" />
     <meta name="twitter:card" content="summary_large_image" />
     ${event ? html`<script type="application/ld+json">${new SafeHtml(inlineJson(event))}</script>` : ''}`;
 

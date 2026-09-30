@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "check": "npm run lint && npm run typecheck && npm test && npm run build",
+    "og": "node scripts/og-images.ts",
     "data:build": "node scripts/build-data.ts",
     "data:update": "node scripts/update-pirelli.ts",
     "data:check-sources": "node scripts/check-sources.ts",

@@ -97,3 +97,15 @@ describe('prerender robustness', () => {
     expect(safeUrl('/\\evil.example/x')).toBe('#');
   });
 });
+
+describe('social card', () => {
+  it('renders race data, escaped, with a data-URL font and no external requests', async () => {
+    const { ogCardHtml } = await import('../../src/ui/ogCard.ts');
+    const r = fixtureRace();
+    r.race.name = 'Fixture <b>Alpha</b> Grand Prix';
+    const doc = ogCardHtml(r, null, 'data:font/woff2;base64,AAAA');
+    expect(doc).toContain('Fixture &lt;b&gt;Alpha&lt;/b&gt; Grand Prix');
+    expect(doc).toContain('C1');
+    expect(doc).not.toMatch(/(src|href)="https?:/);
+  });
+});
