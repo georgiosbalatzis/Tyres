@@ -61,7 +61,8 @@ const STRINGS: Record<EmbedLang, Strings> = {
       trackEvolution: 'Εξέλιξη πίστας',
       downforce: 'Κάθετη δύναμη',
     },
-    compound: { hard: 'Σκληρή', medium: 'Μέση', soft: 'Μαλακή' },
+    // Compound names stay in English, as in Greek F1 coverage.
+    compound: { hard: 'Hard', medium: 'Medium', soft: 'Soft' },
     status: {
       verified: 'Επαληθευμένα',
       transcribed: 'Μεταγραφή, προς έλεγχο',

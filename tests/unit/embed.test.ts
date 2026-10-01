@@ -34,6 +34,8 @@ describe('article embeds', () => {
     expect(doc).toContain('Μήκος πίστας');
     expect(doc).toContain('5,543 km');
     expect(render('circuit', 'en', r)).toContain('5.543 km');
+    // Compound names stay in English in Greek embeds.
+    expect(render('compounds', 'el', r)).toMatch(/e-compound-label">(Hard|Medium|Soft)</);
   });
 
   it('shows missing values as not provided, never as zero', () => {
