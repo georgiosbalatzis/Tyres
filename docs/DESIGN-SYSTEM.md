@@ -77,8 +77,8 @@ No monospace; tabular figures do the alignment work.
 
 - Spacing scale (rem): 0.25, 0.5, 0.75, 1, 1.5, 2, 3, 4.
 - Container: `min(1476px, 100%)` with `--gutter` side padding (16–48 px), as on f1stories.gr.
-- Desktop ≥ 1180 px: three columns (identity/specs/compounds · viewport · demands), title block full width below.
-- Tablet 760–1179 px: identity + specs side by side, then the viewport and other bands full width.
+- Desktop ≥ 1280 px: three columns (identity/specs/compounds · viewport · demands), title block full width below.
+- Tablet 760–1279 px: identity + specs (3-up grid) side by side, then the viewport and other bands full width.
 - Mobile < 760 px: single column. Nav links collapse into a native `popover` menu below 992 px.
 - Rules are 1 px. Outer columns sit flush with the gutter; inner column edges get 1.5rem beside their rule.
 - Radius: 0 for panels, 2 px for controls, 50 % for nav icon buttons and compound discs. No shadows.

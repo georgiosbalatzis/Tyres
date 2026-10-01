@@ -69,10 +69,10 @@ src/
   three/                  loaded via dynamic import only
     viewer.ts             renderer, camera, controls, loop, visibility/resize handling
     studio.ts             lights, environment, floor contact shadow
-    car.ts                procedural generic single-seater (named components)
+    car.ts                procedural generic single-seater (fallback if the GLB fails)
     tyre.ts               tyre geometry + demand shader
     circuit.ts            extruded ribbon from track points
-    modelLoader.ts        seam for replacing the procedural car with a licensed GLB
+    modelLoader.ts        loads public/models/f1car.glb (CC BY 4.0), recolours it, swaps in procedural demand tyres
   styles/                 tokens.css, base.css, layout.css, components.css
 ```
 

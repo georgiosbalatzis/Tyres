@@ -459,6 +459,16 @@ svg {
 }
 
 @media (max-width: 759px) {
+  .masthead {
+    margin-top: var(--s-4);
+    padding-bottom: var(--s-4);
+  }
+  .page-kicker-sub {
+    display: none;
+  }
+  .demands > .setup {
+    margin-top: var(--s-6);
+  }
   .picker {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
@@ -602,7 +612,16 @@ svg {
   }
 }
 
-@media (min-width: 1180px) {
+@media (min-width: 760px) and (max-width: 1279px) {
+  .specs .spec-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .specs .spec:nth-child(n + 3) {
+    grid-column: auto;
+  }
+}
+
+@media (min-width: 1280px) {
   .stage {
     grid-template-columns: minmax(270px, 1fr) minmax(0, 2.5fr) minmax(330px, 1.1fr);
     grid-template-rows: auto auto 1fr auto;
@@ -1119,6 +1138,17 @@ svg {
   gap: var(--s-2);
 }
 
+/* Phones: one horizontally scrolling row of sub-views, bleeding to the screen edge. */
+@media (max-width: 759px) {
+  .chips {
+    flex-wrap: nowrap;
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+}
+
 .chip {
   flex: none;
   min-height: 40px;
@@ -1372,7 +1402,7 @@ svg {
 
 .pair {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.25rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
   gap: var(--s-1) var(--s-4);
 }
 
@@ -1394,6 +1424,7 @@ svg {
   display: flex;
   align-items: baseline;
   gap: var(--s-2);
+  white-space: nowrap;
 }
 
 .axle {
@@ -1602,7 +1633,7 @@ svg {
   font-size: 0.875rem;
 }
 
-@media (min-width: 1180px) {
+@media (min-width: 1280px) {
   .colophon-inner {
     grid-template-columns: 7fr 5fr;
   }

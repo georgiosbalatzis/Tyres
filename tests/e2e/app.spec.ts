@@ -29,12 +29,19 @@ test('prerendered HTML carries the full race data without JavaScript', async ({ 
 
 test('opens on the latest Pirelli preview and loads the 3D view without errors', async ({ page }) => {
   const errors = trackConsole(page);
+  const fallbacks: string[] = [];
+  page.on('console', (m) => {
+    if (m.text().includes('using the procedural car')) fallbacks.push(m.text());
+  });
+  const model = page.waitForResponse((r) => r.url().endsWith(`${BASE}models/f1car.glb`));
   await page.goto(BASE);
   await expect(title(page)).toHaveText('Bahrain Grand Prix');
   await expect(page.locator('#race')).toHaveValue('2026-bh');
   await page.locator('#canvas-host').scrollIntoViewIfNeeded();
   await expect(page.locator('#canvas-host canvas')).toBeVisible({ timeout: 15_000 });
   await expect(page.locator('#canvas-host')).toHaveClass(/has-3d/);
+  expect((await model).ok()).toBe(true);
+  expect(fallbacks).toEqual([]);
   expect(errors).toEqual([]);
 });
 
