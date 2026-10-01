@@ -104,8 +104,9 @@ such files separate and note it in the track file's `source`).
 
 ## 4. Fonts
 
-Archivo (variable, `wght` + `wdth` axes) by Omnibus-Type, SIL Open Font Licence
-1.1, bundled locally via `@fontsource-variable/archivo`. No runtime font CDN.
+IBM Plex Sans (variable `wght` 400–600, latin + latin-ext subsets) and Barlow
+Condensed 700, both SIL Open Font Licence 1.1. These are the same self-hosted files
+f1stories.gr uses, copied from the f1StoriesPage repo into `src/assets/fonts/`. No runtime font CDN.
 
 ## 5. What we deliberately do not use
 

@@ -126,5 +126,6 @@ tests/       unit/ (Vitest), e2e/ (Playwright), fixtures/
 
 - Tyre and circuit data: Pirelli Motorsport press area (facts only, always linked).
 - Circuit outlines: bacinger/f1-circuits, MIT — `data/tracks/LICENSE-f1-circuits.md`.
-- Typeface: Archivo, SIL Open Font Licence 1.1 — `src/assets/fonts/LICENSE-Archivo-OFL.txt`.
+- Typefaces: IBM Plex Sans and Barlow Condensed, SIL Open Font Licence 1.1 — `src/assets/fonts/LICENSE-*-OFL.txt`.
+- F1 Stories logo (`public/logo-nav.webp`): F1 Stories' own mark, from the f1StoriesPage repo.
 - 3D car: procedural and generic, built in `src/three/car.ts`.

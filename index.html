@@ -3,36 +3,65 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#16181b" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#e9e3d6" />
     <title>F1 Stories — Tyre Intelligence</title>
     <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
+    <!-- Blocking on purpose: applies a saved dark theme before first paint. -->
+    <script src="%BASE_URL%theme.js"></script>
     <!--app:head-->
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to race data</a>
-    <div class="sheet">
-      <span class="reg reg-tl" aria-hidden="true"></span><span class="reg reg-tr" aria-hidden="true"></span>
-      <span class="reg reg-bl" aria-hidden="true"></span><span class="reg reg-br" aria-hidden="true"></span>
-
-      <header class="masthead">
-        <a class="brand" href="%BASE_URL%" aria-label="F1 Stories Tyre Intelligence, latest preview">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <span class="brand-name">F1 Stories</span>
-          <span class="brand-sub">Tyre intelligence</span>
+    <header class="site-nav">
+      <div class="nav-inner">
+        <a class="nav-brand" href="https://f1stories.gr/" aria-label="F1 Stories home">
+          <img src="%BASE_URL%logo-nav.webp" alt="" width="38" height="38" />
+          <span class="wordmark">F1 STORIES<span class="wordmark-dot">.</span></span>
         </a>
+        <nav class="nav-links" id="nav-links" popover aria-label="F1 Stories">
+          <a href="https://f1stories.gr/">Home</a>
+          <a href="https://f1stories.gr/blog-module/blog/index.html">Articles</a>
+          <a href="https://www.youtube.com/@f1_stories_original" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://f1stories.gr/standings/">Standings</a>
+          <a href="https://f1stories.gr/standings/?tab=tyre-pace">Data</a>
+          <a href="%BASE_URL%" aria-current="page">Tyres</a>
+          <a href="https://f1stories.gr/authors/">Authors</a>
+          <a href="https://georgiosbalatzis.github.io/BetCastVisualisation/" target="_blank" rel="noopener">BetCast</a>
+        </nav>
+        <div class="nav-tools">
+          <button type="button" class="nav-icon theme-toggle" data-theme-toggle aria-label="Dark theme" aria-pressed="false">
+            <svg viewBox="0 0 20 20" aria-hidden="true" class="i-moon"><path d="M15.5 12.5A6.5 6.5 0 0 1 7.5 4.5a6.5 6.5 0 1 0 8 8z" /></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true" class="i-sun"><circle cx="10" cy="10" r="3.5" /><path d="M10 1.5v2.5M10 16v2.5M1.5 10H4M16 10h2.5M4 4l1.8 1.8M14.2 14.2 16 16M4 16l1.8-1.8M14.2 5.8 16 4" /></svg>
+          </button>
+          <button type="button" class="nav-icon nav-menu" popovertarget="nav-links" aria-label="Menu">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="sheet">
+      <div class="masthead">
+        <p class="page-kicker">Tyre intelligence <span class="page-kicker-sub">/ Pirelli race previews, visualised</span></p>
         <nav class="picker" aria-label="Choose a race preview">
           <label class="field"><span class="field-label">Season</span><select id="year" disabled></select></label>
           <label class="field field-race"><span class="field-label">Race</span><select id="race" disabled></select></label>
           <!--app:stepper-->
         </nav>
-      </header>
+      </div>
 
       <div class="notice" id="notice" role="status" aria-live="polite"><!--app:notice--></div>
 
       <main id="main" class="stage" tabindex="-1" data-mode="car"><!--app:main--></main>
+    </div>
 
-      <footer class="colophon">
+    <footer class="colophon">
+      <div class="colophon-inner">
+        <p class="colophon-brand">
+          <a class="wordmark" href="https://f1stories.gr/">F1 STORIES<span class="wordmark-dot">.</span></a>
+          <span class="colophon-mission">Technical analysis, opinion and the Greek F1 community.</span>
+        </p>
         <!--app:archive-->
         <div class="legal">
           <p>
@@ -41,12 +70,13 @@
             with or endorsed by Pirelli, Formula 1 or the FIA.
           </p>
           <p>
-            Circuit outlines from bacinger/f1-circuits (MIT). Typeface Archivo (SIL Open Font Licence). Tyre colours in
-            car views are a derived visualisation of Pirelli’s 1–5 ratings, not measured data.
+            Circuit outlines from bacinger/f1-circuits (MIT). Typefaces IBM Plex Sans and Barlow Condensed (SIL Open
+            Font Licence). Tyre colours in car views are a derived visualisation of Pirelli’s 1–5 ratings, not measured
+            data.
           </p>
         </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
     <p class="visually-hidden" id="announcer" aria-live="polite"></p>
     <!--app:boot-->
     <script type="module" src="/src/main.ts"></script>

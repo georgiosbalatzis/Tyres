@@ -66,10 +66,10 @@ function prerender(): Plugin {
     transformIndexHtml: {
       order: 'post',
       async handler(html, ctx) {
-        // Preload the hashed Archivo file straight from the bundle so every prerendered page gets a final URL
+        // Preload the hashed Plex (latin) file straight from the bundle so every prerendered page gets a final URL
         // (asset placeholders in index.html are only resolved after this hook runs).
         const font = Object.values(ctx.bundle ?? {}).find((f) =>
-          /archivo-latin-var.*\.woff2$/.test(f.fileName),
+          /ibm-plex-sans-400-600-(?!latin-ext).*\.woff2$/.test(f.fileName),
         );
         const preload = font
           ? `\n    <link rel="preload" href="${BASE}${font.fileName}" as="font" type="font/woff2" crossorigin />`

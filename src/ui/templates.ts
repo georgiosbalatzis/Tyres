@@ -167,7 +167,7 @@ export function compounds(r: RaceRecord, selected: string | null): SafeHtml {
     <ul class="compound-list">
       ${list.map(
         (c) => html`<li>
-          <button type="button" class="compound" data-compound="${c.compound}" data-label="${c.raceLabel}" aria-pressed="${selected === c.compound}"
+          <button type="button" class="compound" data-compound="${c.compound}" data-label="${c.raceLabel}" aria-pressed="${String(selected === c.compound)}"
             style="--tone:${compoundCssVar(c.raceLabel)}">
             <span class="disc" aria-hidden="true"><span>${c.compound}</span></span>
             <span class="compound-text"><span class="compound-label">${c.raceLabel}</span><span class="compound-id">${c.compound}</span></span>
@@ -211,7 +211,7 @@ function heatLegend(): SafeHtml {
 
 export function carViews(active: CarView): SafeHtml {
   return html`<div class="chips" role="group" aria-label="Car visualisation">
-    ${CAR_VIEWS.map((v) => html`<button type="button" class="chip" data-view="${v}" aria-pressed="${v === active}">${VIEW_TITLES[v]}</button>`)}
+    ${CAR_VIEWS.map((v) => html`<button type="button" class="chip" data-view="${v}" aria-pressed="${String(v === active)}">${VIEW_TITLES[v]}</button>`)}
   </div>`;
 }
 
@@ -222,7 +222,7 @@ export function readout(r: RaceRecord, track: TrackShape | null, s: ViewState): 
       <div class="corners" role="group" aria-label="Tyres">
         ${CORNERS.map((c) => {
           const v = view.corners[c];
-          return html`<button type="button" class="corner" data-corner="${c}" aria-pressed="${s.corner === c}">
+          return html`<button type="button" class="corner" data-corner="${c}" aria-pressed="${String(s.corner === c)}">
             <span class="swatch" style="background:${heatColour(v.intensity)}" aria-hidden="true"></span>
             <span class="corner-name">${CORNER_NAMES[c]}</span>
             <span class="corner-value">${v.display}</span>

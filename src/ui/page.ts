@@ -52,7 +52,7 @@ export function mainRegions(ctx: PageContext): SafeHtml {
     <h2 id="viz-title" class="visually-hidden">Visualisation</h2>
     <div class="modebar">
       <div class="modes" role="group" aria-label="View">
-        ${MODES.map((m) => html`<button type="button" class="mode" data-mode="${m}" aria-pressed="${m === s.mode}">${m}</button>`)}
+        ${MODES.map((m) => html`<button type="button" class="mode" data-mode="${m}" aria-pressed="${String(m === s.mode)}">${m}</button>`)}
       </div>
     </div>
     <div class="canvas-host" id="canvas-host">

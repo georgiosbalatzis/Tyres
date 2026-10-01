@@ -179,6 +179,22 @@ test('every prerendered page has resolved asset URLs', async ({ request }) => {
   for (const path of ['', '2026/baku/', '2025/yas-marina/', '404.html']) {
     const body = await (await request.get(`${BASE}${path}`)).text();
     expect(body, path).not.toContain('__VITE_ASSET__');
-    expect(body, path).toMatch(/rel="preload" href="\/Tyres\/assets\/archivo-latin-var-[\w-]+\.woff2"/);
+    expect(body, path).toMatch(/rel="preload" href="\/Tyres\/assets\/ibm-plex-sans-400-600-[\w-]+\.woff2"/);
+    expect(body, path).toContain('<script src="/Tyres/theme.js"></script>');
   }
+});
+
+test('opens in the light theme and remembers a switch to dark', async ({ page }) => {
+  await page.goto(BASE);
+  const root = page.locator('html');
+  await expect(root).not.toHaveAttribute('data-theme');
+  const toggle = page.getByRole('button', { name: 'Dark theme' });
+  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  await toggle.click();
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await page.reload();
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  await toggle.click();
+  await expect(root).not.toHaveAttribute('data-theme');
 });

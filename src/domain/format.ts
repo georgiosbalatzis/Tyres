@@ -111,5 +111,5 @@ export function shortDate(iso: string | null): string {
 }
 
 export function compoundCssVar(raceLabel: string): string {
-  return RACE_LABEL_ORDER.includes(raceLabel) ? `var(--c-${raceLabel})` : 'var(--c-graphite)';
+  return RACE_LABEL_ORDER.includes(raceLabel) ? `var(--c-${raceLabel})` : 'var(--c-text-2)';
 }

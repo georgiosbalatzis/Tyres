@@ -26,8 +26,12 @@ async function load<T>(file: string, schema: Parameters<typeof parseWith<T>>[0])
 
 const manifest = await load(path.join(DATA, 'manifest.json'), Manifest);
 if (!manifest) throw new Error('public/data/manifest.json missing — run `npm run data:build` first.');
-const font = await readFile(path.join(ROOT, 'src/assets/fonts/archivo-latin-var.woff2'));
-const fontUrl = `data:font/woff2;base64,${font.toString('base64')}`;
+const fontUrl = async (file: string) =>
+  `data:font/woff2;base64,${(await readFile(path.join(ROOT, 'src/assets/fonts', file))).toString('base64')}`;
+const fonts = {
+  text: await fontUrl('ibm-plex-sans-400-600.woff2'),
+  brand: await fontUrl('barlow-condensed-700.woff2'),
+};
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
@@ -38,7 +42,7 @@ for (const summary of manifest.years.flatMap((y) => y.races)) {
   const track = record.circuit.trackId
     ? await load(path.join(DATA, 'tracks', `${record.circuit.trackId}.json`), TrackShape)
     : null;
-  await page.setContent(ogCardHtml(record, track, fontUrl), { waitUntil: 'load' });
+  await page.setContent(ogCardHtml(record, track, fonts), { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
   const file = path.join(OUT, 'og', String(record.season), `${record.slug}.png`);
   await mkdir(path.dirname(file), { recursive: true });

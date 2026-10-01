@@ -103,7 +103,10 @@ describe('social card', () => {
     const { ogCardHtml } = await import('../../src/ui/ogCard.ts');
     const r = fixtureRace();
     r.race.name = 'Fixture <b>Alpha</b> Grand Prix';
-    const doc = ogCardHtml(r, null, 'data:font/woff2;base64,AAAA');
+    const doc = ogCardHtml(r, null, {
+      text: 'data:font/woff2;base64,AAAA',
+      brand: 'data:font/woff2;base64,AAAA',
+    });
     expect(doc).toContain('Fixture &lt;b&gt;Alpha&lt;/b&gt; Grand Prix');
     expect(doc).toContain('C1');
     expect(doc).not.toMatch(/(src|href)="https?:/);

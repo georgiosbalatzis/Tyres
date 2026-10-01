@@ -17,10 +17,14 @@ Stack: Vite + TypeScript + Three.js (lazy), zod/mini, Biome, Vitest, Playwright.
 
 ## Design language
 
-"Drawing sheet": graphite neutrals, one pale probe-blue accent for interaction, colour reserved for data.
-Tyre colours: hard `--c-hard` white, medium `--c-medium` yellow, soft `--c-soft` red (`--c-soft-text` for text).
-Demand heat scale `--heat-1…5` teal → red. Archivo variable (wght + wdth) only; tabular figures, no monospace.
-Uppercase only for mode tabs and compound names. See `docs/DESIGN-SYSTEM.md`.
+F1 Stories editorial (matches f1stories.gr): warm paper and ink, racing-red `--c-signal` for brand marks only,
+colour otherwise reserved for data. **Light is the default theme**; `[data-theme="dark"]` (saved by `public/theme.js`)
+is the charcoal edition. The 3D/SVG bench (`.canvas-host`) and the colophon are always dark.
+Use role tokens (`--c-bg/surface/raised/rule/text/text-2/accent`), never raw hex, so both themes work.
+Tyre colours: hard `--c-hard` white, medium `--c-medium` yellow, soft `--c-soft` red; set compound names as text with
+`--c-{hard,medium,soft}-text`. Demand heat scale `--heat-1…5` teal → red.
+IBM Plex Sans (400–600) for text, tabular figures, no monospace; Barlow Condensed 700 only for the wordmark and hero word.
+Uppercase, letter-spaced only for kickers, section titles, mode tabs and compound names. See `docs/DESIGN-SYSTEM.md`.
 
 ## Commands
 
