@@ -4,12 +4,14 @@
  * and never while the tab is hidden, the canvas is off-screen, or the Data mode hides it.
  */
 import {
+  Box3,
   Color,
   DoubleSide,
   Group,
   type Mesh,
   MeshStandardMaterial,
   NeutralToneMapping,
+  type Object3D,
   PerspectiveCamera,
   Raycaster,
   Scene,
@@ -239,16 +241,58 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
   });
 
   /* ---------- camera ---------- */
-  function fitScale() {
-    const aspect = camera.aspect || 1;
-    return Math.min(1.9, Math.max(1, 1.35 / aspect));
+  /** What each mode must keep in frame (shadow planes excluded). Null until it exists. */
+  function fitSubject(mode: Exclude<Mode, 'data'>): Object3D[] | null {
+    if (mode === 'car') return car ? [car.root] : null;
+    if (mode === 'circuit') return circuit ? [circuit.group] : null;
+    return bench.map((b) => b.group);
+  }
+
+  const fitBox = new Box3();
+  const probe = new PerspectiveCamera();
+  const corner = new Vector3();
+  /**
+   * Distance multiplier along the mode's framing direction: the smallest that keeps the subject's
+   * bounding box inside the frame (with a margin), for any canvas aspect, circuit shape or car model.
+   */
+  function fitScale(mode: Exclude<Mode, 'data'>, target: Vector3, dir: Vector3): number {
+    const subject = fitSubject(mode);
+    if (!subject) return Math.min(1.9, Math.max(1, 1.45 / (camera.aspect || 1)));
+    fitBox.makeEmpty();
+    for (const o of subject) fitBox.expandByObject(o);
+    probe.copy(camera);
+    const fits = (k: number) => {
+      probe.position.copy(dir).multiplyScalar(k).add(target);
+      probe.lookAt(target);
+      probe.updateMatrixWorld();
+      for (let i = 0; i < 8; i++) {
+        corner.set(
+          i & 1 ? fitBox.max.x : fitBox.min.x,
+          i & 2 ? fitBox.max.y : fitBox.min.y,
+          i & 4 ? fitBox.max.z : fitBox.min.z,
+        );
+        corner.project(probe);
+        // ponytail: box corners overestimate curved shapes slightly; the margin absorbs it.
+        // The top edge keeps clear of the reset / rotate buttons.
+        if (Math.abs(corner.x) > 0.9 || corner.y > 0.74 || corner.y < -0.86 || corner.z > 1) return false;
+      }
+      return true;
+    };
+    let lo = 0.3;
+    let hi = 4;
+    for (let i = 0; i < 14; i++) {
+      const mid = (lo + hi) / 2;
+      if (fits(mid)) hi = mid;
+      else lo = mid;
+    }
+    return hi;
   }
 
   function frameMode(mode: Mode, dur: number) {
     if (mode === 'data') return;
     const f = FRAMING[mode];
-    const s = fitScale();
     const target = new Vector3(...f.target);
+    const s = fitScale(mode, target, new Vector3(...f.pos).sub(target));
     const pos = new Vector3(...f.pos).sub(target).multiplyScalar(s).add(target);
     controls.minDistance = f.min * s * 0.85;
     controls.maxDistance = f.max * s;
@@ -411,8 +455,10 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
     const h = host.clientHeight;
     if (!w || !h) return;
     renderer.setSize(w, h, false);
+    const before = camera.aspect;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    if (Math.abs(camera.aspect - before) / before > 0.1) frameMode(view.mode, 0);
     schedule();
   });
   ro.observe(host);
@@ -495,7 +541,7 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
       s.radius *= 1.12;
       camera.position.copy(controls.target).add(new Vector3().setFromSpherical(s));
       frameMode('car', 900);
-    }
+    } else if (view.mode === 'car') frameMode('car', 0);
     renderer.render(scene, camera);
     opts.onReady();
     schedule();
@@ -510,6 +556,7 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
       if (trackChanged) rebuildCircuit();
       else circuitDrawnFor = null;
       showMode();
+      if (trackChanged && view.mode === 'circuit') frameMode('circuit', 450);
       applyCarView(700);
       applyCompounds(700);
       drawCircuitIfNeeded();

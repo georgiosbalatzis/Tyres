@@ -930,9 +930,11 @@ svg {
   touch-action: pan-y;
 }
 
+/* Phones: 4:3 frames the car without empty floor and sky; circuits are wider than tall too. */
 @media (max-width: 759px) {
   .canvas-host {
-    aspect-ratio: 4 / 3.4;
+    aspect-ratio: 4 / 3;
+    min-height: 240px;
   }
 }
 

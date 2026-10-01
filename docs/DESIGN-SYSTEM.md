@@ -134,7 +134,7 @@ contact shadow under the car. No bloom, no post-processing.
 
 ## Mobile adaptations
 
-- One WebGL canvas, 4:5 aspect, full bleed within gutters.
+- One WebGL canvas, 4:3 aspect on phones (16:11 above), full bleed within gutters. The camera distance is fitted per mode so the car, every circuit and the tyre bench stay in frame at any aspect.
 - Mode bar becomes a 4-button segmented control (44 px targets) under the
   viewport; submodes become a horizontally scrollable chip row — no labels
   are placed over the canvas.
