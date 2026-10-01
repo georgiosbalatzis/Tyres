@@ -128,6 +128,10 @@ the site's CSP and its author tool's iframe whitelist).
 - `car` (tyre demand by corner) is the derived visualisation as four small car plans
   (longitudinal, lateral, tyre stress, braking/traction) with front and rear values as
   text, and always carries the "Derived visualisation … not temperature" label.
+- **Theme:** embeds are light by default. A `#dark` fragment on the iframe URL switches
+  one to the charcoal theme through CSS `:target` (`<div class="e-root" id="dark">`),
+  with no script, no reload and the same height. f1stories.gr sets the fragment from its
+  `data-theme` in `article-script.js` (`setupTyreEmbeds`, f1StoriesPage PR #235).
 - `3d` is the one embed with a script (`embed-3d.html` → `src/embed3d.ts`, CSP
   `script-src 'self'`). It arrives as a complete poster: mode tabs, the flat drawing
   on the dark bench, and the readout text (`embedReadout`, rendered at build time and

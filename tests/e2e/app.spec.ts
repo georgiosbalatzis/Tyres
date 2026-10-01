@@ -262,3 +262,18 @@ test('the 3D embed loads only on request and keeps its height', async ({ page })
   await expect(page.locator('#r-readout')).toContainText('km');
   expect(errors).toEqual([]);
 });
+
+test('embeds switch to the dark theme with #dark, without a reload or a height change', async ({ page }) => {
+  await page.goto(`${BASE}embed/el/2026/sepang/demands/`);
+  const root = page.locator('.e-root');
+  const height = () => page.locator('.e').evaluate((e) => Math.ceil(e.getBoundingClientRect().height));
+  const light = await height();
+  await expect(root).toHaveCSS('background-color', 'rgb(242, 238, 228)');
+  await page.evaluate(() => {
+    (window as Window & { marker?: number }).marker = 1;
+    location.hash = 'dark';
+  });
+  await expect(root).toHaveCSS('background-color', 'rgb(27, 26, 25)');
+  expect(await height()).toBe(light);
+  expect(await page.evaluate(() => (window as Window & { marker?: number }).marker)).toBe(1);
+});

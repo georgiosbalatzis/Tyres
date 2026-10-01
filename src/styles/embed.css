@@ -72,9 +72,15 @@ a:hover {
   text-overflow: ellipsis;
 }
 
+.e-root {
+  min-height: 100vh;
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+
 .e {
   container-type: inline-size;
-  border-top: 1px solid var(--c-ink);
+  border-top: var(--rule-strong);
 }
 
 .e-head {
@@ -330,7 +336,7 @@ p.e-map {
 
 .e-map-line {
   fill: none;
-  stroke: var(--c-ink);
+  stroke: var(--c-text);
   stroke-width: 11;
   stroke-linejoin: round;
 }
@@ -383,11 +389,11 @@ p.e-map {
 }
 
 .e-demand .plan-body {
-  fill: #c9c4b6;
+  fill: var(--c-rule);
 }
 
 .e-demand .plan-cockpit {
-  fill: var(--c-ink);
+  fill: var(--c-text-2);
 }
 
 .e-demand-text {

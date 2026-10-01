@@ -421,7 +421,8 @@ export function renderEmbed(template: string, ctx: EmbedContext): string {
   const head = html`<title>${title} | F1 Stories</title>
     <meta name="robots" content="noindex" />
     <link rel="canonical" href="${full}" />`;
-  const body = html`<article class="e" data-panel="${panel}">
+  // id="dark": the iframe URL's #dark fragment makes this :target and switches it to the charcoal theme.
+  const body = html`<div class="e-root" id="dark"><article class="e" data-panel="${panel}">
     <header class="e-head">
       <p class="e-kicker">${t.panel[panel]}</p>
       <p class="e-race">${r.round ? `${t.round(r.round)} · ` : ''}${r.season}${panel === 'summary' ? '' : ` · ${r.race.name}`}</p>
@@ -431,7 +432,7 @@ export function renderEmbed(template: string, ctx: EmbedContext): string {
       <p class="e-source">${t.source}: <a href="${safeUrl(r.source.articleUrl)}" target="_blank" rel="noopener external">Pirelli</a>${published ? ` · ${published}` : ''} · <span class="e-status" data-status="${r.validation.status}">${t.status[r.validation.status]}</span></p>
       <p class="e-brand"><a href="${full}" target="_blank" rel="noopener"><span class="e-wordmark">F1 STORIES<span class="e-dot">.</span></span> ${t.open} ↗</a></p>
     </footer>
-  </article>${panel === '3d' ? html`<script type="application/json" id="boot">${new SafeHtml(inlineJson({ record: r, track: ctx.track, lang }))}</script>` : ''}`;
+  </article></div>${panel === '3d' ? html`<script type="application/json" id="boot">${new SafeHtml(inlineJson({ record: r, track: ctx.track, lang }))}</script>` : ''}`;
   return template
     .replace('<html lang="en-GB">', () => `<html lang="${escapeHtml(lang)}">`)
     .replace(/<title>.*?<\/title>/s, () => '')

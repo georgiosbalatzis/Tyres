@@ -128,10 +128,12 @@
   --t-hero: 700ms;
 }
 
-/* Charcoal tokens: the dark theme, and the always-dark surfaces (3D bench, colophon) in either theme. */
+/* Charcoal tokens: the dark theme, the always-dark surfaces (3D bench, colophon) in either theme, and an
+   article embed opened as …/#dark (the f1stories.gr theme bridge sets that fragment; no script in the embed). */
 :root[data-theme="dark"],
 .canvas-host,
-.colophon {
+.colophon,
+.e-root:target {
   color-scheme: dark;
   --c-bg: #1b1a19;
   --c-surface: #242321;
