@@ -62,7 +62,9 @@ test('changing race updates content, URL, title and survives reload and back', a
 test('changing season selects that season’s latest preview', async ({ page }) => {
   await page.goto(BASE);
   await page.locator('#year').selectOption('2025');
-  await expect(page).toHaveURL(`${BASE}2025/yas-marina/`);
+  // On GPU-less CI runners the 3D view compiles in software right after load and can hold the main
+  // thread for a few seconds; allow for it, as the 3D test does.
+  await expect(page).toHaveURL(`${BASE}2025/yas-marina/`, { timeout: 15_000 });
   await expect(title(page)).toHaveText('Abu Dhabi Grand Prix');
   await expect(page.locator('#r-ratings')).toContainText('Downforce');
 });
@@ -126,7 +128,7 @@ test('keyboard users can switch modes, views and tyres', async ({ page }) => {
   await data.focus();
   await page.keyboard.press('Space');
   await expect(page.locator('#r-data table')).toBeVisible();
-  await expect(page.getByRole('table')).toContainText('Camber limit, rear');
+  await expect(page.locator('#r-data').getByRole('table')).toContainText('Camber limit, rear');
   await page.getByRole('button', { name: 'car', exact: true }).click();
   const fl = page.locator('.corner[data-corner="FL"]');
   await fl.focus();
