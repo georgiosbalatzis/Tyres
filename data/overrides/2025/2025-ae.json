@@ -19,13 +19,26 @@
     "lengthKm": 5.281,
     "laps": 58,
     "raceDistanceKm": 306.183,
-    "lapRecord": { "time": "1:25.637", "driver": "Kevin Magnussen", "year": 2024 },
+    "lapRecord": {
+      "time": "1:25.637",
+      "driver": "Kevin Magnussen",
+      "year": 2024
+    },
     "pitStopLoss": null
   },
   "compounds": [
-    { "raceLabel": "hard", "compound": "C3" },
-    { "raceLabel": "medium", "compound": "C4" },
-    { "raceLabel": "soft", "compound": "C5" }
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
   ],
   "characteristics": {
     "traction": 4,
@@ -38,9 +51,15 @@
     "downforce": 3
   },
   "setup": {
-    "minimumStartingPressurePsi": { "front": 23.5, "rear": 21.5 },
+    "minimumStartingPressurePsi": {
+      "front": 23.5,
+      "rear": 21.5
+    },
     "expectedRunningPressurePsi": null,
-    "camberLimitDeg": { "front": -3.0, "rear": -2.0 }
+    "camberLimitDeg": {
+      "front": -3,
+      "rear": -2
+    }
   },
   "source": {
     "publisher": "Pirelli",
@@ -82,9 +101,9 @@
     }
   },
   "validation": {
-    "status": "transcribed",
+    "status": "verified",
     "notes": [
-      "Transcribed from the official preview infographic by an AI-assisted pass on 2026-09-30; awaiting human confirmation."
+      "Verified by Georgios Balatzis on 2026-10-01 against https://content.presspage.com/uploads/2363/8848ac07-ae6e-486e-8495-aac6e018aa7a/24-ae25-preview-en.jpg."
     ]
   }
 }
