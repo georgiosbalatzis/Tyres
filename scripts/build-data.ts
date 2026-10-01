@@ -141,6 +141,7 @@ export async function buildData({
     startDate: r.race.startDate,
     publishedAt: r.source.publishedAt,
     status: r.validation.status,
+    compounds: r.compounds,
   });
   const summaries = records.map(toManifestRace);
   const years = [...new Set(summaries.map((r) => r.season))].sort((a, b) => b - a);

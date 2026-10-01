@@ -75,6 +75,12 @@ export function embedImagePath(
   return `${base}img/${lang}/${race.season}/${race.slug}/${panel}.png`;
 }
 
+/** Season-level embed (compound choices by round) and its image. */
+export const seasonEmbedPath = (base: string, lang: EmbedLang, season: number) =>
+  `${base}embed/${lang}/${season}/season/`;
+export const seasonImagePath = (base: string, lang: EmbedLang, season: number) =>
+  `${base}img/${lang}/${season}/season.png`;
+
 /** Panel images: 720 CSS px panel, 40 px paper margin, rendered at 2×. */
 export const PANEL_IMAGE = { width: 720, margin: 40, scale: 2 } as const;
 

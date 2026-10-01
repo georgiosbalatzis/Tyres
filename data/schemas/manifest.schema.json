@@ -124,6 +124,35 @@
                     "needs-review",
                     "fixture"
                   ]
+                },
+                "compounds": {
+                  "anyOf": [
+                    {
+                      "minItems": 1,
+                      "maxItems": 6,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "raceLabel": {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z-]{1,15}$"
+                          },
+                          "compound": {
+                            "type": "string",
+                            "pattern": "^C\\d{1,2}$|^[A-Z][A-Z0-9-]{0,11}$"
+                          }
+                        },
+                        "required": [
+                          "raceLabel",
+                          "compound"
+                        ]
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 }
               },
               "required": [
@@ -136,7 +165,8 @@
                 "location",
                 "startDate",
                 "publishedAt",
-                "status"
+                "status",
+                "compounds"
               ]
             }
           }

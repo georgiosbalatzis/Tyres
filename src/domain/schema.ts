@@ -147,6 +147,8 @@ export const ManifestRace = z.object({
   startDate: z.nullable(isoDate),
   publishedAt: z.nullable(isoDateTime),
   status: z.enum(DATA_STATUSES),
+  /** The weekend's compounds, so a season view needs no per-race fetch. */
+  compounds: RaceRecord.shape.compounds,
 });
 
 export const Manifest = z.object({

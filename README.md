@@ -94,7 +94,8 @@ The JSON Schemas in `data/schemas/` (generated from `src/domain/schema.ts`) give
 
 Open a race, press **Embed** (desktop), choose a panel and language, and copy the
 iframe snippet into the article. Choose **Image** for a PNG of the same panel
-(social posts, newsletters) with ready alt text; images are rendered at deploy. Embeds live at
+(social posts, newsletters) with ready alt text; images are rendered at deploy.
+**Season compounds** embeds the season's compound choices by round. Embeds live at
 `/Tyres/embed/{el|en}/{season}/{slug}/{panel}/`, are script-free and keep a fixed
 height. Corrections to the data update every embed automatically. Details in
 `docs/ARCHITECTURE.md` → Article embeds.

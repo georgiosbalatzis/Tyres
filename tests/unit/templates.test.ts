@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { eventDates, publishedText, signedDeg } from '../../src/domain/format.ts';
-import { html, safeUrl } from '../../src/ui/html.ts';
-import { inlineJson } from '../../src/ui/page.ts';
+import { html, inlineJson, safeUrl } from '../../src/ui/html.ts';
 import { dataTable, ratings, setup, specs, titleBlock } from '../../src/ui/templates.ts';
 import { fixtureRace } from '../fixtures/races.ts';
 

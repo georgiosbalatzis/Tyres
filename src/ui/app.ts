@@ -18,10 +18,12 @@ import {
   parseLocation,
   racePath,
   resolveRequest,
+  seasonEmbedPath,
+  seasonImagePath,
 } from '../domain/urlState.ts';
 import type { Viewer } from '../three/viewer.ts';
 import { html, setHtml } from './html.ts';
-import { describe, SITE_NAME } from './page.ts';
+import { describe, SITE_NAME, seasonSection } from './page.ts';
 import {
   compounds,
   DEFAULT_VIEW,
@@ -121,6 +123,7 @@ function renderRace(animate: boolean) {
   setHtml($('#r-setup'), setup(r));
   setHtml($('#r-compounds'), compounds(r, view.mode === 'tyres' ? view.compound : null));
   setHtml($('#r-source'), titleBlock(r));
+  if (state.manifest) setHtml($('#r-season'), seasonSection(state.manifest, r));
   setHtml($('#r-data'), dataTable(r));
   $('#r-hero').textContent = heroWord(r);
   renderView();
@@ -480,16 +483,24 @@ function setupEmbedDialog() {
   const choice = (name: string) =>
     (dialog.querySelector(`input[name="${name}"]:checked`) as HTMLInputElement).value;
   const imageInput = dialog.querySelector<HTMLInputElement>('input[name="embed-format"][value="image"]')!;
+  // Race panels live under the race, the season strip under the season.
+  const pathFor = (
+    race: (base: string, lang: EmbedLang, r: RaceRecord, panel: EmbedPanel) => string,
+    season: (base: string, lang: EmbedLang, year: number) => string,
+  ) => {
+    const lang = choice('embed-lang') as EmbedLang;
+    const panel = choice('embed-panel');
+    return panel === 'season'
+      ? season(BASE, lang, state.record.season)
+      : race(BASE, lang, state.record, panel as EmbedPanel);
+  };
   const update = () => {
     if (!state.record) return;
     // The 3D view has no still image.
     imageInput.disabled = choice('embed-panel') === '3d';
     if (imageInput.disabled && imageInput.checked)
       dialog.querySelector<HTMLInputElement>('input[name="embed-format"][value="iframe"]')!.checked = true;
-    src = new URL(
-      embedPath(BASE, choice('embed-lang') as EmbedLang, state.record, choice('embed-panel') as EmbedPanel),
-      location.href,
-    ).href;
+    src = new URL(pathFor(embedPath, seasonEmbedPath), location.href).href;
     copy.disabled = true;
     download.hidden = true;
     status.textContent = '';
@@ -508,15 +519,7 @@ function setupEmbedDialog() {
     frame.style.height = `${height}px`;
     const title = doc.title.replace(/ \| F1 Stories$/, '');
     if (choice('embed-format') === 'image') {
-      const img = new URL(
-        embedImagePath(
-          BASE,
-          choice('embed-lang') as EmbedLang,
-          state.record,
-          choice('embed-panel') as EmbedPanel,
-        ),
-        location.href,
-      ).href;
+      const img = new URL(pathFor(embedImagePath, seasonImagePath), location.href).href;
       // Alt text = the panel's own text (full, even where the panel clips it), minus the brand line.
       const text = panel.cloneNode(true) as HTMLElement;
       for (const el of text.querySelectorAll('.e-brand, [aria-hidden="true"]')) el.remove();

@@ -10,8 +10,9 @@ import {
   type EmbedPanel,
   embedPath,
   racePath,
+  seasonEmbedPath,
 } from './src/domain/urlState.ts';
-import { renderEmbed } from './src/ui/embed.ts';
+import { renderEmbed, renderSeasonEmbed } from './src/ui/embed.ts';
 import { type PageContext, renderPage } from './src/ui/page.ts';
 
 /**
@@ -37,6 +38,13 @@ const CSP = [
 const EMBED_CSP = CSP.replace("script-src 'self'", "script-src 'none'");
 const embedFile = (panel: EmbedPanel) => (panel === '3d' ? 'embed-3d.html' : 'embed.html');
 const EMBED_ROUTE = /^embed\/(el|en)\/(\d{4})\/([a-z0-9-]+)\/([a-z0-9]+)\/?$/;
+const SEASON_ROUTE = /^embed\/(el|en)\/(\d{4})\/season\/?$/;
+
+async function seasonContext(lang: EmbedLang, season: number) {
+  const { manifest } = await context(null, '');
+  const races = manifest.years.find((y) => y.year === season)?.races ?? [];
+  return races.length ? { season, races, lang, base: BASE, siteUrl: SITE_URL } : null;
+}
 
 async function loadJson<T>(file: string, schema: Parameters<typeof parseWith<T>>[0]): Promise<T | null> {
   try {
@@ -87,6 +95,15 @@ function prerender(): Plugin {
     // Dev: serve /embed/{lang}/{season}/{slug}/{panel}/ on the fly, so the copy dialog's preview works locally.
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
+        const s = SEASON_ROUTE.exec((req.url ?? '').split('?')[0]!.slice(BASE.length));
+        if (s) {
+          const ctx = await seasonContext(s[1] as EmbedLang, Number(s[2]));
+          if (!ctx) return next();
+          const raw = await readFile(path.resolve(import.meta.dirname, 'embed.html'), 'utf8');
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          res.end(renderSeasonEmbed(await server.transformIndexHtml(req.url!, raw), ctx));
+          return;
+        }
         const m = EMBED_ROUTE.exec((req.url ?? '').split('?')[0]!.slice(BASE.length));
         if (!m || !(EMBED_PANELS as readonly string[]).includes(m[4]!)) return next();
         try {
@@ -160,6 +177,18 @@ function prerender(): Plugin {
                 renderEmbed(embedTemplates[embedFile(panel)]!, ctx),
               );
             }
+          }
+        }
+        for (const year of manifest.years) {
+          for (const lang of EMBED_LANGS) {
+            const ctx = await seasonContext(lang, year.year);
+            if (!ctx) continue;
+            const dir = path.join(outDir, seasonEmbedPath('', lang, year.year));
+            await mkdir(dir, { recursive: true });
+            await writeFile(
+              path.join(dir, 'index.html'),
+              renderSeasonEmbed(embedTemplates['embed.html']!, ctx),
+            );
           }
         }
         await rm(path.join(outDir, 'embed.html'));

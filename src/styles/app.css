@@ -1,4 +1,5 @@
 @import "./bench.css";
+@import "./season.css";
 
 @property --v {
   syntax: "<number>";
@@ -545,7 +546,7 @@ svg {
 .stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "ident" "view" "specs" "demands" "comp" "tb";
+  grid-template-areas: "ident" "view" "specs" "demands" "comp" "tb" "season";
   outline: none;
 }
 
@@ -573,6 +574,9 @@ svg {
 .titleblock {
   grid-area: tb;
 }
+.season {
+  grid-area: season;
+}
 
 .stage > .specs,
 .stage > .demands,
@@ -593,7 +597,8 @@ svg {
       "view view"
       "demands demands"
       "comp comp"
-      "tb tb";
+      "tb tb"
+      "season season";
   }
   .stage > .identity {
     padding-right: var(--s-5);
@@ -631,7 +636,8 @@ svg {
       "ident view demands"
       "specs view demands"
       "comp view demands"
-      "tb tb tb";
+      "tb tb tb"
+      "season season season";
   }
   .stage > .identity,
   .stage > .specs,

@@ -1,0 +1,90 @@
+/* Season strip: compound choices by round (src/ui/embed.ts → seasonStrip). Main page and embed. */
+
+/* position: relative keeps the absolutely positioned screen-reader labels inside the scroller's clip. */
+.ss-scroll {
+  position: relative;
+  overflow-x: auto;
+}
+
+.ss {
+  width: 100%;
+  min-width: calc(44px + var(--cols) * 26px);
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-variant-numeric: tabular-nums;
+}
+
+.ss th,
+.ss td {
+  height: 28px;
+  padding: 0;
+  text-align: center;
+}
+
+.ss thead th {
+  height: 26px;
+  color: var(--c-text-2);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ss .ss-corner,
+.ss tbody th {
+  width: 44px;
+  color: var(--c-text-2);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.ss tbody tr {
+  border-top: 1px solid var(--c-rule);
+}
+
+.ss .is-current {
+  background: var(--c-raised);
+}
+
+.ss thead .is-current {
+  color: var(--c-text);
+}
+
+/* A small tyre: dark rubber with the weekend role's colour as the sidewall ring. */
+.ss-mark {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #24282d;
+  box-shadow: inset 0 0 0 3px var(--tone, var(--c-text-2));
+  vertical-align: middle;
+}
+
+.ss-mark[data-label="hard"] {
+  --tone: var(--c-hard);
+}
+.ss-mark[data-label="medium"] {
+  --tone: var(--c-medium);
+}
+.ss-mark[data-label="soft"] {
+  --tone: var(--c-soft);
+}
+
+.ss-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-top: 8px;
+  color: var(--c-text-2);
+  font-size: 12px;
+}
+
+.ss-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ss-empty {
+  color: var(--c-text-2);
+}

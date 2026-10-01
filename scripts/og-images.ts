@@ -10,7 +10,15 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from '@playwright/test';
 import { Manifest, parseWith, RaceRecord, TrackShape } from '../src/domain/schema.ts';
-import { EMBED_LANGS, embedImagePath, embedPath, IMAGE_PANELS, PANEL_IMAGE } from '../src/domain/urlState.ts';
+import {
+  EMBED_LANGS,
+  embedImagePath,
+  embedPath,
+  IMAGE_PANELS,
+  PANEL_IMAGE,
+  seasonEmbedPath,
+  seasonImagePath,
+} from '../src/domain/urlState.ts';
 import { ogCardHtml } from '../src/ui/ogCard.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -81,20 +89,28 @@ await panels.route(`${ORIGIN}/**`, async (route) => {
   }
 });
 let images = 0;
-for (const race of manifest.years.flatMap((y) => y.races)) {
+async function shoot(pagePath: string, file: string) {
+  const res = await panels.goto(`${ORIGIN}${pagePath}`);
+  if (!res?.ok()) throw new Error(`embed page missing: ${pagePath}`);
+  // A still image can't be clicked: show the site address instead of "Open in …".
+  await panels.addStyleTag({
+    content: `.e-root{min-height:0;padding:${margin}px}.e-open{display:none}.e-site[hidden]{display:inline}`,
+  });
+  await panels.evaluate(() => document.fonts.ready);
+  await mkdir(path.dirname(file), { recursive: true });
+  await writeFile(file, await panels.locator('.e-root').screenshot({ type: 'png' }));
+  images++;
+}
+for (const year of manifest.years) {
   for (const lang of EMBED_LANGS) {
-    for (const panel of IMAGE_PANELS) {
-      const res = await panels.goto(`${ORIGIN}${embedPath(BASE, lang, race, panel)}`);
-      if (!res?.ok()) throw new Error(`panel page missing: ${lang} ${race.id} ${panel}`);
-      // A still image can't be clicked: show the site address instead of "Open in …".
-      await panels.addStyleTag({
-        content: `.e-root{min-height:0;padding:${margin}px}.e-open{display:none}.e-site[hidden]{display:inline}`,
-      });
-      await panels.evaluate(() => document.fonts.ready);
-      const file = path.join(OUT, embedImagePath('', lang, race, panel));
-      await mkdir(path.dirname(file), { recursive: true });
-      await writeFile(file, await panels.locator('.e-root').screenshot({ type: 'png' }));
-      images++;
+    await shoot(seasonEmbedPath(BASE, lang, year.year), path.join(OUT, seasonImagePath('', lang, year.year)));
+    for (const race of year.races) {
+      for (const panel of IMAGE_PANELS) {
+        await shoot(
+          embedPath(BASE, lang, race, panel),
+          path.join(OUT, embedImagePath('', lang, race, panel)),
+        );
+      }
     }
   }
 }

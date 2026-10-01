@@ -14,6 +14,9 @@ validate (strict ranges, cross-field checks)
 public/data/races/{id}.json + public/data/manifest.json   (build artefact, git-ignored)
 ```
 
+- `manifest.json` is the season index: one summary per published race (id, slug,
+  round, name, dates, status) plus its `compounds`, so season views (the compound
+  strip) need no per-race fetch. It is built from the same validated records.
 - A record may exist **only** in overrides (e.g. a race discovered before the
   automation existed). It must then carry its own `source`.
 - Automation never writes to `data/overrides/`.

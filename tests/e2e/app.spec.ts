@@ -293,3 +293,18 @@ test('the Embed dialog offers a panel image with alt text from the panel', async
   await dialog.getByText('3D view', { exact: true }).click();
   await expect(dialog.locator('input[value="image"]')).toBeDisabled();
 });
+
+test('the season strip shows on the race page and as an embed of constant height', async ({ page }) => {
+  await page.goto(BASE);
+  const band = page.locator('#r-season');
+  await expect(band).toContainText('Compound choices, 2026 season');
+  await expect(band.locator('th.is-current')).toContainText('R16');
+  const heights: number[] = [];
+  for (const width of [300, 968]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(`${BASE}embed/el/2026/season/`);
+    heights.push(await page.locator('.e').evaluate((e) => Math.ceil(e.getBoundingClientRect().height)));
+  }
+  expect(heights[0]).toBe(heights[1]);
+  await expect(page.locator('caption')).toHaveText('Επιλογές γομών, σεζόν 2026');
+});

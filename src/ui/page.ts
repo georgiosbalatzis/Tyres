@@ -4,7 +4,8 @@
  */
 
 import type { Manifest, RaceRecord, TrackShape } from '../domain/schema.ts';
-import { escapeHtml, html, SafeHtml } from './html.ts';
+import { seasonStrip } from './embed.ts';
+import { escapeHtml, html, inlineJson, SafeHtml } from './html.ts';
 import {
   archive,
   compounds,
@@ -78,11 +79,18 @@ export function mainRegions(ctx: PageContext): SafeHtml {
     <div id="r-setup" class="setup">${setup(r)}</div>
   </section>
   <section class="compounds" id="r-compounds" aria-labelledby="compounds-title">${compounds(r, null)}</section>
-  <section class="titleblock" id="r-source" aria-label="Source">${titleBlock(r)}</section>`;
+  <section class="titleblock" id="r-source" aria-label="Source">${titleBlock(r)}</section>
+  <section class="season" id="r-season" aria-labelledby="season-title">${seasonSection(ctx.manifest, r)}</section>`;
+}
+
+/** The season band: compound choices for every published round of this race's season. */
+export function seasonSection(manifest: Manifest, r: RaceRecord): SafeHtml {
+  const races = manifest.years.find((y) => y.year === r.season)?.races ?? [];
+  return html`<header class="section-title"><h2 id="season-title">Compound choices, ${r.season} season</h2><p class="section-aside">${races.length} published Pirelli previews</p></header>
+    ${seasonStrip(races, 'en', r.id)}`;
 }
 
 /** JSON inside <script type="application/json">: neutralise "<" so no payload can close the tag. */
-export const inlineJson = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 
 export function renderPage(template: string, ctx: PageContext): string {
   const { record: r, siteUrl } = ctx;

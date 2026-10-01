@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { type EmbedPanel, embedPath } from '../../src/domain/urlState.ts';
-import { renderEmbed } from '../../src/ui/embed.ts';
-import { fixtureRace } from '../fixtures/races.ts';
+import { renderEmbed, renderSeasonEmbed, seasonStrip } from '../../src/ui/embed.ts';
+import { fixtureRace, summary } from '../fixtures/races.ts';
 
 const TEMPLATE =
   '<!doctype html><html lang="en-GB"><head><title>x</title><!--embed:head--></head><body><!--embed:body--></body></html>';
@@ -74,5 +74,45 @@ describe('article embeds', () => {
     expect(doc).toMatch(/<p class="e-load" id="e-load" hidden>/); // no 3D offer without the script
     expect(doc).toContain('<script type="application/json" id="boot">');
     expect(render('summary', 'el', fixtureRace())).not.toContain('id="boot"');
+  });
+
+  it('draws the season strip as a table: the full C-range, role-coloured marks, current round, honest gaps', () => {
+    const races = [
+      summary({
+        id: '2026-aa',
+        round: 1,
+        compounds: [
+          { raceLabel: 'hard', compound: 'C1' },
+          { raceLabel: 'medium', compound: 'C2' },
+          { raceLabel: 'soft', compound: 'C3' },
+        ],
+      }),
+      summary({
+        id: '2026-bb',
+        round: 2,
+        compounds: [
+          { raceLabel: 'hard', compound: 'C3' },
+          { raceLabel: 'medium', compound: 'C4' },
+          { raceLabel: 'soft', compound: 'C5' },
+        ],
+      }),
+      summary({ id: '2026-cc', round: 3, compounds: null }),
+    ];
+    const strip = seasonStrip(races, 'el', '2026-bb').value;
+    expect(strip.match(/<th scope="row">C\d<\/th>/g)).toEqual(
+      ['C1', 'C2', 'C3', 'C4', 'C5'].map((c) => `<th scope="row">${c}</th>`),
+    );
+    expect(strip.match(/class="ss-mark" data-label="soft" title/g)).toHaveLength(2);
+    expect(strip).toContain('aria-current="true"');
+    expect(strip).toContain('2026-cc GP, Δεν δόθηκε'); // a round without compounds says so
+    const doc = renderSeasonEmbed(TEMPLATE, {
+      season: 2026,
+      races,
+      lang: 'en',
+      base: '/Tyres/',
+      siteUrl: 'https://example.test/Tyres/',
+    });
+    expect(doc).toContain('3 fixture');
+    expect(doc).toContain('Compound choices, 2026 season');
   });
 });

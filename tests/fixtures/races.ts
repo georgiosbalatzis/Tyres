@@ -74,6 +74,7 @@ export function summary(p: Partial<ManifestRace> & { id: string }): ManifestRace
     startDate: null,
     publishedAt: null,
     status: 'fixture',
+    compounds: null,
     ...p,
   };
 }

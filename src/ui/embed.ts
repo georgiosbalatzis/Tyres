@@ -5,11 +5,16 @@
  */
 import { type CarView, deriveView, HEAT_STOPS } from '../domain/derivedMetrics.ts';
 import { characteristicsFor, RACE_LABEL_ORDER } from '../domain/format.ts';
-import type { CharacteristicKey, DataStatus, RaceRecord, TrackShape } from '../domain/schema.ts';
+import type {
+  CharacteristicKey,
+  DataStatus,
+  ManifestRace,
+  RaceRecord,
+  TrackShape,
+} from '../domain/schema.ts';
 import { type EmbedLang, type EmbedPanel, racePath } from '../domain/urlState.ts';
 import { carPlanSvg, trackPathD } from './fallbackSvg.ts';
-import { escapeHtml, html, SafeHtml, safeUrl } from './html.ts';
-import { inlineJson } from './page.ts';
+import { escapeHtml, html, inlineJson, SafeHtml, safeUrl } from './html.ts';
 import { DEFAULT_VIEW, fallbackVisual, sortedCompounds } from './templates.ts';
 
 /** The four rating-based views; pressures are official values and live in the setup panel. */
@@ -62,6 +67,12 @@ interface Strings {
   outline: (name: string, licence: string) => string;
   tyresNote: string;
   modelCredit: string;
+  seasonPanel: string;
+  seasonTitle: (season: number) => string;
+  roundsNote: (n: number) => string;
+  compoundCol: string;
+  previews: string;
+  statusShort: Record<DataStatus, string>;
   planLabel: (view: string) => string;
   low: string;
   high: string;
@@ -142,6 +153,17 @@ const STRINGS: Record<EmbedLang, Strings> = {
     outline: (name, licence) => `Χάραξη πίστας: ${name} (${licence}). Δεν σχεδιάζονται τομείς ή υψομετρικά.`,
     tyresNote: 'Το χρώμα στο πλάι δείχνει τον ρόλο της γόμας: λευκό Hard, κίτρινο Medium, κόκκινο Soft.',
     modelCredit: 'Μοντέλο: “Low Poly-F1”, salasilma13, CC BY 4.0',
+    seasonPanel: 'Γόμες ανά αγώνα',
+    seasonTitle: (y) => `Επιλογές γομών, σεζόν ${y}`,
+    roundsNote: (n) => `${n} αγώνες με δημοσιευμένη προεπισκόπηση της Pirelli`,
+    compoundCol: 'Γόμα',
+    previews: 'προεπισκοπήσεις Pirelli',
+    statusShort: {
+      verified: 'επαληθευμένα',
+      transcribed: 'μεταγραφή',
+      'needs-review': 'προς έλεγχο',
+      fixture: 'δοκιμαστικά',
+    },
     planLabel: (view) => `Κάτοψη μονοθεσίου: ${view} ανά ελαστικό`,
     low: 'Χαμηλή',
     high: 'Υψηλή απαίτηση',
@@ -220,6 +242,17 @@ const STRINGS: Record<EmbedLang, Strings> = {
     outline: (name, licence) => `Outline: ${name} (${licence}). Sectors and elevation are not drawn.`,
     tyresNote: 'Sidewall colour marks the weekend role: white hard, yellow medium, red soft.',
     modelCredit: 'Model: “Low Poly-F1”, salasilma13, CC BY 4.0',
+    seasonPanel: 'Compounds by round',
+    seasonTitle: (y) => `Compound choices, ${y} season`,
+    roundsNote: (n) => `${n} rounds with a published Pirelli preview`,
+    compoundCol: 'Compound',
+    previews: 'Pirelli previews',
+    statusShort: {
+      verified: 'verified',
+      transcribed: 'transcribed',
+      'needs-review': 'needs review',
+      fixture: 'fixture',
+    },
     planLabel: (view) => `Car plan view: ${view} by tyre`,
     low: 'Low',
     high: 'High demand',
@@ -411,33 +444,142 @@ export interface EmbedContext {
 }
 
 /** Fills embed.html's placeholders. */
+interface Shell {
+  lang: EmbedLang;
+  panel: string;
+  title: string;
+  canonical: string;
+  siteUrl: string;
+  kicker: string;
+  sub: string;
+  body: SafeHtml;
+  source: SafeHtml;
+  after?: SafeHtml;
+}
+
+/** The page every embed shares: head, theme wrapper, header, provenance footer. */
+function embedDocument(template: string, d: Shell): string {
+  const t = STRINGS[d.lang];
+  const head = html`<title>${d.title} | F1 Stories</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="${d.canonical}" />`;
+  // id="dark": the iframe URL's #dark fragment makes this :target and switches it to the charcoal theme.
+  const body = html`<div class="e-root" id="dark"><article class="e" data-panel="${d.panel}">
+    <header class="e-head">
+      <p class="e-kicker">${d.kicker}</p>
+      <p class="e-race">${d.sub}</p>
+    </header>
+    <div class="e-body">${d.body}</div>
+    <footer class="e-foot">
+      <p class="e-source">${t.source}: ${d.source}</p>
+      <p class="e-brand"><a href="${d.canonical}" target="_blank" rel="noopener"><span class="e-wordmark">F1 STORIES<span class="e-dot">.</span></span> <span class="e-open">${t.open} ↗</span><span class="e-site" hidden>Tyre Intelligence · ${d.siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span></a></p>
+    </footer>
+  </article></div>${d.after ?? ''}`;
+  return template
+    .replace('<html lang="en-GB">', () => `<html lang="${escapeHtml(d.lang)}">`)
+    .replace(/<title>.*?<\/title>/s, () => '')
+    .replace('<!--embed:head-->', () => head.value)
+    .replace('<!--embed:body-->', () => body.value);
+}
+
 export function renderEmbed(template: string, ctx: EmbedContext): string {
   const { record: r, panel, lang } = ctx;
   const t = STRINGS[lang];
   const full = new URL(racePath('', r), ctx.siteUrl).href;
   const c: Ctx = { full, lang, r, track: ctx.track, t, f: fmt(t) };
   const published = c.f.published(r.source.publishedAt);
-  const title = `${t.panel[panel]}: ${r.race.name} ${r.season}`;
-  const head = html`<title>${title} | F1 Stories</title>
-    <meta name="robots" content="noindex" />
-    <link rel="canonical" href="${full}" />`;
-  // id="dark": the iframe URL's #dark fragment makes this :target and switches it to the charcoal theme.
-  const body = html`<div class="e-root" id="dark"><article class="e" data-panel="${panel}">
-    <header class="e-head">
-      <p class="e-kicker">${t.panel[panel]}</p>
-      <p class="e-race">${r.round ? `${t.round(r.round)} · ` : ''}${r.season}${panel === 'summary' ? '' : ` · ${r.race.name}`}</p>
-    </header>
-    <div class="e-body">${PANELS[panel](c)}</div>
-    <footer class="e-foot">
-      <p class="e-source">${t.source}: <a href="${safeUrl(r.source.articleUrl)}" target="_blank" rel="noopener external">Pirelli</a>${published ? ` · ${published}` : ''} · <span class="e-status" data-status="${r.validation.status}">${t.status[r.validation.status]}</span></p>
-      <p class="e-brand"><a href="${full}" target="_blank" rel="noopener"><span class="e-wordmark">F1 STORIES<span class="e-dot">.</span></span> <span class="e-open">${t.open} ↗</span><span class="e-site" hidden>Tyre Intelligence · ${ctx.siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span></a></p>
-    </footer>
-  </article></div>${panel === '3d' ? html`<script type="application/json" id="boot">${new SafeHtml(inlineJson({ record: r, track: ctx.track, lang }))}</script>` : ''}`;
-  return template
-    .replace('<html lang="en-GB">', () => `<html lang="${escapeHtml(lang)}">`)
-    .replace(/<title>.*?<\/title>/s, () => '')
-    .replace('<!--embed:head-->', () => head.value)
-    .replace('<!--embed:body-->', () => body.value);
+  return embedDocument(template, {
+    lang,
+    panel,
+    title: `${t.panel[panel]}: ${r.race.name} ${r.season}`,
+    canonical: full,
+    siteUrl: ctx.siteUrl,
+    kicker: t.panel[panel],
+    sub: `${r.round ? `${t.round(r.round)} · ` : ''}${r.season}${panel === 'summary' ? '' : ` · ${r.race.name}`}`,
+    body: PANELS[panel](c),
+    source: html`<a href="${safeUrl(r.source.articleUrl)}" target="_blank" rel="noopener external">Pirelli</a>${published ? ` · ${published}` : ''} · <span class="e-status" data-status="${r.validation.status}">${t.status[r.validation.status]}</span>`,
+    after:
+      panel === '3d'
+        ? html`<script type="application/json" id="boot">${new SafeHtml(inlineJson({ record: r, track: ctx.track, lang }))}</script>`
+        : undefined,
+  });
+}
+
+/* ------------------------------------------------------------------ season strip */
+
+const compoundNumber = (id: string) => (/^C\d{1,2}$/.test(id) ? Number(id.slice(1)) : null);
+
+/**
+ * Compound choices across a season, Pirelli-style: compounds as rows (C1 hardest at the top), rounds as
+ * columns, a marker in the weekend role's colour where a compound was nominated. A real table, so it reads
+ * row by row with a screen reader. Only published previews appear.
+ */
+export function seasonStrip(
+  races: ManifestRace[],
+  lang: EmbedLang,
+  currentId: string | null = null,
+): SafeHtml {
+  const t = STRINGS[lang];
+  const list = [...races].sort(
+    (a, b) => (a.round ?? 99) - (b.round ?? 99) || (a.startDate ?? '').localeCompare(b.startDate ?? ''),
+  );
+  const ids = list.flatMap((r) => r.compounds?.map((c) => c.compound) ?? []);
+  const nums = ids.map(compoundNumber).filter((n): n is number => n != null);
+  if (!ids.length) return html`<p class="ss-empty">${t.noCompounds}</p>`;
+  // Every C-number between the softest and hardest nominated, so gaps in the range stay visible.
+  const rows = [
+    ...(nums.length
+      ? Array.from(
+          { length: Math.max(...nums) - Math.min(...nums) + 1 },
+          (_, i) => `C${Math.min(...nums) + i}`,
+        )
+      : []),
+    ...[...new Set(ids.filter((id) => compoundNumber(id) == null))].sort(),
+  ];
+  const current = (r: ManifestRace) => (r.id === currentId ? html` class="is-current"` : '');
+  return html`<div class="ss-scroll" style="--rows:${rows.length}"><table class="ss" style="--cols:${list.length}">
+    <caption class="visually-hidden">${t.seasonTitle(list[0]!.season)}</caption>
+    <thead><tr><th scope="col" class="ss-corner"><span class="visually-hidden">${t.compoundCol}</span></th>${list.map(
+      (r) =>
+        html`<th scope="col"${current(r)}${r.id === currentId ? html` aria-current="true"` : ''}><span aria-hidden="true">${r.round ? `R${r.round}` : '–'}</span><span class="visually-hidden">${r.name}${r.compounds ? '' : `, ${t.notProvided}`}</span></th>`,
+    )}</tr></thead>
+    <tbody>${rows.map(
+      (id) =>
+        html`<tr><th scope="row">${id}</th>${list.map((r) => {
+          const c = r.compounds?.find((x) => x.compound === id);
+          return html`<td${current(r)}>${c ? html`<span class="ss-mark" data-label="${c.raceLabel}" title="${`${r.name}: ${id} ${t.compound[c.raceLabel] ?? c.raceLabel}`}"><span class="visually-hidden">${t.compound[c.raceLabel] ?? c.raceLabel}</span></span>` : ''}</td>`;
+        })}</tr>`,
+    )}</tbody>
+  </table></div>
+  <p class="ss-legend" aria-hidden="true">${['hard', 'medium', 'soft'].map(
+    (l) => html`<span><span class="ss-mark" data-label="${l}"></span>${t.compound[l]}</span>`,
+  )}</p>`;
+}
+
+export interface SeasonEmbedContext {
+  season: number;
+  races: ManifestRace[];
+  lang: EmbedLang;
+  base: string;
+  siteUrl: string;
+}
+
+export function renderSeasonEmbed(template: string, ctx: SeasonEmbedContext): string {
+  const t = STRINGS[ctx.lang];
+  const counts = new Map<DataStatus, number>();
+  for (const r of ctx.races) counts.set(r.status, (counts.get(r.status) ?? 0) + 1);
+  const latest = [...ctx.races].sort((a, b) => (b.round ?? 0) - (a.round ?? 0))[0];
+  return embedDocument(template, {
+    lang: ctx.lang,
+    panel: 'season',
+    title: t.seasonTitle(ctx.season),
+    canonical: latest ? new URL(racePath('', latest), ctx.siteUrl).href : ctx.siteUrl,
+    siteUrl: ctx.siteUrl,
+    kicker: t.seasonPanel,
+    sub: t.seasonTitle(ctx.season),
+    body: html`<p class="e-caption">${t.roundsNote(ctx.races.length)}</p>${seasonStrip(ctx.races, ctx.lang)}`,
+    source: html`${t.previews} · ${[...counts].map(([s, n]) => `${n} ${t.statusShort[s]}`).join(', ')}`,
+  });
 }
 
 /* ------------------------------------------------------------------ 3D embed */

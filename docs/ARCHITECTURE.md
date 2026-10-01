@@ -137,6 +137,13 @@ the site's CSP and its author tool's iframe whitelist).
   `/img/{el|en}/{season}/{slug}/{panel}.png` (720 px panel + 40 px paper margin, at 2×;
   the footer shows the site address instead of "Open in …"). The dialog's Image format
   gives an `<img>` whose alt text is the panel's own text, read from the preview.
+- **Season strip** (`seasonStrip` in `src/ui/embed.ts`, styles in `season.css`): compound
+  choices by round as a table (C-range rows, round columns, a tyre-ring marker in the
+  weekend role's colour). On the race page under the title block (current round
+  highlighted, re-rendered from the manifest on race change), and as the season embed
+  `/embed/{el|en}/{season}/season/` + image `/img/{lang}/{season}/season.png`. In the
+  embed it scrolls sideways when narrow, with a permanent scrollbar so the height stays
+  constant. The footer counts previews by status.
 - `3d` is the one embed with a script (`embed-3d.html` → `src/embed3d.ts`, CSP
   `script-src 'self'`). It arrives as a complete poster: mode tabs, the flat drawing
   on the dark bench, and the readout text (`embedReadout`, rendered at build time and

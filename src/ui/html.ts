@@ -48,6 +48,9 @@ export function safeUrl(url: string | null | undefined): string {
   }
 }
 
+/** JSON for an inline <script type="application/json">: "<" escaped, so data can never close the tag. */
+export const inlineJson = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
+
 /** The single DOM sink for template output. */
 export function setHtml(el: Element, content: SafeHtml) {
   el.innerHTML = content.value;
