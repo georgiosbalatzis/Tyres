@@ -60,6 +60,8 @@ test('changing race updates content, URL, title and survives reload and back', a
 });
 
 test('changing season selects that season’s latest preview', async ({ page }) => {
+  page.on('console', (m) => console.log(`[console.${m.type()}] ${m.text()}`));
+  page.on('pageerror', (e) => console.log(`[pageerror] ${e.message}\n${e.stack}`));
   await page.goto(BASE);
   await page.locator('#year').selectOption('2025');
   await expect(page).toHaveURL(`${BASE}2025/yas-marina/`);
@@ -126,7 +128,7 @@ test('keyboard users can switch modes, views and tyres', async ({ page }) => {
   await data.focus();
   await page.keyboard.press('Space');
   await expect(page.locator('#r-data table')).toBeVisible();
-  await expect(page.getByRole('table')).toContainText('Camber limit, rear');
+  await expect(page.locator('#r-data').getByRole('table')).toContainText('Camber limit, rear');
   await page.getByRole('button', { name: 'car', exact: true }).click();
   const fl = page.locator('.corner[data-corner="FL"]');
   await fl.focus();
