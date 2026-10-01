@@ -8,8 +8,9 @@ import { characteristicsFor, RACE_LABEL_ORDER } from '../domain/format.ts';
 import type { CharacteristicKey, DataStatus, RaceRecord, TrackShape } from '../domain/schema.ts';
 import { type EmbedLang, type EmbedPanel, racePath } from '../domain/urlState.ts';
 import { carPlanSvg, trackPathD } from './fallbackSvg.ts';
-import { escapeHtml, html, type SafeHtml, safeUrl } from './html.ts';
-import { sortedCompounds } from './templates.ts';
+import { escapeHtml, html, SafeHtml, safeUrl } from './html.ts';
+import { inlineJson } from './page.ts';
+import { DEFAULT_VIEW, fallbackVisual, sortedCompounds } from './templates.ts';
 
 /** The four rating-based views; pressures are official values and live in the setup panel. */
 const DEMAND_VIEWS = [
@@ -18,7 +19,6 @@ const DEMAND_VIEWS = [
   'stress',
   'brakingTraction',
 ] as const satisfies readonly CarView[];
-type DemandView = (typeof DEMAND_VIEWS)[number];
 
 interface Strings {
   locale: string;
@@ -48,7 +48,20 @@ interface Strings {
   noTrack: string;
   source: string;
   open: string;
-  demandView: Record<DemandView, string>;
+  demandView: Record<CarView, string>;
+  mode: Record<'car' | 'circuit' | 'tyres', string>;
+  modesLabel: string;
+  viewsLabel: string;
+  load3d: string;
+  loadNote: string;
+  loading3d: string;
+  noGl: string;
+  failed3d: string;
+  reset: string;
+  laps2: (n: number) => string;
+  outline: (name: string, licence: string) => string;
+  tyresNote: string;
+  modelCredit: string;
   planLabel: (view: string) => string;
   low: string;
   high: string;
@@ -65,6 +78,7 @@ const STRINGS: Record<EmbedLang, Strings> = {
       compounds: 'Γόμες αγώνα',
       demands: 'Απαιτήσεις πίστας',
       car: 'Απαίτηση ανά ελαστικό',
+      '3d': 'Τρισδιάστατη προβολή',
       setup: 'Όρια ρυθμίσεων',
       circuit: 'Η πίστα',
     },
@@ -113,7 +127,21 @@ const STRINGS: Record<EmbedLang, Strings> = {
       lateral: 'Πλευρικά φορτία',
       stress: 'Καταπόνηση ελαστικών',
       brakingTraction: 'Φρενάρισμα / πρόσφυση',
+      pressures: 'Πιέσεις',
     },
+    mode: { car: 'Μονοθέσιο', circuit: 'Πίστα', tyres: 'Ελαστικά' },
+    modesLabel: 'Προβολή',
+    viewsLabel: 'Απεικόνιση ελαστικών',
+    load3d: 'Προβολή σε 3D',
+    loadNote: 'φορτώνει περίπου 300 KB',
+    loading3d: 'Φόρτωση 3D…',
+    noGl: 'Το 3D δεν είναι διαθέσιμο σε αυτή τη συσκευή. Εμφανίζεται το σχέδιο.',
+    failed3d: 'Το 3D δεν φόρτωσε. Εμφανίζεται το σχέδιο.',
+    reset: 'Επαναφορά κάμερας',
+    laps2: (n) => `${n} γύροι`,
+    outline: (name, licence) => `Χάραξη πίστας: ${name} (${licence}). Δεν σχεδιάζονται τομείς ή υψομετρικά.`,
+    tyresNote: 'Το χρώμα στο πλάι δείχνει τον ρόλο της γόμας: λευκό Hard, κίτρινο Medium, κόκκινο Soft.',
+    modelCredit: 'Μοντέλο: “Low Poly-F1”, salasilma13, CC BY 4.0',
     planLabel: (view) => `Κάτοψη μονοθεσίου: ${view} ανά ελαστικό`,
     low: 'Χαμηλή',
     high: 'Υψηλή απαίτηση',
@@ -129,6 +157,7 @@ const STRINGS: Record<EmbedLang, Strings> = {
       compounds: 'Weekend compounds',
       demands: 'Track demands',
       car: 'Tyre demand by corner',
+      '3d': '3D view',
       setup: 'Setup limits',
       circuit: 'Circuit',
     },
@@ -176,7 +205,21 @@ const STRINGS: Record<EmbedLang, Strings> = {
       lateral: 'Lateral',
       stress: 'Tyre stress',
       brakingTraction: 'Braking / traction',
+      pressures: 'Pressures',
     },
+    mode: { car: 'Car', circuit: 'Circuit', tyres: 'Tyres' },
+    modesLabel: 'View',
+    viewsLabel: 'Tyre visualisation',
+    load3d: 'View in 3D',
+    loadNote: 'loads about 300 KB',
+    loading3d: 'Loading 3D…',
+    noGl: '3D isn’t available on this device. Showing the drawing.',
+    failed3d: 'The 3D view couldn’t load. Showing the drawing.',
+    reset: 'Reset camera',
+    laps2: (n) => `${n} laps`,
+    outline: (name, licence) => `Outline: ${name} (${licence}). Sectors and elevation are not drawn.`,
+    tyresNote: 'Sidewall colour marks the weekend role: white hard, yellow medium, red soft.',
+    modelCredit: 'Model: “Low Poly-F1”, salasilma13, CC BY 4.0',
     planLabel: (view) => `Car plan view: ${view} by tyre`,
     low: 'Low',
     high: 'High demand',
@@ -221,6 +264,7 @@ function fmt(t: Strings) {
 interface Ctx {
   /** Absolute URL of the full race page. */
   full: string;
+  lang: EmbedLang;
   r: RaceRecord;
   track: TrackShape | null;
   t: Strings;
@@ -259,6 +303,22 @@ function axlePair(t: Strings, front: string | null, rear: string | null): SafeHt
 
 const PANELS: Record<EmbedPanel, (c: Ctx) => SafeHtml> = {
   compounds: (c) => compoundRow(c),
+
+  // Poster first: the flat drawing on the dark bench. src/embed3d.ts swaps in the 3D view on request.
+  '3d': ({ r, track, t, lang }) => {
+    const view = { ...DEFAULT_VIEW, mode: 'car' as const };
+    return html`<div class="e-modes" role="group" aria-label="${t.modesLabel}">${EMBED_MODES.map(
+      (m) =>
+        html`<button type="button" class="e-mode" data-mode="${m}" aria-pressed="${String(m === view.mode)}">${t.mode[m]}</button>`,
+    )}</div>
+    <div class="canvas-host e-stage" id="canvas-host">
+      <div class="fallback" id="r-fallback">${fallbackVisual(r, track, view)}</div>
+      <p class="e-load" id="e-load" hidden><button type="button" class="e-load-btn" id="load-3d">${t.load3d}</button><span class="e-load-note" id="e-load-note">${t.loadNote}</span></p>
+      <button type="button" class="tool e-reset" id="e-reset" aria-label="${t.reset}" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 8.5A6 6 0 1 1 5 13.5M4.5 3.5v5h5" /></svg></button>
+    </div>
+    <p class="e-credit"><a href="https://sketchfab.com/3d-models/low-poly-f1-0ac02bfa81f64549be15acaa78f36f29" target="_blank" rel="noopener external">${t.modelCredit}</a></p>
+    <div class="e-readout" id="r-readout" aria-live="polite">${embedReadout(r, track, lang, view)}</div>`;
+  },
 
   // Derived visualisation: the same mapping as the 3D car (derivedMetrics.ts), front and rear as text.
   car: ({ r, t, f, full }) => {
@@ -355,7 +415,7 @@ export function renderEmbed(template: string, ctx: EmbedContext): string {
   const { record: r, panel, lang } = ctx;
   const t = STRINGS[lang];
   const full = new URL(racePath('', r), ctx.siteUrl).href;
-  const c: Ctx = { full, r, track: ctx.track, t, f: fmt(t) };
+  const c: Ctx = { full, lang, r, track: ctx.track, t, f: fmt(t) };
   const published = c.f.published(r.source.publishedAt);
   const title = `${t.panel[panel]}: ${r.race.name} ${r.season}`;
   const head = html`<title>${title} | F1 Stories</title>
@@ -371,10 +431,64 @@ export function renderEmbed(template: string, ctx: EmbedContext): string {
       <p class="e-source">${t.source}: <a href="${safeUrl(r.source.articleUrl)}" target="_blank" rel="noopener external">Pirelli</a>${published ? ` · ${published}` : ''} · <span class="e-status" data-status="${r.validation.status}">${t.status[r.validation.status]}</span></p>
       <p class="e-brand"><a href="${full}" target="_blank" rel="noopener"><span class="e-wordmark">F1 STORIES<span class="e-dot">.</span></span> ${t.open} ↗</a></p>
     </footer>
-  </article>`;
+  </article>${panel === '3d' ? html`<script type="application/json" id="boot">${new SafeHtml(inlineJson({ record: r, track: ctx.track, lang }))}</script>` : ''}`;
   return template
     .replace('<html lang="en-GB">', () => `<html lang="${escapeHtml(lang)}">`)
     .replace(/<title>.*?<\/title>/s, () => '')
     .replace('<!--embed:head-->', () => head.value)
     .replace('<!--embed:body-->', () => body.value);
 }
+
+/* ------------------------------------------------------------------ 3D embed */
+
+/** The 3D embed script's own messages (loading, failure), from the same glossary. */
+export const embedText = (lang: EmbedLang) => STRINGS[lang];
+
+export const EMBED_MODES = ['car', 'circuit', 'tyres'] as const;
+export type EmbedMode = (typeof EMBED_MODES)[number];
+
+/**
+ * The text that accompanies the 3D/drawing for the current view: every fact the visual shows is also
+ * here as HTML. Rendered at build time and re-rendered by src/embed3d.ts as the reader changes view.
+ */
+export function embedReadout(
+  r: RaceRecord,
+  track: TrackShape | null,
+  lang: EmbedLang,
+  view: { mode: EmbedMode; carView: CarView },
+): SafeHtml {
+  const t = STRINGS[lang];
+  const f = fmt(t);
+  const nd2 = nd(t);
+  if (view.mode === 'car') {
+    const d = deriveView(r, view.carView);
+    const p = r.setup.minimumStartingPressurePsi;
+    const shown = (corner: 'FL' | 'RL', psi: number | null | undefined) => {
+      if (view.carView === 'pressures')
+        return psi == null ? nd2 : html`${f.num(psi, 1)}<span class="e-of"> psi</span>`;
+      const v = d.corners[corner].intensity;
+      return v == null
+        ? nd2
+        : html`${f.num(1 + 4 * v, view.carView === 'longitudinal' ? 1 : 0)}<span class="e-of">/5</span>`;
+    };
+    return html`<div class="e-chips" role="group" aria-label="${t.viewsLabel}">${CAR_VIEWS_3D.map(
+      (v) =>
+        html`<button type="button" class="e-chip" data-view="${v}" aria-pressed="${String(v === view.carView)}">${t.demandView[v]}</button>`,
+    )}</div>
+    <p class="e-values"><span class="e-axle">${t.front}</span><span class="e-fig">${shown('FL', p?.front)}</span><span class="e-axle">${t.rear}</span><span class="e-fig">${shown('RL', p?.rear)}</span></p>
+    <p class="e-derived">${view.carView === 'pressures' ? `${t.minPressure}. ${t.minPressureNote}.` : t.derived}</p>`;
+  }
+  if (view.mode === 'circuit') {
+    const c = r.circuit;
+    const line = [c.name, f.num(c.lengthKm, 3, ' km'), c.laps == null ? null : t.laps2(c.laps)]
+      .filter(Boolean)
+      .join(' · ');
+    return html`<p class="e-line">${line || t.notProvided}</p><p class="e-values"></p>
+      <p class="e-derived">${track ? t.outline(track.source.name, track.source.license) : t.noTrack}</p>`;
+  }
+  const list = sortedCompounds(r);
+  return html`<p class="e-line">${list.length ? list.map((c) => `${c.compound} ${t.compound[c.raceLabel] ?? c.raceLabel}`).join(' · ') : t.noCompounds}</p><p class="e-values"></p>
+    <p class="e-derived">${t.tyresNote}</p>`;
+}
+
+const CAR_VIEWS_3D: CarView[] = ['longitudinal', 'lateral', 'stress', 'brakingTraction', 'pressures'];

@@ -114,7 +114,7 @@ f1stories.gr articles embed single panels as iframes, the same way they embed th
 telemetry dashboard and ghostcar (`georgiosbalatzis.github.io` is already allowed by
 the site's CSP and its author tool's iframe whitelist).
 
-- `/embed/{el|en}/{season}/{slug}/{summary|compounds|demands|car|setup|circuit}/` is
+- `/embed/{el|en}/{season}/{slug}/{summary|compounds|demands|car|setup|circuit|3d}/` is
   prerendered for every race from `embed.html` + `src/ui/embed.ts` +
   `src/styles/embed.css`. Language is a path segment (not `?lang=`) so the pages stay
   static and script-free (`script-src 'none'`), `noindex`, canonical to the race page.
@@ -128,6 +128,12 @@ the site's CSP and its author tool's iframe whitelist).
 - `car` (tyre demand by corner) is the derived visualisation as four small car plans
   (longitudinal, lateral, tyre stress, braking/traction) with front and rear values as
   text, and always carries the "Derived visualisation … not temperature" label.
+- `3d` is the one embed with a script (`embed-3d.html` → `src/embed3d.ts`, CSP
+  `script-src 'self'`). It arrives as a complete poster: mode tabs, the flat drawing
+  on the dark bench, and the readout text (`embedReadout`, rendered at build time and
+  again in the browser). The Three.js viewer and the car model load only when the
+  reader presses "Προβολή σε 3D", into the same fixed-height stage, so the iframe
+  height is identical before and after. The model's CC BY credit sits under the stage.
 - The "Embed" dialog on the main page (desktop) previews a panel, measures its height
   from the same-origin preview and copies a ready iframe snippet.
 - Dev: `npm run dev` serves embed routes on the fly (see `configureServer` in

@@ -1,3 +1,5 @@
+@import "./bench.css";
+
 @property --v {
   syntax: "<number>";
   inherits: true;
@@ -877,57 +879,10 @@ svg {
   display: none;
 }
 
-.tool {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: var(--control-border);
-  border-radius: var(--radius-control);
-  background: transparent;
-}
-
-.view-tools .tool {
-  background: rgb(22 24 27 / 0.72);
-}
-
-.tool svg {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-}
-
-.tool .i-pause,
-.tool[aria-pressed="true"] .i-play {
-  display: none;
-}
-
-.tool[aria-pressed="true"] .i-pause {
-  display: block;
-}
-
-.tool[aria-pressed="true"] {
-  border-color: var(--c-text);
-}
-
 .canvas-host {
-  position: relative;
   aspect-ratio: 16 / 11;
   min-height: 320px;
   max-height: 72vh;
-  width: 100%;
-  overflow: hidden;
-  border: var(--rule);
-  background-color: var(--c-bg);
-  color: var(--c-text);
-  background-image:
-    linear-gradient(rgb(238 232 219 / 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(238 232 219 / 0.035) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: -1px -1px;
-  touch-action: pan-y;
 }
 
 /* Phones: 4:3 frames the car without empty floor and sky; circuits are wider than tall too. */
@@ -954,49 +909,6 @@ svg {
   user-select: none;
 }
 
-.fallback {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  padding: 6% 8%;
-  transition: opacity var(--t-mid);
-}
-
-.fallback > svg {
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-}
-
-.canvas-host.has-3d .fallback {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.canvas-host canvas:focus-visible {
-  outline: 2px solid var(--c-accent);
-  outline-offset: -3px;
-}
-
-.canvas-host canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  outline: none;
-  touch-action: none;
-}
-
-@media (pointer: coarse) {
-  /* Let a single finger scroll the page; the scene rotates with two fingers or the buttons. */
-  .canvas-host canvas {
-    touch-action: pan-y;
-  }
-}
-
 .loading-3d {
   position: absolute;
   right: var(--s-3);
@@ -1004,79 +916,6 @@ svg {
   z-index: 3;
   color: var(--c-text-2);
   font-size: var(--fs-caption);
-}
-
-.fallback-car .plan-body {
-  fill: #3a4047;
-}
-
-.fallback-car .plan-cockpit {
-  fill: var(--c-bg);
-}
-
-.plan-tyre {
-  transition: fill var(--t-hero) var(--ease-out);
-}
-
-.fallback-circuit .track-casing {
-  fill: none;
-  stroke: var(--c-raised);
-  stroke-width: 36;
-  stroke-linejoin: round;
-}
-
-.fallback-circuit .track-line {
-  fill: none;
-  stroke: var(--c-text);
-  stroke-width: 9;
-  stroke-linejoin: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0;
-  animation: draw-on 600ms var(--ease-out) both;
-}
-
-@keyframes draw-on {
-  from {
-    stroke-dashoffset: 1;
-  }
-}
-
-.fallback-tyres {
-  display: flex;
-  gap: 6%;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.fallback-tyre {
-  display: grid;
-  place-items: center;
-  width: 26%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 14px solid #0c0d0e;
-  box-shadow:
-    inset 0 0 0 6px var(--tone),
-    inset 0 0 0 22px #202428;
-  font-weight: 800;
-  font-size: clamp(1rem, 3vw, 2rem);
-  transition: transform var(--t-mid) var(--ease-out);
-}
-
-.fallback-tyre.is-selected {
-  transform: scale(1.12);
-}
-
-.plate {
-  display: grid;
-  place-items: center;
-  width: 70%;
-  aspect-ratio: 3 / 2;
-  border: 1px dashed var(--c-rule);
-  color: var(--c-text-2);
-  text-align: center;
-  padding: var(--s-4);
 }
 
 /* Hero interaction: probe sweep on race change */
@@ -1113,9 +952,6 @@ svg {
 
 @media (prefers-reduced-motion: reduce) {
   .canvas-host.is-sweeping .sweep {
-    animation: none;
-  }
-  .fallback-circuit .track-line {
     animation: none;
   }
 }

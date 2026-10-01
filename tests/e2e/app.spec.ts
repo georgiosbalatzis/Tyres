@@ -208,7 +208,7 @@ test('opens in the light theme and remembers a switch to dark', async ({ page })
 
 test('article embeds keep one height at every width and load without errors', async ({ page }) => {
   const errors = trackConsole(page);
-  for (const panel of ['summary', 'compounds', 'demands', 'car', 'setup', 'circuit']) {
+  for (const panel of ['summary', 'compounds', 'demands', 'car', 'setup', 'circuit', '3d']) {
     const heights: number[] = [];
     for (const width of [300, 968]) {
       await page.setViewportSize({ width, height: 900 });
@@ -242,4 +242,23 @@ test('the Embed dialog copies an iframe snippet for the current race', async ({
   );
   const height = Number(/height="(\d+)"/.exec(snippet)![1]);
   expect(height).toBeGreaterThan(200);
+});
+
+test('the 3D embed loads only on request and keeps its height', async ({ page }) => {
+  const errors = trackConsole(page);
+  let viewerRequested = false;
+  page.on('request', (r) => {
+    if (/viewer-.*\.js|f1car\.glb/.test(r.url())) viewerRequested = true;
+  });
+  await page.goto(`${BASE}embed/el/2026/sepang/3d/`);
+  const panel = page.locator('.e');
+  const before = await panel.evaluate((e) => Math.ceil(e.getBoundingClientRect().height));
+  await page.waitForTimeout(500);
+  expect(viewerRequested).toBe(false);
+  await page.getByRole('button', { name: 'Προβολή σε 3D' }).click();
+  await expect(page.locator('#canvas-host')).toHaveClass(/has-3d/, { timeout: 15_000 });
+  expect(await panel.evaluate((e) => Math.ceil(e.getBoundingClientRect().height))).toBe(before);
+  await page.getByRole('button', { name: 'Πίστα' }).click();
+  await expect(page.locator('#r-readout')).toContainText('km');
+  expect(errors).toEqual([]);
 });

@@ -1,4 +1,5 @@
 @import "./tokens.css";
+@import "./bench.css";
 
 /*
  * Article embeds. Rule: every row has a fixed height and never wraps (long text is clipped with an
@@ -454,6 +455,182 @@ p.e-map {
   line-height: 18px;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+}
+
+/* ---------- 3D embed: tabs, fixed-height bench, readout (same height before and after the 3D loads) */
+
+.e-modes {
+  display: flex;
+  height: 40px;
+  margin-bottom: 8px;
+  border: var(--control-border);
+  border-radius: var(--radius-control);
+}
+
+.e-mode {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--c-text-2);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.e-mode + .e-mode {
+  border-left: 1px solid var(--c-rule);
+}
+
+.e-mode[aria-pressed="true"] {
+  background: var(--c-text);
+  color: var(--c-bg);
+}
+
+.e-stage {
+  height: 300px;
+}
+
+/* The drawing keeps clear of the load button underneath it. */
+.e-stage .fallback {
+  padding: 14px 16px 72px;
+}
+
+.e-load {
+  position: absolute;
+  inset: auto 0 16px;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 12px;
+  padding: 0 12px;
+  text-align: center;
+}
+
+.e-load[hidden] {
+  display: none;
+}
+
+.e-load-btn {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--c-text);
+  border-radius: var(--radius-control);
+  background: var(--c-text);
+  color: var(--c-bg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.e-load-btn:hover:not(:disabled) {
+  border-color: var(--c-signal);
+  background: var(--c-signal);
+  color: var(--c-ink);
+}
+
+.e-load-btn[hidden] {
+  display: none;
+}
+
+.e-load-note {
+  color: var(--c-text-2);
+  font-size: 12px;
+}
+
+.e-reset {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  background: rgb(22 24 27 / 0.72);
+  color: var(--c-text);
+  cursor: pointer;
+}
+
+.e-reset[hidden] {
+  display: none;
+}
+
+.e-stage .fallback-tyre {
+  border-width: 10px;
+  font-size: 18px;
+}
+
+.e-credit {
+  height: 22px;
+  overflow: hidden;
+  color: var(--c-text-2);
+  font-size: 11px;
+  line-height: 22px;
+  text-align: right;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.e-readout {
+  margin-top: 4px;
+}
+
+.e-chips {
+  display: flex;
+  gap: 6px;
+  height: 36px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.e-chip {
+  flex: none;
+  height: 32px;
+  padding: 0 10px;
+  border: var(--control-border);
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--c-text-2);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.e-chip[aria-pressed="true"] {
+  border-color: var(--c-text);
+  background: var(--c-raised);
+  color: var(--c-text);
+}
+
+.e-line {
+  height: 36px;
+  overflow: hidden;
+  font-weight: 600;
+  line-height: 32px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.e-values {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  height: 32px;
+  white-space: nowrap;
+}
+
+.e-values .e-axle:not(:first-child) {
+  margin-left: 12px;
+}
+
+.e-mode:focus-visible,
+.e-chip:focus-visible,
+.e-load-btn:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
 }
 
 /* ---------- footer: provenance, always visible */

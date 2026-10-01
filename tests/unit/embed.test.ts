@@ -65,4 +65,14 @@ describe('article embeds', () => {
     expect(en).toMatch(/Longitudinal<\/p>[\s\S]*?Not provided/);
     expect(render('car', 'el', r)).toContain('Παράγωγη απεικόνιση');
   });
+
+  it('ships the 3D embed as a complete poster: drawing, readout text, model credit, boot data', () => {
+    const doc = render('3d', 'el', fixtureRace());
+    expect(doc).toContain('id="r-fallback"');
+    expect(doc).toContain('Παράγωγη απεικόνιση'); // car-mode readout carries the derived label
+    expect(doc).toContain('CC BY 4.0');
+    expect(doc).toMatch(/<p class="e-load" id="e-load" hidden>/); // no 3D offer without the script
+    expect(doc).toContain('<script type="application/json" id="boot">');
+    expect(render('summary', 'el', fixtureRace())).not.toContain('id="boot"');
+  });
 });

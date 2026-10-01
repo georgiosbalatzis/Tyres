@@ -59,7 +59,7 @@ export function racePath(base: string, race: Pick<ManifestRace, 'season' | 'slug
 
 export const EMBED_LANGS = ['el', 'en'] as const;
 export type EmbedLang = (typeof EMBED_LANGS)[number];
-export const EMBED_PANELS = ['summary', 'compounds', 'demands', 'car', 'setup', 'circuit'] as const;
+export const EMBED_PANELS = ['summary', 'compounds', 'demands', 'car', 'setup', 'circuit', '3d'] as const;
 export type EmbedPanel = (typeof EMBED_PANELS)[number];
 
 /** Script-free embed page for f1stories.gr articles: /embed/{lang}/{season}/{slug}/{panel}/ */

@@ -33,9 +33,10 @@ const CSP = [
   "base-uri 'self'",
   "form-action 'none'",
 ].join('; ');
-// Embeds are pure HTML and CSS.
+// Embeds are pure HTML and CSS, except the 3D embed, which loads the viewer on request.
 const EMBED_CSP = CSP.replace("script-src 'self'", "script-src 'none'");
-const EMBED_ROUTE = /^embed\/(el|en)\/(\d{4})\/([a-z0-9-]+)\/([a-z]+)\/?$/;
+const embedFile = (panel: EmbedPanel) => (panel === '3d' ? 'embed-3d.html' : 'embed.html');
+const EMBED_ROUTE = /^embed\/(el|en)\/(\d{4})\/([a-z0-9-]+)\/([a-z0-9]+)\/?$/;
 
 async function loadJson<T>(file: string, schema: Parameters<typeof parseWith<T>>[0]): Promise<T | null> {
   try {
@@ -74,7 +75,7 @@ async function embedContext(lang: EmbedLang, season: number, slug: string, panel
 
 function prerender(): Plugin {
   let template = '';
-  let embedTemplate = '';
+  const embedTemplates: Record<string, string> = {};
   let outDir = 'dist';
   let isBuild = false;
   return {
@@ -91,7 +92,7 @@ function prerender(): Plugin {
         try {
           const ctx = await embedContext(m[1] as EmbedLang, Number(m[2]), m[3]!, m[4] as EmbedPanel);
           if (!ctx) return next();
-          const raw = await readFile(path.resolve(import.meta.dirname, 'embed.html'), 'utf8');
+          const raw = await readFile(path.resolve(import.meta.dirname, embedFile(ctx.panel)), 'utf8');
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
           res.end(renderEmbed(await server.transformIndexHtml(req.url!, raw), ctx));
         } catch (err) {
@@ -102,11 +103,13 @@ function prerender(): Plugin {
     transformIndexHtml: {
       order: 'post',
       async handler(html, ctx) {
-        if (ctx.path.endsWith('embed.html')) {
+        const file = path.basename(ctx.path);
+        if (file === 'embed.html' || file === 'embed-3d.html') {
           if (isBuild) {
-            embedTemplate = html.replace(
+            const csp = file === 'embed.html' ? EMBED_CSP : CSP;
+            embedTemplates[file] = html.replace(
               '<head>',
-              () => `<head>\n    <meta http-equiv="Content-Security-Policy" content="${EMBED_CSP}" />`,
+              () => `<head>\n    <meta http-equiv="Content-Security-Policy" content="${csp}" />`,
             );
           }
           return html;
@@ -144,7 +147,7 @@ function prerender(): Plugin {
         renderPage(template, { ...(await context(null, '')), notFound: true }),
       );
       // Article embeds: every race × panel × language. The bare template is not a page of its own.
-      if (embedTemplate) {
+      if (embedTemplates['embed.html'] && embedTemplates['embed-3d.html']) {
         for (const race of manifest.years.flatMap((y) => y.races)) {
           for (const lang of EMBED_LANGS) {
             for (const panel of EMBED_PANELS) {
@@ -152,11 +155,15 @@ function prerender(): Plugin {
               if (!ctx) continue;
               const dir = path.join(outDir, embedPath('', lang, race, panel));
               await mkdir(dir, { recursive: true });
-              await writeFile(path.join(dir, 'index.html'), renderEmbed(embedTemplate, ctx));
+              await writeFile(
+                path.join(dir, 'index.html'),
+                renderEmbed(embedTemplates[embedFile(panel)]!, ctx),
+              );
             }
           }
         }
         await rm(path.join(outDir, 'embed.html'));
+        await rm(path.join(outDir, 'embed-3d.html'));
       }
     },
   };
@@ -171,6 +178,7 @@ export default defineConfig({
       input: {
         main: path.resolve(import.meta.dirname, 'index.html'),
         embed: path.resolve(import.meta.dirname, 'embed.html'),
+        embed3d: path.resolve(import.meta.dirname, 'embed-3d.html'),
       },
     },
     assetsInlineLimit: 0,

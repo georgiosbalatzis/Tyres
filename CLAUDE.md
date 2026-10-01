@@ -29,7 +29,8 @@ Uppercase, letter-spaced only for kickers, section titles, mode tabs and compoun
 ## Article embeds
 
 `/embed/{el|en}/{season}/{slug}/{panel}/` pages (`src/ui/embed.ts`, `src/styles/embed.css`) are iframed into
-f1stories.gr articles. Keep them script-free, keep provenance and status in the footer, and keep every row a
+f1stories.gr articles. Keep them script-free (the `3d` panel is the single exception: it loads the viewer only on
+request), keep provenance and status in the footer, and keep every row a
 fixed height that never wraps, so a panel's height is the same at every width (an e2e test checks it).
 Greek wording lives only in `STRINGS` in `src/ui/embed.ts`.
 
