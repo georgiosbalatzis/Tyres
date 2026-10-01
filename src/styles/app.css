@@ -1708,3 +1708,14 @@ svg {
   color: var(--c-text-2);
   font-size: var(--fs-caption);
 }
+
+.embed-download {
+  color: var(--c-text);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+}
+
+.embed-choice input:disabled + span {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

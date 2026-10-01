@@ -62,6 +62,22 @@ export type EmbedLang = (typeof EMBED_LANGS)[number];
 export const EMBED_PANELS = ['summary', 'compounds', 'demands', 'car', 'setup', 'circuit', '3d'] as const;
 export type EmbedPanel = (typeof EMBED_PANELS)[number];
 
+/** Panels that also exist as images (the 3D view has no still). */
+export const IMAGE_PANELS = EMBED_PANELS.filter((p) => p !== '3d');
+
+/** Panel image for social posts and newsletters, rendered at deploy by scripts/og-images.ts. */
+export function embedImagePath(
+  base: string,
+  lang: EmbedLang,
+  race: Pick<ManifestRace, 'season' | 'slug'>,
+  panel: EmbedPanel,
+) {
+  return `${base}img/${lang}/${race.season}/${race.slug}/${panel}.png`;
+}
+
+/** Panel images: 720 CSS px panel, 40 px paper margin, rendered at 2×. */
+export const PANEL_IMAGE = { width: 720, margin: 40, scale: 2 } as const;
+
 /** Script-free embed page for f1stories.gr articles: /embed/{lang}/{season}/{slug}/{panel}/ */
 export function embedPath(
   base: string,

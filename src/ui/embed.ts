@@ -281,7 +281,7 @@ function compoundRow({ r, t }: Ctx): SafeHtml {
       c,
     ) => html`<li data-label="${c.raceLabel}" style="--tone:var(--c-${RACE_LABEL_ORDER.includes(c.raceLabel) ? c.raceLabel : 'text-2'})">
       <span class="e-disc" aria-hidden="true">${c.compound}</span>
-      <span class="e-compound"><span class="e-compound-label">${t.compound[c.raceLabel] ?? c.raceLabel}</span><span class="e-compound-id">${c.compound}</span></span>
+      <span class="e-compound"><span class="e-compound-label">${t.compound[c.raceLabel] ?? c.raceLabel}</span> <span class="e-compound-id">${c.compound}</span></span>
     </li>`,
   )}</ul>`;
 }
@@ -298,7 +298,7 @@ function ratingRows({ r, t }: Ctx, keys: CharacteristicKey[]): SafeHtml {
 }
 
 function axlePair(t: Strings, front: string | null, rear: string | null): SafeHtml {
-  return html`<span class="e-axles"><span class="e-axle">${t.front}</span><span class="e-fig">${front ?? nd(t)}</span><span class="e-axle">${t.rear}</span><span class="e-fig">${rear ?? nd(t)}</span></span>`;
+  return html`<span class="e-axles"><span class="e-axle">${t.front}</span> <span class="e-fig">${front ?? nd(t)}</span> <span class="e-axle">${t.rear}</span> <span class="e-fig">${rear ?? nd(t)}</span></span>`;
 }
 
 const PANELS: Record<EmbedPanel, (c: Ctx) => SafeHtml> = {
@@ -331,8 +331,8 @@ const PANELS: Record<EmbedPanel, (c: Ctx) => SafeHtml> = {
         <p class="e-demand-title">${t.demandView[key]}</p>
         ${carPlanSvg(view, t.planLabel(t.demandView[key]))}
         <div class="e-demand-text">
-          <p class="e-demand-row"><span class="e-axle">${t.front}</span><span class="e-fig">${value(view.corners.FL.intensity, digits)}</span></p>
-          <p class="e-demand-row"><span class="e-axle">${t.rear}</span><span class="e-fig">${value(view.corners.RL.intensity, digits)}</span></p>
+          <p class="e-demand-row"><span class="e-axle">${t.front}</span> <span class="e-fig">${value(view.corners.FL.intensity, digits)}</span></p>
+          <p class="e-demand-row"><span class="e-axle">${t.rear}</span> <span class="e-fig">${value(view.corners.RL.intensity, digits)}</span></p>
         </div>
       </li>`;
     })}</ul>
@@ -363,7 +363,7 @@ const PANELS: Record<EmbedPanel, (c: Ctx) => SafeHtml> = {
     const c = r.circuit;
     const pit = c.pitStopLoss;
     const row = (label: string, value: string | null, note: string | null = null) =>
-      html`<div class="e-fact"><dt>${label}</dt><dd>${value ?? nd(t)}${value && note ? html`<span class="e-note">${note}</span>` : ''}</dd></div>`;
+      html`<div class="e-fact"><dt>${label}</dt> <dd>${value ?? nd(t)}${value && note ? html`<span class="e-note">${note}</span>` : ''}</dd></div>`;
     const map = track ? trackPathD(track) : null;
     return html`${
       map
@@ -430,7 +430,7 @@ export function renderEmbed(template: string, ctx: EmbedContext): string {
     <div class="e-body">${PANELS[panel](c)}</div>
     <footer class="e-foot">
       <p class="e-source">${t.source}: <a href="${safeUrl(r.source.articleUrl)}" target="_blank" rel="noopener external">Pirelli</a>${published ? ` · ${published}` : ''} · <span class="e-status" data-status="${r.validation.status}">${t.status[r.validation.status]}</span></p>
-      <p class="e-brand"><a href="${full}" target="_blank" rel="noopener"><span class="e-wordmark">F1 STORIES<span class="e-dot">.</span></span> ${t.open} ↗</a></p>
+      <p class="e-brand"><a href="${full}" target="_blank" rel="noopener"><span class="e-wordmark">F1 STORIES<span class="e-dot">.</span></span> <span class="e-open">${t.open} ↗</span><span class="e-site" hidden>Tyre Intelligence · ${ctx.siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span></a></p>
     </footer>
   </article></div>${panel === '3d' ? html`<script type="application/json" id="boot">${new SafeHtml(inlineJson({ record: r, track: ctx.track, lang }))}</script>` : ''}`;
   return template
@@ -476,7 +476,7 @@ export function embedReadout(
       (v) =>
         html`<button type="button" class="e-chip" data-view="${v}" aria-pressed="${String(v === view.carView)}">${t.demandView[v]}</button>`,
     )}</div>
-    <p class="e-values"><span class="e-axle">${t.front}</span><span class="e-fig">${shown('FL', p?.front)}</span><span class="e-axle">${t.rear}</span><span class="e-fig">${shown('RL', p?.rear)}</span></p>
+    <p class="e-values"><span class="e-axle">${t.front}</span> <span class="e-fig">${shown('FL', p?.front)}</span> <span class="e-axle">${t.rear}</span> <span class="e-fig">${shown('RL', p?.rear)}</span></p>
     <p class="e-derived">${view.carView === 'pressures' ? `${t.minPressure}. ${t.minPressureNote}.` : t.derived}</p>`;
   }
   if (view.mode === 'circuit') {

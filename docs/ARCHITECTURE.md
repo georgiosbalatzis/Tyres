@@ -132,6 +132,11 @@ the site's CSP and its author tool's iframe whitelist).
   one to the charcoal theme through CSS `:target` (`<div class="e-root" id="dark">`),
   with no script, no reload and the same height. f1stories.gr sets the fragment from its
   `data-theme` in `article-script.js` (`setupTyreEmbeds`, f1StoriesPage PR #235).
+- **Panel images** (social posts, newsletters): `scripts/og-images.ts` screenshots every
+  static panel in both languages from the built embed pages at deploy, into
+  `/img/{el|en}/{season}/{slug}/{panel}.png` (720 px panel + 40 px paper margin, at 2×;
+  the footer shows the site address instead of "Open in …"). The dialog's Image format
+  gives an `<img>` whose alt text is the panel's own text, read from the preview.
 - `3d` is the one embed with a script (`embed-3d.html` → `src/embed3d.ts`, CSP
   `script-src 'self'`). It arrives as a complete poster: mode tabs, the flat drawing
   on the dark bench, and the readout text (`embedReadout`, rendered at build time and

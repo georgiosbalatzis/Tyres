@@ -100,6 +100,11 @@
           <label><input type="radio" name="embed-panel" value="3d" /><span>3D view</span></label>
         </fieldset>
         <fieldset class="embed-choice">
+          <legend>Format</legend>
+          <label><input type="radio" name="embed-format" value="iframe" checked /><span>Iframe for articles</span></label>
+          <label><input type="radio" name="embed-format" value="image" /><span>Image for social and newsletters</span></label>
+        </fieldset>
+        <fieldset class="embed-choice">
           <legend>Language</legend>
           <label><input type="radio" name="embed-lang" value="el" checked /><span lang="el">Ελληνικά</span></label>
           <label><input type="radio" name="embed-lang" value="en" /><span>English</span></label>
@@ -108,6 +113,7 @@
         <textarea class="embed-code" id="embed-code" rows="3" readonly spellcheck="false"></textarea>
         <p class="embed-actions">
           <button type="button" class="embed-copy" id="embed-copy" disabled>Copy code</button>
+          <a class="embed-download" id="embed-download" href="%BASE_URL%" download hidden>Download image</a>
           <span class="embed-status" id="embed-status" role="status"></span>
         </p>
         <p class="embed-label">Preview, as it will appear in the article</p>

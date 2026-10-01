@@ -12,7 +12,9 @@ import { allRaces, neighbours, pickLatest, raceForYearChange, racesInYear } from
 import {
   type EmbedLang,
   type EmbedPanel,
+  embedImagePath,
   embedPath,
+  PANEL_IMAGE,
   parseLocation,
   racePath,
   resolveRequest,
@@ -468,6 +470,7 @@ function setupEmbedDialog() {
   const frame = $<HTMLIFrameElement>('#embed-preview');
   const code = $<HTMLTextAreaElement>('#embed-code');
   const copy = $<HTMLButtonElement>('#embed-copy');
+  const download = $<HTMLAnchorElement>('#embed-download');
   const status = $('#embed-status');
   const open = $<HTMLButtonElement>('#embed-open');
   if (!dialog || typeof dialog.showModal !== 'function') return;
@@ -476,13 +479,19 @@ function setupEmbedDialog() {
 
   const choice = (name: string) =>
     (dialog.querySelector(`input[name="${name}"]:checked`) as HTMLInputElement).value;
+  const imageInput = dialog.querySelector<HTMLInputElement>('input[name="embed-format"][value="image"]')!;
   const update = () => {
     if (!state.record) return;
+    // The 3D view has no still image.
+    imageInput.disabled = choice('embed-panel') === '3d';
+    if (imageInput.disabled && imageInput.checked)
+      dialog.querySelector<HTMLInputElement>('input[name="embed-format"][value="iframe"]')!.checked = true;
     src = new URL(
       embedPath(BASE, choice('embed-lang') as EmbedLang, state.record, choice('embed-panel') as EmbedPanel),
       location.href,
     ).href;
     copy.disabled = true;
+    download.hidden = true;
     status.textContent = '';
     code.value = '';
     frame.src = src;
@@ -490,17 +499,38 @@ function setupEmbedDialog() {
   frame.addEventListener('load', () => {
     const doc = frame.contentDocument;
     const panel = doc?.querySelector('.e');
-    if (!doc || !panel || !src) {
+    if (!doc || !panel || !src || !state.record) {
       code.value = '';
-      status.textContent = 'The preview couldn’t load.';
+      if (src) status.textContent = 'The preview couldn’t load.';
       return;
     }
     const height = Math.ceil(panel.getBoundingClientRect().height);
     frame.style.height = `${height}px`;
     const title = doc.title.replace(/ \| F1 Stories$/, '');
-    // Same shape as the other f1stories.gr tool embeds; html`` escapes every attribute value.
-    code.value =
-      html`<iframe src="${src}" title="${`${title} (F1 Stories Tyre Intelligence)`}" width="100%" height="${height}" loading="lazy" style="border:0;width:100%;max-width:100%;display:block;"></iframe>`.value;
+    if (choice('embed-format') === 'image') {
+      const img = new URL(
+        embedImagePath(
+          BASE,
+          choice('embed-lang') as EmbedLang,
+          state.record,
+          choice('embed-panel') as EmbedPanel,
+        ),
+        location.href,
+      ).href;
+      // Alt text = the panel's own text (full, even where the panel clips it), minus the brand line.
+      const text = panel.cloneNode(true) as HTMLElement;
+      for (const el of text.querySelectorAll('.e-brand, [aria-hidden="true"]')) el.remove();
+      const alt = (text.textContent ?? '').replace(/\s+/g, ' ').trim();
+      const { width, margin } = PANEL_IMAGE;
+      code.value =
+        html`<img src="${img}" alt="${alt}" width="${width + 2 * margin}" height="${height + 2 * margin}" loading="lazy" style="display:block;width:100%;max-width:${width + 2 * margin}px;height:auto;" />`.value;
+      download.href = img;
+      download.hidden = false;
+    } else {
+      // Same shape as the other f1stories.gr tool embeds; html`` escapes every attribute value.
+      code.value =
+        html`<iframe src="${src}" title="${`${title} (F1 Stories Tyre Intelligence)`}" width="100%" height="${height}" loading="lazy" style="border:0;width:100%;max-width:100%;display:block;"></iframe>`.value;
+    }
     copy.disabled = false;
   });
   open.addEventListener('click', () => {
@@ -509,8 +539,8 @@ function setupEmbedDialog() {
   });
   dialog.addEventListener('change', update);
   dialog.addEventListener('close', () => {
-    frame.src = 'about:blank';
     src = '';
+    frame.src = 'about:blank';
   });
   copy.addEventListener('click', async () => {
     try {

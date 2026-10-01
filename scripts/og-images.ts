@@ -1,13 +1,16 @@
 /**
- * Renders a 1200×630 social card per race into <out>/og/{season}/{slug}.png (default out: dist).
- * Run after `npm run build`; needs Playwright's Chromium (`npx playwright install chromium`).
+ * Renders, after `npm run build` (needs Playwright's Chromium: `npx playwright install chromium`):
+ *   - a 1200×630 social card per race into <out>/og/{season}/{slug}.png
+ *   - every static embed panel, both languages, as an image for social posts and newsletters into
+ *     <out>/img/{lang}/{season}/{slug}/{panel}.png, straight from the built embed pages (no server).
  *
- *   node scripts/og-images.ts [--out dist]
+ *   BASE_PATH=/Tyres/ node scripts/og-images.ts [--out dist]
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from '@playwright/test';
 import { Manifest, parseWith, RaceRecord, TrackShape } from '../src/domain/schema.ts';
+import { EMBED_LANGS, embedImagePath, embedPath, IMAGE_PANELS, PANEL_IMAGE } from '../src/domain/urlState.ts';
 import { ogCardHtml } from '../src/ui/ogCard.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -49,5 +52,51 @@ for (const summary of manifest.years.flatMap((y) => y.races)) {
   await writeFile(file, await page.screenshot({ type: 'png' }));
   count++;
 }
-await browser.close();
 console.log(`og: ${count} card(s) → ${path.relative(ROOT, path.join(OUT, 'og'))}/`);
+
+/* Panel images: load the built embed pages from <out>, mapping the site's base path onto it. */
+const BASE = (process.env.BASE_PATH ?? '/').replace(/\/?$/, '/');
+const ORIGIN = 'http://tyres.local';
+const TYPES: Record<string, string> = {
+  '.html': 'text/html',
+  '.css': 'text/css',
+  '.woff2': 'font/woff2',
+  '.svg': 'image/svg+xml',
+};
+const { width, margin, scale } = PANEL_IMAGE;
+const panels = await browser.newPage({
+  viewport: { width: width + 2 * margin, height: 1200 },
+  deviceScaleFactor: scale,
+});
+await panels.route(`${ORIGIN}/**`, async (route) => {
+  const rel = decodeURIComponent(new URL(route.request().url()).pathname).slice(BASE.length);
+  const file = path.join(OUT, rel.endsWith('/') || rel === '' ? `${rel}index.html` : rel);
+  try {
+    await route.fulfill({
+      body: await readFile(file),
+      contentType: TYPES[path.extname(file)] ?? 'application/octet-stream',
+    });
+  } catch {
+    await route.fulfill({ status: 404, body: '' });
+  }
+});
+let images = 0;
+for (const race of manifest.years.flatMap((y) => y.races)) {
+  for (const lang of EMBED_LANGS) {
+    for (const panel of IMAGE_PANELS) {
+      const res = await panels.goto(`${ORIGIN}${embedPath(BASE, lang, race, panel)}`);
+      if (!res?.ok()) throw new Error(`panel page missing: ${lang} ${race.id} ${panel}`);
+      // A still image can't be clicked: show the site address instead of "Open in …".
+      await panels.addStyleTag({
+        content: `.e-root{min-height:0;padding:${margin}px}.e-open{display:none}.e-site[hidden]{display:inline}`,
+      });
+      await panels.evaluate(() => document.fonts.ready);
+      const file = path.join(OUT, embedImagePath('', lang, race, panel));
+      await mkdir(path.dirname(file), { recursive: true });
+      await writeFile(file, await panels.locator('.e-root').screenshot({ type: 'png' }));
+      images++;
+    }
+  }
+}
+await browser.close();
+console.log(`img: ${images} panel image(s) → ${path.relative(ROOT, path.join(OUT, 'img'))}/`);

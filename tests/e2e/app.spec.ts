@@ -277,3 +277,19 @@ test('embeds switch to the dark theme with #dark, without a reload or a height c
   expect(await height()).toBe(light);
   expect(await page.evaluate(() => (window as Window & { marker?: number }).marker)).toBe(1);
 });
+
+test('the Embed dialog offers a panel image with alt text from the panel', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'The embed tool is desktop-only.');
+  await page.goto(BASE);
+  await page.getByRole('button', { name: 'Embed' }).click();
+  const dialog = page.locator('#embed-dialog');
+  await dialog.getByText('Image for social and newsletters').click();
+  await expect(page.getByRole('button', { name: 'Copy code' })).toBeEnabled();
+  const snippet = await page.locator('#embed-code').inputValue();
+  expect(snippet).toMatch(/^<img src="http:\/\/localhost:\d+\/Tyres\/img\/el\/2026\/sepang\/summary\.png"/);
+  expect(snippet).toContain('alt="Ελαστικά αγώνα');
+  expect(snippet).toContain('Πηγή: Pirelli');
+  await expect(page.locator('#embed-download')).toBeVisible();
+  await dialog.getByText('3D view', { exact: true }).click();
+  await expect(dialog.locator('input[value="image"]')).toBeDisabled();
+});
