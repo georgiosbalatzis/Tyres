@@ -114,7 +114,7 @@ f1stories.gr articles embed single panels as iframes, the same way they embed th
 telemetry dashboard and ghostcar (`georgiosbalatzis.github.io` is already allowed by
 the site's CSP and its author tool's iframe whitelist).
 
-- `/embed/{el|en}/{season}/{slug}/{summary|compounds|demands|setup|circuit}/` is
+- `/embed/{el|en}/{season}/{slug}/{summary|compounds|demands|car|setup|circuit}/` is
   prerendered for every race from `embed.html` + `src/ui/embed.ts` +
   `src/styles/embed.css`. Language is a path segment (not `?lang=`) so the pages stay
   static and script-free (`script-src 'none'`), `noindex`, canonical to the race page.
@@ -125,6 +125,9 @@ the site's CSP and its author tool's iframe whitelist).
   e2e test enforces it. No script on f1stories.gr is needed.
 - Every embed shows its source, publication date and data status, and links to the
   full race page.
+- `car` (tyre demand by corner) is the derived visualisation as four small car plans
+  (longitudinal, lateral, tyre stress, braking/traction) with front and rear values as
+  text, and always carries the "Derived visualisation … not temperature" label.
 - The "Embed" dialog on the main page (desktop) previews a panel, measures its height
   from the same-origin preview and copies a ready iframe snippet.
 - Dev: `npm run dev` serves embed routes on the fly (see `configureServer` in

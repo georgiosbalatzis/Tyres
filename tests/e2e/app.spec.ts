@@ -208,7 +208,7 @@ test('opens in the light theme and remembers a switch to dark', async ({ page })
 
 test('article embeds keep one height at every width and load without errors', async ({ page }) => {
   const errors = trackConsole(page);
-  for (const panel of ['summary', 'compounds', 'demands', 'setup', 'circuit']) {
+  for (const panel of ['summary', 'compounds', 'demands', 'car', 'setup', 'circuit']) {
     const heights: number[] = [];
     for (const width of [300, 968]) {
       await page.setViewportSize({ width, height: 900 });

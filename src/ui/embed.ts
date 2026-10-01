@@ -3,12 +3,22 @@
  * f1stories.gr articles. Every panel keeps the same height at any width ≥ 300 px, so a fixed
  * iframe height fits (the copy dialog measures it; tests/e2e checks it stays constant).
  */
+import { type CarView, deriveView, HEAT_STOPS } from '../domain/derivedMetrics.ts';
 import { characteristicsFor, RACE_LABEL_ORDER } from '../domain/format.ts';
 import type { CharacteristicKey, DataStatus, RaceRecord, TrackShape } from '../domain/schema.ts';
 import { type EmbedLang, type EmbedPanel, racePath } from '../domain/urlState.ts';
-import { trackPathD } from './fallbackSvg.ts';
+import { carPlanSvg, trackPathD } from './fallbackSvg.ts';
 import { escapeHtml, html, type SafeHtml, safeUrl } from './html.ts';
 import { sortedCompounds } from './templates.ts';
+
+/** The four rating-based views; pressures are official values and live in the setup panel. */
+const DEMAND_VIEWS = [
+  'longitudinal',
+  'lateral',
+  'stress',
+  'brakingTraction',
+] as const satisfies readonly CarView[];
+type DemandView = (typeof DEMAND_VIEWS)[number];
 
 interface Strings {
   locale: string;
@@ -38,6 +48,12 @@ interface Strings {
   noTrack: string;
   source: string;
   open: string;
+  demandView: Record<DemandView, string>;
+  planLabel: (view: string) => string;
+  low: string;
+  high: string;
+  derived: string;
+  method: string;
 }
 
 /* Greek glossary: editorial choices, kept in one place so they are easy to review. */
@@ -48,6 +64,7 @@ const STRINGS: Record<EmbedLang, Strings> = {
       summary: 'Ελαστικά αγώνα',
       compounds: 'Γόμες αγώνα',
       demands: 'Απαιτήσεις πίστας',
+      car: 'Απαίτηση ανά ελαστικό',
       setup: 'Όρια ρυθμίσεων',
       circuit: 'Η πίστα',
     },
@@ -91,6 +108,19 @@ const STRINGS: Record<EmbedLang, Strings> = {
     noTrack: 'Δεν υπάρχει ακόμη χάρτης της πίστας.',
     source: 'Πηγή',
     open: 'Άνοιγμα στο Tyre Intelligence',
+    demandView: {
+      longitudinal: 'Διαμήκη φορτία',
+      lateral: 'Πλευρικά φορτία',
+      stress: 'Καταπόνηση ελαστικών',
+      brakingTraction: 'Φρενάρισμα / πρόσφυση',
+    },
+    planLabel: (view) => `Κάτοψη μονοθεσίου: ${view} ανά ελαστικό`,
+    low: 'Χαμηλή',
+    high: 'Υψηλή απαίτηση',
+    // The required "Derived visualisation" label (CLAUDE.md), in Greek.
+    derived:
+      'Παράγωγη απεικόνιση με βάση τα χαρακτηριστικά πίστας της Pirelli. Τα χρώματα δείχνουν σχετική απαίτηση, όχι θερμοκρασία.',
+    method: 'Μέθοδος',
   },
   en: {
     locale: 'en-GB',
@@ -98,6 +128,7 @@ const STRINGS: Record<EmbedLang, Strings> = {
       summary: 'Race tyres',
       compounds: 'Weekend compounds',
       demands: 'Track demands',
+      car: 'Tyre demand by corner',
       setup: 'Setup limits',
       circuit: 'Circuit',
     },
@@ -140,6 +171,18 @@ const STRINGS: Record<EmbedLang, Strings> = {
     noTrack: 'Track outline not available yet.',
     source: 'Source',
     open: 'Open in Tyre Intelligence',
+    demandView: {
+      longitudinal: 'Longitudinal',
+      lateral: 'Lateral',
+      stress: 'Tyre stress',
+      brakingTraction: 'Braking / traction',
+    },
+    planLabel: (view) => `Car plan view: ${view} by tyre`,
+    low: 'Low',
+    high: 'High demand',
+    derived:
+      'Derived visualisation based on Pirelli circuit characteristics. Colours show relative demand, not temperature.',
+    method: 'Method',
   },
 };
 
@@ -176,6 +219,8 @@ function fmt(t: Strings) {
 /* ------------------------------------------------------------------ panels */
 
 interface Ctx {
+  /** Absolute URL of the full race page. */
+  full: string;
   r: RaceRecord;
   track: TrackShape | null;
   t: Strings;
@@ -214,6 +259,26 @@ function axlePair(t: Strings, front: string | null, rear: string | null): SafeHt
 
 const PANELS: Record<EmbedPanel, (c: Ctx) => SafeHtml> = {
   compounds: (c) => compoundRow(c),
+
+  // Derived visualisation: the same mapping as the 3D car (derivedMetrics.ts), front and rear as text.
+  car: ({ r, t, f, full }) => {
+    const value = (v: number | null, digits: number) =>
+      v == null ? nd(t) : html`${f.num(1 + 4 * v, digits)}<span class="e-of">/5</span>`;
+    return html`<ul class="e-demand">${DEMAND_VIEWS.map((key) => {
+      const view = deriveView(r, key);
+      const digits = key === 'longitudinal' ? 1 : 0;
+      return html`<li>
+        <p class="e-demand-title">${t.demandView[key]}</p>
+        ${carPlanSvg(view, t.planLabel(t.demandView[key]))}
+        <div class="e-demand-text">
+          <p class="e-demand-row"><span class="e-axle">${t.front}</span><span class="e-fig">${value(view.corners.FL.intensity, digits)}</span></p>
+          <p class="e-demand-row"><span class="e-axle">${t.rear}</span><span class="e-fig">${value(view.corners.RL.intensity, digits)}</span></p>
+        </div>
+      </li>`;
+    })}</ul>
+    <p class="e-legend" aria-hidden="true"><span>${t.low}</span><span class="e-legend-bar" style="background:linear-gradient(90deg,${HEAT_STOPS.join(',')})"></span><span>${t.high}</span></p>
+    <p class="e-derived">${t.derived} <a href="${full}" target="_blank" rel="noopener">${t.method} ↗</a></p>`;
+  },
 
   demands: (c) =>
     html`<p class="e-caption">${c.t.ratingScale}</p>${ratingRows(
@@ -289,8 +354,8 @@ export interface EmbedContext {
 export function renderEmbed(template: string, ctx: EmbedContext): string {
   const { record: r, panel, lang } = ctx;
   const t = STRINGS[lang];
-  const c: Ctx = { r, track: ctx.track, t, f: fmt(t) };
   const full = new URL(racePath('', r), ctx.siteUrl).href;
+  const c: Ctx = { full, r, track: ctx.track, t, f: fmt(t) };
   const published = c.f.published(r.source.publishedAt);
   const title = `${t.panel[panel]}: ${r.race.name} ${r.season}`;
   const head = html`<title>${title} | F1 Stories</title>

@@ -1,15 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { embedPath } from '../../src/domain/urlState.ts';
+import { type EmbedPanel, embedPath } from '../../src/domain/urlState.ts';
 import { renderEmbed } from '../../src/ui/embed.ts';
 import { fixtureRace } from '../fixtures/races.ts';
 
 const TEMPLATE =
   '<!doctype html><html lang="en-GB"><head><title>x</title><!--embed:head--></head><body><!--embed:body--></body></html>';
-const render = (
-  panel: 'summary' | 'compounds' | 'demands' | 'setup' | 'circuit',
-  lang: 'el' | 'en',
-  r = fixtureRace(),
-) =>
+const render = (panel: EmbedPanel, lang: 'el' | 'en', r = fixtureRace()) =>
   renderEmbed(TEMPLATE, {
     record: r,
     track: null,
@@ -57,5 +53,16 @@ describe('article embeds', () => {
     expect(doc).toContain('href="https://example.test/Tyres/');
     expect(doc).toContain('noindex');
     expect(doc).not.toContain('<script');
+  });
+
+  it('labels the tyre-demand panel as derived, never as temperature, and keeps gaps visible', () => {
+    const r = fixtureRace();
+    r.characteristics.traction = null;
+    const en = render('car', 'en', r);
+    expect(en).toContain('Derived visualisation based on Pirelli circuit characteristics');
+    expect(en).toContain('not temperature');
+    // Longitudinal needs both braking and traction: without traction it is not provided, not guessed.
+    expect(en).toMatch(/Longitudinal<\/p>[\s\S]*?Not provided/);
+    expect(render('car', 'el', r)).toContain('Παράγωγη απεικόνιση');
   });
 });

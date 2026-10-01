@@ -44,14 +44,16 @@ const TYRE_RECT: Record<Corner, [number, number, number, number]> = {
 };
 
 /** Plan view of a generic single-seater, nose up. Tyre fills come from the derived view. */
-export function carPlanSvg(view: DerivedView | null): SafeHtml {
+export function carPlanSvg(
+  view: DerivedView | null,
+  label = 'Plan view of a generic Formula 1 car with tyres coloured by the selected derived view',
+): SafeHtml {
   const tyre = (c: Corner) => {
     const [x, y, w, h] = TYRE_RECT[c];
     const fill = heatColour(view?.corners[c].intensity ?? null);
     return html`<rect class="plan-tyre" data-corner="${c}" x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill="${fill}" />`;
   };
-  return html`<svg class="fallback-car" viewBox="0 0 240 470" role="img"
-      aria-label="Plan view of a generic Formula 1 car with tyres coloured by the selected derived view">
+  return html`<svg class="fallback-car" viewBox="0 0 240 470" role="img" aria-label="${label}">
     <g class="plan-body">
       <path d="M36 44h168v14H36z" />
       <path d="M112 28h16l6 150h-28z" />
