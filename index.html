@@ -49,6 +49,10 @@
           <label class="field field-race"><span class="field-label">Race</span><select id="race" disabled></select></label>
           <!--app:stepper-->
         </nav>
+        <button type="button" class="step embed-open" id="embed-open" aria-haspopup="dialog" hidden>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6 3 10l4 4M13 6l4 4-4 4" /></svg>
+          <span>Embed</span>
+        </button>
       </div>
 
       <div class="notice" id="notice" role="status" aria-live="polite"><!--app:notice--></div>
@@ -77,6 +81,37 @@
         </div>
       </div>
     </footer>
+    <dialog class="embed-dialog" id="embed-dialog" aria-labelledby="embed-title">
+      <form method="dialog" class="embed-form">
+        <header class="embed-head">
+          <h2 id="embed-title" class="section-title">Embed in an article</h2>
+          <button type="submit" class="tool" aria-label="Close">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15" /></svg>
+          </button>
+        </header>
+        <fieldset class="embed-choice">
+          <legend>Panel</legend>
+          <label><input type="radio" name="embed-panel" value="summary" checked autofocus /><span>Summary</span></label>
+          <label><input type="radio" name="embed-panel" value="compounds" /><span>Compounds</span></label>
+          <label><input type="radio" name="embed-panel" value="demands" /><span>Track demands</span></label>
+          <label><input type="radio" name="embed-panel" value="setup" /><span>Setup limits</span></label>
+          <label><input type="radio" name="embed-panel" value="circuit" /><span>Circuit</span></label>
+        </fieldset>
+        <fieldset class="embed-choice">
+          <legend>Language</legend>
+          <label><input type="radio" name="embed-lang" value="el" checked /><span lang="el">Ελληνικά</span></label>
+          <label><input type="radio" name="embed-lang" value="en" /><span>English</span></label>
+        </fieldset>
+        <label class="embed-label" for="embed-code">Code for the article</label>
+        <textarea class="embed-code" id="embed-code" rows="3" readonly spellcheck="false"></textarea>
+        <p class="embed-actions">
+          <button type="button" class="embed-copy" id="embed-copy" disabled>Copy code</button>
+          <span class="embed-status" id="embed-status" role="status"></span>
+        </p>
+        <p class="embed-label">Preview, as it will appear in the article</p>
+        <iframe class="embed-preview" id="embed-preview" title="Embed preview"></iframe>
+      </form>
+    </dialog>
     <p class="visually-hidden" id="announcer" aria-live="polite"></p>
     <!--app:boot-->
     <script type="module" src="/src/main.ts"></script>

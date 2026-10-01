@@ -9,7 +9,14 @@ import {
   type TrackShape,
 } from '../domain/schema.ts';
 import { allRaces, neighbours, pickLatest, raceForYearChange, racesInYear } from '../domain/selection.ts';
-import { parseLocation, racePath, resolveRequest } from '../domain/urlState.ts';
+import {
+  type EmbedLang,
+  type EmbedPanel,
+  embedPath,
+  parseLocation,
+  racePath,
+  resolveRequest,
+} from '../domain/urlState.ts';
 import type { Viewer } from '../three/viewer.ts';
 import { html, setHtml } from './html.ts';
 import { describe, SITE_NAME } from './page.ts';
@@ -449,6 +456,73 @@ function setupViewer() {
 
 const latestOf = (m: Manifest) => allRaces(m).find((r) => r.id === m.latest) ?? pickLatest(allRaces(m));
 
+/* ------------------------------------------------------------------ article embeds */
+
+/**
+ * The "Embed" dialog: pick a panel and language, preview the script-free embed page, copy an iframe
+ * snippet for an f1stories.gr article. The height comes from the preview itself (same origin), and
+ * embed panels are built to keep that height at every width.
+ */
+function setupEmbedDialog() {
+  const dialog = $<HTMLDialogElement>('#embed-dialog');
+  const frame = $<HTMLIFrameElement>('#embed-preview');
+  const code = $<HTMLTextAreaElement>('#embed-code');
+  const copy = $<HTMLButtonElement>('#embed-copy');
+  const status = $('#embed-status');
+  const open = $<HTMLButtonElement>('#embed-open');
+  if (!dialog || typeof dialog.showModal !== 'function') return;
+  open.hidden = false;
+  let src = '';
+
+  const choice = (name: string) =>
+    (dialog.querySelector(`input[name="${name}"]:checked`) as HTMLInputElement).value;
+  const update = () => {
+    if (!state.record) return;
+    src = new URL(
+      embedPath(BASE, choice('embed-lang') as EmbedLang, state.record, choice('embed-panel') as EmbedPanel),
+      location.href,
+    ).href;
+    copy.disabled = true;
+    status.textContent = '';
+    code.value = '';
+    frame.src = src;
+  };
+  frame.addEventListener('load', () => {
+    const doc = frame.contentDocument;
+    const panel = doc?.querySelector('.e');
+    if (!doc || !panel || !src) {
+      code.value = '';
+      status.textContent = 'The preview couldn’t load.';
+      return;
+    }
+    const height = Math.ceil(panel.getBoundingClientRect().height);
+    frame.style.height = `${height}px`;
+    const title = doc.title.replace(/ \| F1 Stories$/, '');
+    // Same shape as the other f1stories.gr tool embeds; html`` escapes every attribute value.
+    code.value =
+      html`<iframe src="${src}" title="${`${title} (F1 Stories Tyre Intelligence)`}" width="100%" height="${height}" loading="lazy" style="border:0;width:100%;max-width:100%;display:block;"></iframe>`.value;
+    copy.disabled = false;
+  });
+  open.addEventListener('click', () => {
+    update();
+    dialog.showModal();
+  });
+  dialog.addEventListener('change', update);
+  dialog.addEventListener('close', () => {
+    frame.src = 'about:blank';
+    src = '';
+  });
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(code.value);
+      status.textContent = 'Copied. Paste it into the article.';
+    } catch {
+      code.select();
+      status.textContent = 'Copy blocked by the browser. The code is selected: press Ctrl/⌘ + C.';
+    }
+  });
+}
+
 export async function start() {
   window.addEventListener('unhandledrejection', (e) => {
     console.warn('Unhandled:', e.reason);
@@ -477,6 +551,7 @@ export async function start() {
     navToken: 0,
   };
   bindEvents();
+  setupEmbedDialog();
 
   try {
     const parsed = parseWith(ManifestSchema, await fetchJson(`${BASE}data/manifest.json`));

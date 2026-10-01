@@ -54,3 +54,20 @@ export function resolveRequest(manifest: Manifest, req: Requested, latest: Manif
 export function racePath(base: string, race: Pick<ManifestRace, 'season' | 'slug'>): string {
   return `${base}${race.season}/${race.slug}/`;
 }
+
+/* ------------------------------------------------------------------ article embeds */
+
+export const EMBED_LANGS = ['el', 'en'] as const;
+export type EmbedLang = (typeof EMBED_LANGS)[number];
+export const EMBED_PANELS = ['summary', 'compounds', 'demands', 'setup', 'circuit'] as const;
+export type EmbedPanel = (typeof EMBED_PANELS)[number];
+
+/** Script-free embed page for f1stories.gr articles: /embed/{lang}/{season}/{slug}/{panel}/ */
+export function embedPath(
+  base: string,
+  lang: EmbedLang,
+  race: Pick<ManifestRace, 'season' | 'slug'>,
+  panel: EmbedPanel,
+) {
+  return `${base}embed/${lang}/${race.season}/${race.slug}/${panel}/`;
+}

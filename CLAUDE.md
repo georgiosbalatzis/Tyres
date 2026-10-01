@@ -26,6 +26,13 @@ Tyre colours: hard `--c-hard` white, medium `--c-medium` yellow, soft `--c-soft`
 IBM Plex Sans (400–600) for text, tabular figures, no monospace; Barlow Condensed 700 only for the wordmark and hero word.
 Uppercase, letter-spaced only for kickers, section titles, mode tabs and compound names. See `docs/DESIGN-SYSTEM.md`.
 
+## Article embeds
+
+`/embed/{el|en}/{season}/{slug}/{panel}/` pages (`src/ui/embed.ts`, `src/styles/embed.css`) are iframed into
+f1stories.gr articles. Keep them script-free, keep provenance and status in the footer, and keep every row a
+fixed height that never wraps, so a panel's height is the same at every width (an e2e test checks it).
+Greek wording lives only in `STRINGS` in `src/ui/embed.ts`.
+
 ## Commands
 
 ```

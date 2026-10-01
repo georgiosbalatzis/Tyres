@@ -205,3 +205,41 @@ test('opens in the light theme and remembers a switch to dark', async ({ page })
   await toggle.click();
   await expect(root).not.toHaveAttribute('data-theme');
 });
+
+test('article embeds keep one height at every width and load without errors', async ({ page }) => {
+  const errors = trackConsole(page);
+  for (const panel of ['summary', 'compounds', 'demands', 'setup', 'circuit']) {
+    const heights: number[] = [];
+    for (const width of [300, 968]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(`${BASE}embed/el/2026/sepang/${panel}/`);
+      await page.evaluate(() => document.fonts.ready);
+      heights.push(await page.locator('.e').evaluate((e) => Math.ceil(e.getBoundingClientRect().height)));
+    }
+    expect(heights[0], panel).toBe(heights[1]);
+  }
+  await expect(page.locator('html')).toHaveAttribute('lang', 'el');
+  expect(errors).toEqual([]);
+});
+
+test('the Embed dialog copies an iframe snippet for the current race', async ({
+  page,
+  context,
+  isMobile,
+}) => {
+  test.skip(isMobile, 'The embed tool is desktop-only.');
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.goto(BASE);
+  await page.getByRole('button', { name: 'Embed' }).click();
+  await page.locator('#embed-dialog').getByText('Track demands', { exact: true }).click();
+  const copy = page.getByRole('button', { name: 'Copy code' });
+  await expect(copy).toBeEnabled();
+  await copy.click();
+  await expect(page.locator('#embed-status')).toContainText('Copied');
+  const snippet = await page.evaluate(() => navigator.clipboard.readText());
+  expect(snippet).toMatch(
+    /^<iframe src="http:\/\/localhost:\d+\/Tyres\/embed\/el\/2026\/sepang\/demands\/" title="[^"]+" width="100%" height="\d+"/,
+  );
+  const height = Number(/height="(\d+)"/.exec(snippet)![1]);
+  expect(height).toBeGreaterThan(200);
+});

@@ -108,6 +108,28 @@ src/
 - `404.html` is a copy of the index shell: unknown paths show the latest race
   with a "page not found" notice instead of a blank GitHub 404.
 
+## Article embeds
+
+f1stories.gr articles embed single panels as iframes, the same way they embed the
+telemetry dashboard and ghostcar (`georgiosbalatzis.github.io` is already allowed by
+the site's CSP and its author tool's iframe whitelist).
+
+- `/embed/{el|en}/{season}/{slug}/{summary|compounds|demands|setup|circuit}/` is
+  prerendered for every race from `embed.html` + `src/ui/embed.ts` +
+  `src/styles/embed.css`. Language is a path segment (not `?lang=`) so the pages stay
+  static and script-free (`script-src 'none'`), `noindex`, canonical to the race page.
+- Greek labels, number and date formats live in `STRINGS` in `src/ui/embed.ts` (one
+  glossary to review). Pirelli's own names (races, circuits) stay as published.
+- **Fixed height:** every row has a fixed height and never wraps (ellipsis), so a
+  panel is equally tall at 300 px and 968 px and a fixed iframe `height` fits. An
+  e2e test enforces it. No script on f1stories.gr is needed.
+- Every embed shows its source, publication date and data status, and links to the
+  full race page.
+- The "Embed" dialog on the main page (desktop) previews a panel, measures its height
+  from the same-origin preview and copies a ready iframe snippet.
+- Dev: `npm run dev` serves embed routes on the fly (see `configureServer` in
+  `vite.config.ts`).
+
 ## GitHub Pages base path
 
 Project sites live under `/<repo>/`. Vite's `base` is read from `BASE_PATH`

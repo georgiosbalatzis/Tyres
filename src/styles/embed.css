@@ -1,0 +1,396 @@
+@import "./tokens.css";
+
+/*
+ * Article embeds. Rule: every row has a fixed height and never wraps (long text is clipped with an
+ * ellipsis), so a panel is exactly as tall at 300 px as at 968 px and a fixed iframe height fits.
+ * Paper background matches f1stories.gr's light article page.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--c-bg);
+}
+
+body {
+  min-width: 300px;
+  color: var(--c-text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+p,
+ul,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--c-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+/* One line, always: the heart of the fixed-height rule. */
+.e-kicker,
+.e-race,
+.e-title,
+.e-venue,
+.e-caption,
+.e-rating-label,
+.e-compound-label,
+.e-pair dt,
+.e-fact dt,
+.e-fact dd,
+.e-source,
+.e-brand,
+.e-empty {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.e {
+  container-type: inline-size;
+  border-top: 1px solid var(--c-ink);
+}
+
+.e-head {
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  height: 58px;
+  border-bottom: 1px solid var(--c-rule);
+}
+
+.e-kicker {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+}
+
+.e-race {
+  color: var(--c-text-2);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.e-body {
+  padding: 12px 0;
+}
+
+.e-caption {
+  height: 24px;
+  color: var(--c-text-2);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.e-caption-aside {
+  margin-left: 0.5em;
+  opacity: 0.8;
+}
+
+.e-nd {
+  color: var(--c-text-2);
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.e-note {
+  margin-left: 0.6em;
+  color: var(--c-text-2);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* ---------- identity (summary) */
+
+.e-identity {
+  height: 58px;
+  margin-bottom: 8px;
+}
+
+.e-title {
+  font-size: min(24px, 7.2cqi);
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: -0.02em;
+}
+
+.e-venue {
+  color: var(--c-text-2);
+  font-size: 13px;
+  line-height: 22px;
+}
+
+/* ---------- compounds */
+
+.e-compounds {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  height: 64px;
+  margin-bottom: 8px;
+}
+
+.e-compounds li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.e-disc {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 6px solid #0c0d0e;
+  box-shadow:
+    inset 0 0 0 4px var(--tone),
+    inset 0 0 0 8px #0c0d0e;
+  background: #24282d;
+  color: #eee8db;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.e-compound {
+  display: grid;
+  min-width: 0;
+}
+
+.e-compound-label {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+}
+
+/* Narrow columns: smaller disc and tighter tracking so HARD/MEDIUM/SOFT (and Greek) stay whole. */
+@container (max-width: 400px) {
+  .e-compounds li {
+    gap: 6px;
+  }
+  .e-disc {
+    width: 40px;
+    height: 40px;
+    border-width: 5px;
+    font-size: 12px;
+  }
+  .e-compound-label {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+}
+
+[data-label="hard"] .e-compound-label {
+  color: var(--c-hard-text);
+}
+[data-label="medium"] .e-compound-label {
+  color: var(--c-medium-text);
+}
+[data-label="soft"] .e-compound-label {
+  color: var(--c-soft-text);
+}
+
+.e-compound-id {
+  color: var(--c-text-2);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* ---------- ratings */
+
+.e-ratings {
+  max-width: 560px;
+}
+
+.e-ratings li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 76px 44px;
+  gap: 12px;
+  align-items: center;
+  height: 30px;
+}
+
+.e-scale {
+  height: 12px;
+  background: linear-gradient(90deg, var(--heat) calc(var(--v) * 20%), var(--c-rule) 0);
+  mask: repeating-linear-gradient(90deg, #000 0 calc(20% - 3px), transparent calc(20% - 3px) 20%);
+}
+
+.e-rating-value {
+  justify-self: end;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.e-of {
+  color: var(--c-text-2);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* ---------- setup pairs */
+
+.e-pair {
+  height: 52px;
+}
+
+.e-pair + .e-pair {
+  margin-top: 6px;
+}
+
+.e-pair dt {
+  color: var(--c-text-2);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.e-pairs-inline .e-pair {
+  height: 52px;
+  margin-top: 6px;
+  border-top: 1px solid var(--c-rule);
+  padding-top: 4px;
+}
+
+.e-axles {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  height: 32px;
+  white-space: nowrap;
+}
+
+.e-axle {
+  color: var(--c-text-2);
+  font-size: 12px;
+}
+
+.e-fig {
+  min-width: 6.5em;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+/* ---------- circuit */
+
+.e-map {
+  display: block;
+  width: 100%;
+  height: 150px;
+  margin-bottom: 8px;
+}
+
+p.e-map {
+  display: grid;
+  place-items: center;
+  color: var(--c-text-2);
+  font-size: 13px;
+  border: 1px dashed var(--c-rule);
+}
+
+.e-map-casing {
+  fill: none;
+  stroke: var(--c-rule);
+  stroke-width: 34;
+  stroke-linejoin: round;
+}
+
+.e-map-line {
+  fill: none;
+  stroke: var(--c-ink);
+  stroke-width: 11;
+  stroke-linejoin: round;
+}
+
+/* One grid for all rows: the label column fits the longest label, the value side clips its note. */
+.e-facts {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  grid-auto-rows: 28px;
+  column-gap: 16px;
+  align-items: baseline;
+}
+
+.e-fact {
+  display: contents;
+}
+
+.e-fact dt {
+  color: var(--c-text-2);
+  font-size: 13px;
+}
+
+.e-fact dd {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ---------- footer: provenance, always visible */
+
+.e-foot {
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  height: 52px;
+  border-top: 1px solid var(--c-rule);
+  color: var(--c-text-2);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.e-status[data-status="verified"] {
+  color: var(--c-text);
+  font-weight: 600;
+}
+
+.e-brand a {
+  text-decoration: none;
+}
+
+.e-brand a:hover {
+  text-decoration: underline;
+}
+
+.e-wordmark {
+  color: var(--c-text);
+  font-family: var(--font-brand);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.e-dot {
+  color: var(--c-signal);
+}

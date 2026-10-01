@@ -71,7 +71,8 @@ self-hosted.
 | Figures (specs) | Plex 600, tabular-nums, `--fs-figure` |
 | Unit / caption | Plex 400–500, .8125rem, `--c-text-2` |
 
-No monospace; tabular figures do the alignment work.
+No monospace; tabular figures do the alignment work. The one exception is the
+embed dialog's code box, which shows HTML to copy.
 
 ## Spacing, grid, rules
 
