@@ -193,19 +193,43 @@ test('every prerendered page has resolved asset URLs', async ({ request }) => {
   }
 });
 
-test('opens in the light theme and remembers a switch to dark', async ({ page }) => {
-  await page.goto(BASE);
+test('follows the OS and remembers the choice under f1stories-theme', async ({ page }) => {
   const root = page.locator('html');
-  await expect(root).not.toHaveAttribute('data-theme');
+  const stored = () => page.evaluate(() => localStorage.getItem('f1stories-theme'));
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.goto(BASE);
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.reload();
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  expect(await stored()).toBeNull(); // only the toggle writes
   const toggle = page.getByRole('button', { name: 'Dark theme' });
   await expect(toggle).toHaveAttribute('aria-pressed', 'false');
   await toggle.click();
   await expect(root).toHaveAttribute('data-theme', 'dark');
-  await page.reload();
+  expect(await stored()).toBe('dark');
+  await page.reload(); // the OS still says light; the stored choice wins
   await expect(root).toHaveAttribute('data-theme', 'dark');
   await expect(toggle).toHaveAttribute('aria-pressed', 'true');
-  await toggle.click();
-  await expect(root).not.toHaveAttribute('data-theme');
+});
+
+test('migrates the legacy theme key once and leaves foreign values alone', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (!sessionStorage.getItem('seeded')) {
+      sessionStorage.setItem('seeded', '1');
+      localStorage.setItem('theme', 'dark');
+    }
+  });
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.goto(BASE);
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  expect(
+    await page.evaluate(() => [localStorage.getItem('f1stories-theme'), localStorage.getItem('theme')]),
+  ).toEqual(['dark', null]);
+  await page.evaluate(() => localStorage.setItem('f1stories-theme', 'auto'));
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light'); // 'auto' means follow the OS
+  expect(await page.evaluate(() => localStorage.getItem('f1stories-theme'))).toBe('auto');
 });
 
 test('article embeds keep one height at every width and load without errors', async ({ page }) => {

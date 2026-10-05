@@ -7,7 +7,7 @@ Status list below up to date in this file as part of each phase's commit. Read t
 ## Status
 
 - [x] Phase 0 — Branch, references, baseline captures
-- [ ] Phase 1 — Tokens and theme contract
+- [x] Phase 1 — Tokens and theme contract
 - [ ] Phase 2 — One strings module, Greek UI copy
 - [ ] Phase 3 — Site shell: masthead, Race Desk hero, signal band, sponsors, colophon, countdown
 - [ ] Phase 4 — Product body: scope row, context row, tabs, stage + sidebar, panels, archive
@@ -112,7 +112,7 @@ Edit the `:root` block. **Values must equal the canonical ones**:
 
 Then:
 
-- Remove `.colophon` from the charcoal selector list (`:root[data-theme="dark"], .canvas-host, .colophon, .e-root:target`).
+- **Deferred to Phase 3:** remove `.colophon` from the charcoal selector list (the old colophon still needs it until it is replaced). Then remove `.colophon` from the charcoal selector list (`:root[data-theme="dark"], .canvas-host, .colophon, .e-root:target`).
   The canonical colophon is the fixed **ink** block (`--c-colophon-bg`), not charcoal. Keep `.canvas-host` and `.e-root:target`.
 - Update the header comment: "Values mirror f1StoriesPage/docs/design-tokens.md. Light values on :root; the dark edition on
   `[data-theme="dark"]`. `public/theme.js` always sets data-theme explicitly (dark when nothing else applies)."
