@@ -88,7 +88,7 @@ Then `npm run data:build` merges, validates and writes the publishable dataset.
   never to `main`.
 
 A new race with only partial data still publishes: compounds and circuit length
-from the text appear; everything else reads "Not provided" and the status badge
+from the text appear; everything else reads "Δεν δόθηκε" (Not provided) and the status badge
 says the record is awaiting review.
 
 ## Automation

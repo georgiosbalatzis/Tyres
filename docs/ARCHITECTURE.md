@@ -5,9 +5,12 @@
 - **Static GitHub Pages.** No runtime backend, no runtime scraping, no CORS
   dependency. The browser only ever loads files from our own origin.
 - **Official provenance.** Every value comes from Pirelli (or is explicitly
-  labelled as derived). Missing is shown as "Not provided", never as 0.
+  labelled as derived). Missing is shown as "Δεν δόθηκε" (Not provided), never as 0.
 - **3D is progressive enhancement.** The page is complete, readable and
   indexable before Three.js loads, and remains so if it never does.
+- **Part of the F1 Stories family.** The page wears the f1stories.gr shell (masthead, Race Desk hero,
+  signal band, sponsors, colophon) and its theme contract; see `docs/DESIGN-SYSTEM.md`. The shell is
+  copied from the main site and Telemetry, not imported: the apps are separate deployments.
 
 ```
 press.pirelli.com ──► scripts/update-pirelli.ts ──► data/generated/{year}/{id}.json   (machine, regenerable)
@@ -53,19 +56,29 @@ API and the Three.js render loop.
 ## Runtime modules
 
 ```
+index.html                static shell: skip link, masthead, Race Desk hero, signal band, scope row, sponsors,
+                          colophon, with <!--app:…--> placeholders for everything that depends on the race
+embed.html, embed-3d.html templates for the article embeds
+public/theme.js           blocking theme resolver (f1stories-theme → OS → dark)
 src/
-  main.ts                 boot: fetch manifest → resolve selection → render → lazy-load 3D
+  main.ts                 boot: imports tokens.css, shell.css, app.css, then starts the controller
   domain/
     schema.ts             zod/mini schema for race records, tracks, manifest (single source of truth)
     selection.ts          latest-race logic, year switching, prev/next
-    urlState.ts           ?year=&race= and /{year}/{slug}/ parsing + serialising
-    derivedMetrics.ts     visualisation-only mapping of 1–5 ratings → per-tyre intensities
-    format.ts             "Not provided", units, dates
+    urlState.ts           ?year=&race= and /{year}/{slug}/ parsing + serialising; typed ResolveNotice
+    derivedMetrics.ts     visualisation-only mapping of 1–5 ratings → per-tyre intensities (text supplied by the UI)
+    format.ts             rating list, compound colour variables, English helpers for the review sheet only
   ui/
+    strings.ts            ALL wording: STRINGS (page + embeds, el/en), fmt() number and date formats, PAGE (page-only Greek)
     html.ts               escaping tagged template (the only way HTML strings are built)
-    templates.ts          pure render functions (used at runtime AND in the prerender)
+    templates.ts          pure render functions (used at runtime AND in the prerender): identity, band, specs, ratings,
+                          setup, compounds, titleBlock, readout, dataTable, archive, stepper, embedDialog, credits
+    page.ts               whole-page composition for the prerender: fills the index.html placeholders, head and SEO
+    embed.ts              article embed panels and the season strip
+    ogCard.ts             1200×630 social card (race and generic)
+    countdown.ts          bundled F1 calendar (mirrors the main site) and the masthead's next-GP countdown
     fallbackSvg.ts        SVG car plan-view + SVG circuit (no-WebGL / pre-3D state)
-    app.ts                controller: events, state, history, transitions
+    app.ts                controller: events, state, history, transitions, countdown, embed dialog
   three/                  loaded via dynamic import only
     viewer.ts             renderer, camera, controls, loop, visibility/resize handling
     studio.ts             lights, environment, floor contact shadow
@@ -73,8 +86,33 @@ src/
     tyre.ts               tyre geometry + demand shader
     circuit.ts            extruded ribbon from track points
     modelLoader.ts        loads public/models/f1car.glb (CC BY 4.0), recolours it, swaps in procedural demand tyres
-  styles/                 tokens.css, base.css, layout.css, components.css
+  styles/
+    tokens.css            fonts and role tokens (canonical values), both themes; imported by the page and the embeds
+    shell.css             masthead, Race Desk hero, signal band, sponsors, colophon (ported from Telemetry/the main site)
+    app.css               base, scope row, key figures, tabs, stage, sidebar, panels, archive, embed dialog
+    bench.css             the dark test bench and its drawings (shared with the 3D embed)
+    season.css            the season strip (page and embed)
+    embed.css             article embeds
 ```
+
+### Page composition
+
+`index.html` holds the parts that never change per race. `renderPage` (`src/ui/page.ts`) fills the placeholders at
+build time, and `app.ts` re-renders the same regions with the same functions when the race changes:
+
+| Placeholder | Filled by |
+|---|---|
+| `<!--app:head-->` | title, description, canonical, Open Graph, JSON-LD (Greek, from `PAGE.seo`) |
+| `<!--app:identity-->` | `identity(r)`: race name, circuit, location, dates (the hero's second line) |
+| `<!--app:band-->` | `band(r)`: preview, season, round, **data status** (the signal band) |
+| `<!--app:stepper-->` | `stepper(...)`: previous/next as real links |
+| `<!--app:main-->` | `mainRegions(ctx)`: key figures, tabs, stage, sidebar, source, season, archive |
+| `<!--app:credits-->` | `credits()`: the Pirelli disclaimer and attributions in the colophon |
+| `<!--app:embedDialog-->` | `embedDialog()`: the author tool |
+| `<!--app:notice-->`, `<!--app:boot-->` | the 404 notice; the JSON the browser boots from |
+
+The footer year is stamped at build. The masthead's countdown is filled in the browser from the bundled calendar and
+stays hidden once the calendar has run out.
 
 ### Data flow at runtime
 
@@ -118,8 +156,8 @@ the site's CSP and its author tool's iframe whitelist).
   prerendered for every race from `embed.html` + `src/ui/embed.ts` +
   `src/styles/embed.css`. Language is a path segment (not `?lang=`) so the pages stay
   static and script-free (`script-src 'none'`), `noindex`, canonical to the race page.
-- Greek labels, number and date formats live in `STRINGS` in `src/ui/embed.ts` (one
-  glossary to review). Pirelli's own names (races, circuits) stay as published.
+- Greek and English labels, number and date formats live in `STRINGS` in `src/ui/strings.ts` (one
+  glossary to review, shared with the main page). Pirelli's own names (races, circuits) stay as published.
 - **Fixed height:** every row has a fixed height and never wraps (ellipsis), so a
   panel is equally tall at 300 px and 968 px and a fixed iframe `height` fits. An
   e2e test enforces it. No script on f1stories.gr is needed.
@@ -135,7 +173,8 @@ the site's CSP and its author tool's iframe whitelist).
 - **Panel images** (social posts, newsletters): `scripts/og-images.ts` screenshots every
   static panel in both languages from the built embed pages at deploy, into
   `/img/{el|en}/{season}/{slug}/{panel}.png` (720 px panel + 40 px paper margin, at 2×;
-  the footer shows the site address instead of "Open in …"). The dialog's Image format
+  the footer shows the site address instead of "Open in …"). The same script renders a Race Desk social
+  card per race (`/og/{season}/{slug}.png`) and the generic `/og.png` used by the 404 page. The dialog's Image format
   gives an `<img>` whose alt text is the panel's own text, read from the preview.
 - **Season strip** (`seasonStrip` in `src/ui/embed.ts`, styles in `season.css`): compound
   choices by round as a table (C-range rows, round columns, a tyre-ring marker in the
@@ -150,7 +189,7 @@ the site's CSP and its author tool's iframe whitelist).
   again in the browser). The Three.js viewer and the car model load only when the
   reader presses "Προβολή σε 3D", into the same fixed-height stage, so the iframe
   height is identical before and after. The model's CC BY credit sits under the stage.
-- The "Embed" dialog on the main page (desktop) previews a panel, measures its height
+- The "Ενσωμάτωση" dialog on the main page (desktop) previews a panel, measures its height
   from the same-origin preview and copies a ready iframe snippet.
 - Dev: `npm run dev` serves embed routes on the fly (see `configureServer` in
   `vite.config.ts`).
@@ -166,40 +205,38 @@ Project sites live under `/<repo>/`. Vite's `base` is read from `BASE_PATH`
 
 | Situation | Behaviour |
 |---|---|
-| Manifest fetch fails | Prerendered race stays; notice "Race list unavailable"; selectors disabled |
+| Manifest fetch fails | Prerendered race stays; notice (`PAGE.notice.manifestFailed`); selectors disabled |
 | Race JSON fails / fails validation | Previous race stays; notice names the race; others remain selectable |
-| Track JSON missing | Circuit shows "Track outline not available" plate; facts unaffected |
+| Track JSON missing | Circuit shows the "no outline" plate (`PAGE.noOutline`); facts unaffected |
 | WebGL unavailable / context lost / shader error | SVG car + circuit remain; notice; no retry loop |
 | three chunk fails to load | Same as WebGL unavailable |
 | Unknown year / race in URL | Latest race + notice |
-| Partial Pirelli record | Missing values render "Not provided"; status badge "Needs review" |
+| Partial Pirelli record | Missing values render "Δεν δόθηκε"; the status in the signal band and source strip reads "Χρειάζεται έλεγχο" |
 
 All async entry points are wrapped; `window.onerror`/`unhandledrejection`
 report to a visually hidden live region instead of breaking the page.
 
 ## Performance budget
 
-| Asset | Budget |
-|---|---|
-| Critical JS (main chunk, gz) | ≤ 22 KB (measured 21 KB: app + templates + zod/mini) |
-| CSS (gz) | ≤ 10 KB |
-| Fonts | 1 variable woff2 latin subset, preloaded |
-| three chunk (gz) | ≤ 170 KB (measured 156 KB), loaded after first paint |
-| Per-race JSON | ≤ 4 KB |
-| Track JSON | ≤ 12 KB |
-| Renderer | DPR ≤ 1.75 (≤ 1.5 on coarse-pointer screens), MSAA off on low-core touch devices, render-on-demand, paused when hidden/off-screen/in Data mode |
+| Asset | Budget | Measured (2026-10-05) |
+|---|---|---|
+| Critical JS (main + shared chunk, gz) | ≤ 22 KB | **29.7 KB** (5.3 KB app + 24.4 KB zod/mini and the preload helper) — over budget |
+| CSS (gz) | ≤ 10 KB | 8.8 KB page, 4.5 KB embeds |
+| Fonts | preload only what the first paint needs | Plex Latin (40 KB), Plex Greek (16 KB) and Barlow 700 (15 KB) are preloaded; Latin-ext (26 KB) loads on demand |
+| three chunk (gz) | ≤ 170 KB | **177.6 KB** — over budget, loaded after first paint |
+| Per-race JSON | ≤ 4 KB | unchanged |
+| Track JSON | ≤ 12 KB | unchanged |
+| Renderer | DPR ≤ 1.75 (≤ 1.5 on coarse-pointer screens), MSAA off on low-core touch devices, render-on-demand, paused when hidden/off-screen/in Data mode | unchanged |
 
-### Measured (Lighthouse 12, local production preview, 2026-09-30)
+The two over-budget lines predate the Race Desk redesign (the same chunks measured 26.6 KB and 177.7 KB before it); the
+redesign added about 3 KB to the critical JS (the strings and the countdown calendar). They are recorded, not fixed.
+
+### Measured (Lighthouse 12, local production preview, 2026-10-05, after the redesign)
 
 | | Performance | Accessibility | Best practices | SEO |
 |---|---|---|---|---|
-| Desktop (`/`) | 100 | 100 | 100 | 100 |
-| Mobile (`/`, simulated slow 4G, 4× CPU) | 99 | 100 | 100 | 100 |
-| Desktop (`/2026/baku/`, after review fixes) | 100 | 100 | 100 | 100 |
-| Mobile (`/2026/baku/`, after review fixes) | 96 | 100 | 100 | 100 |
+| Desktop (`/Tyres/`) | 100 | 100 | 100 | 100 |
+| Mobile (`/Tyres/`, simulated slow 4G, 4× CPU) | 100 | 100 | 100 | 100 |
 
-Mobile LCP ≈ 1.7–2.5 s (simulated), TBT 70–120 ms (Three.js setup on a 4× throttled CPU), CLS 0.
-
-Before the fixes above desktop scored 68 (TBT 520 ms from a synchronous WebGL probe
-and shader compile; Speed Index 5.4 s from default auto-rotation repainting). Auto-rotate
-is now off by default.
+Mobile LCP 1.8 s, desktop LCP 0.4 s, TBT 0 ms, CLS 0. Auto-rotate stays off by default (it once cost Speed Index 5.4 s
+on desktop), and the viewer creates its own WebGL context instead of probing for one.

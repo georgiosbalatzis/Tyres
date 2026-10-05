@@ -1,126 +1,162 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="el">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#e9e3d6" />
-    <title>F1 Stories — Tyre Intelligence</title>
+    <meta name="theme-color" content="#1b1a19" />
+    <title>TYRES — Ελαστικά &amp; απαιτήσεις πίστας Formula 1 | F1 Stories</title>
     <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
     <!-- Blocking on purpose: applies a saved dark theme before first paint. -->
     <script src="%BASE_URL%theme.js"></script>
     <!--app:head-->
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to race data</a>
-    <header class="site-nav">
-      <div class="nav-inner">
-        <a class="nav-brand" href="https://f1stories.gr/" aria-label="F1 Stories home">
-          <img src="%BASE_URL%logo-nav.webp" alt="" width="38" height="38" />
-          <span class="wordmark">F1 STORIES<span class="wordmark-dot">.</span></span>
-        </a>
-        <nav class="nav-links" id="nav-links" popover aria-label="F1 Stories">
-          <a href="https://f1stories.gr/">Home</a>
-          <a href="https://f1stories.gr/blog-module/blog/index.html">Articles</a>
-          <a href="https://www.youtube.com/@f1_stories_original" target="_blank" rel="noopener">YouTube</a>
-          <a href="https://f1stories.gr/standings/">Standings</a>
-          <a href="https://f1stories.gr/standings/?tab=tyre-pace">Data</a>
-          <a href="%BASE_URL%" aria-current="page">Tyres</a>
-          <a href="https://f1stories.gr/authors/">Authors</a>
-          <a href="https://georgiosbalatzis.github.io/BetCastVisualisation/" target="_blank" rel="noopener">BetCast</a>
-        </nav>
-        <div class="nav-tools">
-          <button type="button" class="nav-icon theme-toggle" data-theme-toggle aria-label="Dark theme" aria-pressed="false">
-            <svg viewBox="0 0 20 20" aria-hidden="true" class="i-moon"><path d="M15.5 12.5A6.5 6.5 0 0 1 7.5 4.5a6.5 6.5 0 1 0 8 8z" /></svg>
-            <svg viewBox="0 0 20 20" aria-hidden="true" class="i-sun"><circle cx="10" cy="10" r="3.5" /><path d="M10 1.5v2.5M10 16v2.5M1.5 10H4M16 10h2.5M4 4l1.8 1.8M14.2 14.2 16 16M4 16l1.8-1.8M14.2 5.8 16 4" /></svg>
-          </button>
-          <button type="button" class="nav-icon nav-menu" popovertarget="nav-links" aria-label="Menu">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" /></svg>
-          </button>
+    <a class="skip-link" href="#main">Μετάβαση στα δεδομένα του αγώνα</a>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="F1 Stories">
+        <div class="shell site-nav-inner">
+          <a class="brand" href="https://f1stories.gr/" aria-label="F1 Stories, αρχική σελίδα">
+            <img src="%BASE_URL%logo-nav.webp" alt="" width="38" height="38" decoding="async" />
+            <span class="wordmark">F1 STORIES<span class="wordmark-dot">.</span></span>
+          </a>
+          <div class="site-nav-links" id="nav-links" popover>
+            <a href="https://f1stories.gr/">Αρχική</a>
+            <a href="https://f1stories.gr/blog-module/blog/index.html">Άρθρα</a>
+            <a href="https://www.youtube.com/@f1_stories_original" target="_blank" rel="noopener">YouTube</a>
+            <a href="https://f1stories.gr/standings/">Βαθμολογία</a>
+            <a href="https://f1stories.gr/standings/?tab=tyre-pace" class="is-current" aria-current="page">Δεδομένα</a>
+            <a href="https://f1stories.gr/authors/">Συντάκτες</a>
+            <a href="https://georgiosbalatzis.github.io/BetCastVisualisation/" target="_blank" rel="noopener">BetCast</a>
+          </div>
+          <div class="site-nav-right">
+            <p class="nav-countdown" id="nav-countdown" hidden><span class="nav-countdown-name"></span><span class="nav-countdown-time"></span></p>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Σκούρο θέμα" aria-pressed="false">
+              <svg viewBox="0 0 20 20" aria-hidden="true" class="i-moon"><path d="M15.5 12.5A6.5 6.5 0 0 1 7.5 4.5a6.5 6.5 0 1 0 8 8z" /></svg>
+              <svg viewBox="0 0 20 20" aria-hidden="true" class="i-sun"><circle cx="10" cy="10" r="3.5" /><path d="M10 1.5v2.5M10 16v2.5M1.5 10H4M16 10h2.5M4 4l1.8 1.8M14.2 14.2 16 16M4 16l1.8-1.8M14.2 5.8 16 4" /></svg>
+            </button>
+            <button type="button" class="nav-menu" popovertarget="nav-links" aria-label="Μενού">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" /></svg>
+            </button>
+          </div>
+        </div>
+      </nav>
+      <div class="desk-hero">
+        <div class="shell">
+          <div class="kicker-row">
+            <span class="kicker">F1 STORIES / RACE DESK</span>
+            <nav class="race-desk-nav" aria-label="Race Desk" lang="en">
+              <a href="https://f1stories.gr/standings/">THE GRID</a>
+              <a href="https://georgiosbalatzis.github.io/f1-telemetry-dashboard/">TELEMETRY</a>
+              <a href="https://georgiosbalatzis.github.io/ghostcar/">GHOST CAR</a>
+              <a href="%BASE_URL%" aria-current="page">TYRES</a>
+            </nav>
+          </div>
+          <div class="hero-grid">
+            <div>
+              <h1 class="display"><span lang="en">TYRES<span class="dot">.</span></span><span class="display-descriptor">Ελαστικά &amp; απαιτήσεις πίστας</span></h1>
+              <div id="r-identity"><!--app:identity--></div>
+            </div>
+            <aside class="hero-aside"><strong>Κάθε γόμα, μια ιστορία.</strong><p>Οι γόμες, οι απαιτήσεις της πίστας και τα όρια ρυθμίσεων από την προεπισκόπηση της Pirelli για κάθε Grand Prix.</p></aside>
+          </div>
+        </div>
+      </div>
+      <div class="signal-band">
+        <div class="shell signal-band-inner">
+          <p class="signal-status" id="r-band"><!--app:band--></p>
+          <span class="signal-slogan" lang="en">EVERY COMPOUND COUNTS.</span>
         </div>
       </div>
     </header>
 
-    <div class="sheet">
-      <div class="masthead">
-        <p class="page-kicker">Tyre intelligence <span class="page-kicker-sub">/ Pirelli race previews, visualised</span></p>
-        <nav class="picker" aria-label="Choose a race preview">
-          <label class="field"><span class="field-label">Season</span><select id="year" disabled></select></label>
-          <label class="field field-race"><span class="field-label">Race</span><select id="race" disabled></select></label>
-          <!--app:stepper-->
-        </nav>
-        <button type="button" class="step embed-open" id="embed-open" aria-haspopup="dialog" hidden>
+    <div class="scope">
+      <div class="shell scope-inner">
+        <label class="field"><span class="field-label">Σεζόν</span><select id="year" disabled></select></label>
+        <label class="field field-race"><span class="field-label">Grand Prix</span><select id="race" disabled></select></label>
+        <!--app:stepper-->
+        <button type="button" class="text-action embed-open" id="embed-open" aria-haspopup="dialog" hidden>
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6 3 10l4 4M13 6l4 4-4 4" /></svg>
-          <span>Embed</span>
+          <span>Ενσωμάτωση</span>
         </button>
       </div>
-
-      <div class="notice" id="notice" role="status" aria-live="polite"><!--app:notice--></div>
-
-      <main id="main" class="stage" tabindex="-1" data-mode="car"><!--app:main--></main>
     </div>
 
+    <div class="shell"><div class="notice" id="notice" role="status" aria-live="polite"><!--app:notice--></div></div>
+
+    <main id="main" class="shell stage" tabindex="-1" data-mode="car"><!--app:main--></main>
+
+    <section class="sponsor-strip" aria-labelledby="sponsors-heading">
+      <div class="shell sponsor-strip-layout">
+        <h2 class="sponsor-strip-label" id="sponsors-heading">ΜΑΖΙ ΣΤΗΝ ΕΚΚΙΝΗΣΗ</h2>
+        <ul class="sponsor-logos">
+          <li>
+            <a href="https://balatzis.gr/" target="_blank" rel="noopener sponsored" class="sponsor-logo">
+              <img src="%BASE_URL%images/sponsors/normalized/Balatzis.webp" srcset="%BASE_URL%images/sponsors/normalized/Balatzis-1x.webp 1x, %BASE_URL%images/sponsors/normalized/Balatzis.webp 2x" alt="Μπαλατζής Χωματουργικά" loading="lazy" decoding="async" width="320" height="160" />
+              <span>ΧΟΡΗΓΟΣ</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://pourtsidisgenerators.gr/" target="_blank" rel="noopener sponsored" class="sponsor-logo">
+              <img src="%BASE_URL%images/sponsors/normalized/ps.webp" srcset="%BASE_URL%images/sponsors/normalized/ps-1x.webp 1x, %BASE_URL%images/sponsors/normalized/ps.webp 2x" alt="Πουρτσίδης Γεννήτριες" loading="lazy" decoding="async" width="320" height="160" />
+              <span>ΣΥΝΕΡΓΑΤΗΣ</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://balatzis.gr/#domika" target="_blank" rel="noopener sponsored" class="sponsor-logo">
+              <img src="%BASE_URL%images/sponsors/normalized/BalatzisDomika.webp" srcset="%BASE_URL%images/sponsors/normalized/BalatzisDomika-1x.webp 1x, %BASE_URL%images/sponsors/normalized/BalatzisDomika.webp 2x" alt="Μπαλατζής Δομικά" loading="lazy" decoding="async" width="320" height="160" />
+              <span>POWERED BY</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://ambrosiadis.gr/" target="_blank" rel="noopener sponsored" class="sponsor-logo">
+              <img src="%BASE_URL%images/sponsors/normalized/am.webp" srcset="%BASE_URL%images/sponsors/normalized/am-1x.webp 1x, %BASE_URL%images/sponsors/normalized/am.webp 2x" alt="Αμβροσιάδης" loading="lazy" decoding="async" width="320" height="160" />
+              <span>ΣΥΝΕΡΓΑΤΗΣ</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.bedandhome.gr/" target="_blank" rel="noopener sponsored" class="sponsor-logo">
+              <img src="%BASE_URL%images/sponsors/normalized/bedhome.webp" srcset="%BASE_URL%images/sponsors/normalized/bedhome-1x.webp 1x, %BASE_URL%images/sponsors/normalized/bedhome.webp 2x" alt="Bed and Home" loading="lazy" decoding="async" width="320" height="160" />
+              <span>ADVERTISING PARTNER</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.grandrealm.gr/" target="_blank" rel="noopener sponsored" class="sponsor-logo">
+              <img src="%BASE_URL%images/sponsors/normalized/GrandRealm.webp" srcset="%BASE_URL%images/sponsors/normalized/GrandRealm-1x.webp 1x, %BASE_URL%images/sponsors/normalized/GrandRealm.webp 2x" alt="Grand Realm" loading="lazy" decoding="async" width="320" height="160" />
+              <span>ΣΥΝΕΡΓΑΤΗΣ</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
     <footer class="colophon">
-      <div class="colophon-inner">
-        <p class="colophon-brand">
-          <a class="wordmark" href="https://f1stories.gr/">F1 STORIES<span class="wordmark-dot">.</span></a>
-          <span class="colophon-mission">Technical analysis, opinion and the Greek F1 community.</span>
-        </p>
-        <!--app:archive-->
-        <div class="legal">
-          <p>
-            Unofficial visualisation. Tyre and circuit data sourced from Pirelli Motorsport press previews; every page
-            links to its original source. Formula 1 and related marks belong to their respective owners. Not affiliated
-            with or endorsed by Pirelli, Formula 1 or the FIA.
-          </p>
-          <p>
-            Circuit outlines from bacinger/f1-circuits (MIT). 3D car: “Low Poly-F1” by salasilma13 (CC BY 4.0), recoloured, with procedural tyres. Typefaces IBM Plex Sans and Barlow Condensed (SIL Open
-            Font Licence). Tyre colours in car views are a derived visualisation of Pirelli’s 1–5 ratings, not measured
-            data.
-          </p>
+      <div class="shell">
+        <div class="colophon-brand">
+          <a href="https://f1stories.gr/" class="wordmark" aria-label="F1 Stories, αρχική σελίδα">F1 STORIES<span class="wordmark-dot">.</span></a>
+          <p>Τεχνική ανάλυση, άποψη και ελληνική F1 κοινότητα.</p>
         </div>
+        <nav class="colophon-links" aria-label="Ενότητες">
+          <a href="https://f1stories.gr/blog-module/blog/index.html">Άρθρα</a>
+          <a href="https://f1stories.gr/standings/">Βαθμολογία</a>
+          <a href="https://f1stories.gr/authors/">Συντάκτες</a>
+          <a href="https://www.youtube.com/@f1_stories_original" target="_blank" rel="noopener">YouTube ↗</a>
+          <a href="https://georgiosbalatzis.github.io/BetCastVisualisation/" target="_blank" rel="noopener">BetCast ↗</a>
+        </nav>
+        <div class="colophon-meta">
+          <span>© <span data-current-year>2026</span> F1 Stories. Με επιφύλαξη παντός δικαιώματος.</span>
+          <div class="colophon-credits"><!--app:credits--></div>
+        </div>
+        <div class="colophon-social">
+          <a href="https://www.youtube.com/@f1_stories_original" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true"><use href="%BASE_URL%f1stories-social.svg#fa-youtube" /></svg><span class="visually-hidden">F1 Stories στο YouTube</span></a>
+          <a href="https://www.facebook.com/f1storiess" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true"><use href="%BASE_URL%f1stories-social.svg#fa-facebook-f" /></svg><span class="visually-hidden">F1 Stories στο Facebook</span></a>
+          <a href="https://www.instagram.com/myf1stories/" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true"><use href="%BASE_URL%f1stories-social.svg#fa-instagram" /></svg><span class="visually-hidden">F1 Stories στο Instagram</span></a>
+          <a href="https://www.tiktok.com/@f1stories6" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true"><use href="%BASE_URL%f1stories-social.svg#fa-tiktok" /></svg><span class="visually-hidden">F1 Stories στο TikTok</span></a>
+          <a href="mailto:myf1stories@gmail.com"><svg width="20" height="20" aria-hidden="true"><use href="%BASE_URL%f1stories-social.svg#fa-envelope" /></svg><span class="visually-hidden">Email στο F1 Stories</span></a>
+        </div>
+        <div class="colophon-legal"><a href="https://f1stories.gr/privacy/privacy.html">Πολιτική Απορρήτου</a><a href="https://f1stories.gr/privacy/terms.html">Όροι Χρήσης</a></div>
       </div>
     </footer>
-    <dialog class="embed-dialog" id="embed-dialog" aria-labelledby="embed-title">
-      <form method="dialog" class="embed-form">
-        <header class="embed-head">
-          <h2 id="embed-title" class="section-title">Embed in an article</h2>
-          <button type="submit" class="tool" aria-label="Close">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15" /></svg>
-          </button>
-        </header>
-        <fieldset class="embed-choice">
-          <legend>Panel</legend>
-          <label><input type="radio" name="embed-panel" value="summary" checked autofocus /><span>Summary</span></label>
-          <label><input type="radio" name="embed-panel" value="compounds" /><span>Compounds</span></label>
-          <label><input type="radio" name="embed-panel" value="demands" /><span>Track demands</span></label>
-          <label><input type="radio" name="embed-panel" value="car" /><span>Tyre demand</span></label>
-          <label><input type="radio" name="embed-panel" value="setup" /><span>Setup limits</span></label>
-          <label><input type="radio" name="embed-panel" value="circuit" /><span>Circuit</span></label>
-          <label><input type="radio" name="embed-panel" value="3d" /><span>3D view</span></label>
-          <label><input type="radio" name="embed-panel" value="season" /><span>Season compounds</span></label>
-        </fieldset>
-        <fieldset class="embed-choice">
-          <legend>Format</legend>
-          <label><input type="radio" name="embed-format" value="iframe" checked /><span>Iframe for articles</span></label>
-          <label><input type="radio" name="embed-format" value="image" /><span>Image for social and newsletters</span></label>
-        </fieldset>
-        <fieldset class="embed-choice">
-          <legend>Language</legend>
-          <label><input type="radio" name="embed-lang" value="el" checked /><span lang="el">Ελληνικά</span></label>
-          <label><input type="radio" name="embed-lang" value="en" /><span>English</span></label>
-        </fieldset>
-        <label class="embed-label" for="embed-code">Code for the article</label>
-        <textarea class="embed-code" id="embed-code" rows="3" readonly spellcheck="false"></textarea>
-        <p class="embed-actions">
-          <button type="button" class="embed-copy" id="embed-copy" disabled>Copy code</button>
-          <a class="embed-download" id="embed-download" href="%BASE_URL%" download hidden>Download image</a>
-          <span class="embed-status" id="embed-status" role="status"></span>
-        </p>
-        <p class="embed-label">Preview, as it will appear in the article</p>
-        <iframe class="embed-preview" id="embed-preview" title="Embed preview"></iframe>
-      </form>
-    </dialog>
+    <!--app:embedDialog-->
     <p class="visually-hidden" id="announcer" aria-live="polite"></p>
     <!--app:boot-->
     <script type="module" src="/src/main.ts"></script>

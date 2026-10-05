@@ -22,14 +22,16 @@ import {
   seasonImagePath,
 } from '../domain/urlState.ts';
 import type { Viewer } from '../three/viewer.ts';
+import { formatCountdown, nextRace } from './countdown.ts';
 import { html, setHtml } from './html.ts';
-import { describe, SITE_NAME, seasonSection } from './page.ts';
+import { describe, seasonSection } from './page.ts';
+import { PAGE, STRINGS } from './strings.ts';
 import {
+  band,
   compounds,
   DEFAULT_VIEW,
   dataTable,
   fallbackVisual,
-  heroWord,
   identity,
   type Mode,
   ratings,
@@ -118,6 +120,7 @@ function renderRace(animate: boolean) {
   const { record: r, view } = state;
   const figuresBefore = readFigures();
   setHtml($('#r-identity'), identity(r));
+  setHtml($('#r-band'), band(r));
   setHtml($('#r-specs'), specs(r));
   setHtml($('#r-ratings'), ratings(r));
   setHtml($('#r-setup'), setup(r));
@@ -125,7 +128,6 @@ function renderRace(animate: boolean) {
   setHtml($('#r-source'), titleBlock(r));
   if (state.manifest) setHtml($('#r-season'), seasonSection(state.manifest, r));
   setHtml($('#r-data'), dataTable(r));
-  $('#r-hero').textContent = heroWord(r);
   renderView();
   if (animate && !reducedMotion.matches) {
     tweenFigures(figuresBefore);
@@ -163,15 +165,16 @@ function tweenFigures(before: Map<string, string>) {
   for (const el of document.querySelectorAll<HTMLElement>('[data-figure]')) {
     const to = el.textContent ?? '';
     const from = before.get(el.dataset.figure!) ?? '';
-    const a = Number.parseFloat(from);
-    const b = Number.parseFloat(to);
-    if (!/^\d+(\.\d+)?$/.test(to) || Number.isNaN(a) || a === b) continue;
-    const digits = to.split('.')[1]?.length ?? 0;
+    // Figures are printed with a decimal comma ("5,543"); count in plain numbers and print the same way.
+    const a = Number.parseFloat(from.replace(',', '.'));
+    const b = Number.parseFloat(to.replace(',', '.'));
+    if (!/^\d+(,\d+)?$/.test(to) || Number.isNaN(a) || a === b) continue;
+    const digits = to.split(',')[1]?.length ?? 0;
     const t0 = performance.now();
     const step = (now: number) => {
       const t = Math.min(1, (now - t0) / 550);
       const e = 1 - (1 - t) ** 3;
-      el.textContent = t < 1 ? (a + (b - a) * e).toFixed(digits) : to;
+      el.textContent = t < 1 ? (a + (b - a) * e).toFixed(digits).replace('.', ',') : to;
       if (t < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
@@ -180,7 +183,7 @@ function tweenFigures(before: Map<string, string>) {
 
 function updateHead() {
   const r = state.record;
-  document.title = `${r.race.name} ${r.season} tyres and circuit | ${SITE_NAME}`;
+  document.title = PAGE.seo.title(r.race.name, r.season);
   document.querySelector('meta[name="description"]')?.setAttribute('content', describe(r));
   document
     .querySelector('link[rel="canonical"]')
@@ -226,8 +229,8 @@ function syncControls() {
   const { prev: p, next: n } = cur ? neighbours(m, cur) : { prev: null, next: null };
   const hadFocus = document.activeElement;
   for (const [el, race, word] of [
-    [prev, p, 'Previous'],
-    [next, n, 'Next'],
+    [prev, p, PAGE.scope.prev],
+    [next, n, PAGE.scope.next],
   ] as const) {
     if (race) {
       el.href = racePath(BASE, race);
@@ -289,14 +292,12 @@ async function goTo(id: string, opts: { history: 'push' | 'replace' | 'none' }) 
     updateHead();
     if (opts.history !== 'none') writeHistory(opts.history);
     state.viewer?.setRace(record, track, state.view);
-    announce(`Showing ${record.race.name} ${record.season}`);
+    announce(PAGE.notice.showing(record.race.name, record.season));
     notice(null);
   } catch (err) {
     if (token !== state.navToken) return;
     const name = summaryOf(id)?.name ?? id;
-    notice(
-      `Couldn’t load ${name} (${(err as Error).message}). Still showing ${state.record.race.name} ${state.record.season}.`,
-    );
+    notice(PAGE.notice.loadFailed(name, (err as Error).message, state.record.race.name, state.record.season));
     syncControls();
   } finally {
     if (token === state.navToken) requestAnimationFrame(() => stage.classList.remove('is-switching'));
@@ -379,7 +380,7 @@ function bindEvents() {
           ? (sortedCompounds(state.record)[1]?.compound ?? null)
           : state.view.compound;
       setView({ mode, compound });
-      announce(`${mode} view`);
+      announce(PAGE.modes[mode]);
       return;
     }
     const view = t.closest<HTMLElement>('.chip')?.dataset.view as CarView | undefined;
@@ -426,7 +427,7 @@ function setupViewer() {
           host.classList.remove('has-3d');
           $('#r-fallback').removeAttribute('aria-hidden');
           ($('#view-tools') as HTMLElement).hidden = true;
-          setHtml(loading, html`${reason} Showing the flat drawing instead.`);
+          setHtml(loading, html`${reason} ${PAGE.viewer.flat}`);
           loading.hidden = false;
         },
       });
@@ -434,16 +435,11 @@ function setupViewer() {
       // WebGLRenderer throws when no context can be created (no GPU, blocked, or disabled).
       const noGl = /webgl|context/i.test(String((err as Error)?.message));
       host.dataset.webgl = noGl ? 'unavailable' : 'failed';
-      setHtml(
-        loading,
-        noGl
-          ? html`3D view unavailable on this device. Showing the flat drawing instead.`
-          : html`3D view couldn’t load. Showing the flat drawing instead.`,
-      );
+      setHtml(loading, noGl ? html`${STRINGS.el.noGl}` : html`${STRINGS.el.failed3d}`);
     }
   };
   if (conn?.saveData) {
-    setHtml(loading, html`<button type="button" class="chip" id="load-3d">Load 3D view</button>`);
+    setHtml(loading, html`<button type="button" class="chip" id="load-3d">${PAGE.viewer.load}</button>`);
     loading.hidden = false;
     $('#load-3d').addEventListener('click', () => void start(), { once: true });
     return;
@@ -512,7 +508,7 @@ function setupEmbedDialog() {
     const panel = doc?.querySelector('.e');
     if (!doc || !panel || !src || !state.record) {
       code.value = '';
-      if (src) status.textContent = 'The preview couldn’t load.';
+      if (src) status.textContent = PAGE.embedDialog.previewFailed;
       return;
     }
     const height = Math.ceil(panel.getBoundingClientRect().height);
@@ -532,7 +528,7 @@ function setupEmbedDialog() {
     } else {
       // Same shape as the other f1stories.gr tool embeds; html`` escapes every attribute value.
       code.value =
-        html`<iframe src="${src}" title="${`${title} (F1 Stories Tyre Intelligence)`}" width="100%" height="${height}" loading="lazy" style="border:0;width:100%;max-width:100%;display:block;"></iframe>`.value;
+        html`<iframe src="${src}" title="${PAGE.embedDialog.iframeTitle(title)}" width="100%" height="${height}" loading="lazy" style="border:0;width:100%;max-width:100%;display:block;"></iframe>`.value;
     }
     copy.disabled = false;
   });
@@ -548,15 +544,31 @@ function setupEmbedDialog() {
   copy.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(code.value);
-      status.textContent = 'Copied. Paste it into the article.';
+      status.textContent = PAGE.embedDialog.copied;
     } catch {
       code.select();
-      status.textContent = 'Copy blocked by the browser. The code is selected: press Ctrl/⌘ + C.';
+      status.textContent = PAGE.embedDialog.copyBlocked;
     }
   });
 }
 
+/** The masthead's next-GP countdown, from the bundled calendar. Stays hidden once the calendar has run out. */
+function startCountdown() {
+  const el = document.getElementById('nav-countdown');
+  if (!el) return;
+  const tick = () => {
+    const race = nextRace(Date.now());
+    el.hidden = !race;
+    if (!race) return;
+    el.querySelector('.nav-countdown-name')!.textContent = race.name;
+    el.querySelector('.nav-countdown-time')!.textContent = formatCountdown(race.start - Date.now());
+  };
+  tick();
+  setInterval(tick, 60_000);
+}
+
 export async function start() {
+  startCountdown();
   window.addEventListener('unhandledrejection', (e) => {
     console.warn('Unhandled:', e.reason);
     e.preventDefault();
@@ -571,7 +583,7 @@ export async function start() {
   };
   const rec = parseWith(RaceRecord, boot.record);
   if (!rec.ok) {
-    notice('This page’s built-in race data is damaged. Loading the race list instead.');
+    notice(PAGE.notice.bootDamaged);
   }
   const trk = boot.track ? parseWith(TrackSchema, boot.track) : null;
 
@@ -591,9 +603,7 @@ export async function start() {
     if (!parsed.ok) throw new Error('invalid');
     state.manifest = parsed.value;
   } catch {
-    notice(
-      'The race list couldn’t load, so other previews aren’t selectable right now. This page’s data is complete.',
-    );
+    notice(PAGE.notice.manifestFailed);
   }
 
   if (state.manifest) {
@@ -614,7 +624,7 @@ export async function start() {
     } else if (location.search && race) {
       writeHistory('replace');
     }
-    if (msg && !boot.notFound) notice(msg);
+    if (msg && !boot.notFound) notice(PAGE.notice.resolve(msg));
     history.replaceState({ raceId: state.record.id }, '');
   }
   if (!state.record) return;

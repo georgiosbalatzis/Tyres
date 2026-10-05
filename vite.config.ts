@@ -131,14 +131,21 @@ function prerender(): Plugin {
           }
           return html;
         }
-        // Preload the hashed Plex (latin) file straight from the bundle so every prerendered page gets a final URL
-        // (asset placeholders in index.html are only resolved after this hook runs).
-        const font = Object.values(ctx.bundle ?? {}).find((f) =>
-          /ibm-plex-sans-400-600-(?!latin-ext|greek).*\.woff2$/.test(f.fileName),
-        );
-        const preload = font
-          ? `\n    <link rel="preload" href="${BASE}${font.fileName}" as="font" type="font/woff2" crossorigin />`
-          : '';
+        // Preload the hashed fonts the first paint needs (Latin and Greek text, the Barlow display title) straight
+        // from the bundle so every prerendered page gets a final URL (asset placeholders in index.html are only
+        // resolved after this hook runs).
+        const files = Object.values(ctx.bundle ?? {}).map((f) => f.fileName);
+        const preload = [
+          /ibm-plex-sans-400-600-(?!latin-ext|greek).*\.woff2$/,
+          /ibm-plex-sans-400-600-greek-.*\.woff2$/,
+          /barlow-condensed-700-.*\.woff2$/,
+        ]
+          .map((re) => files.find((f) => re.test(f)))
+          .filter((f): f is string => !!f)
+          .map(
+            (f) => `\n    <link rel="preload" href="${BASE}${f}" as="font" type="font/woff2" crossorigin />`,
+          )
+          .join('');
         template = isBuild
           ? html.replace(
               '<head>',

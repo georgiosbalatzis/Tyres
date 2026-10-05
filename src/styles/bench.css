@@ -144,8 +144,15 @@
   background: transparent;
 }
 
+/* Transparent, ruled in paper, like the social icons in the colophon. */
 .view-tools .tool {
-  background: rgb(22 24 27 / 0.72);
+  border-color: var(--c-colophon-rule);
+  background: transparent;
+  color: var(--c-colophon-text);
+}
+
+.view-tools .tool:is(:hover, :focus-visible) {
+  border-color: #e9e3d659;
 }
 
 .tool svg {

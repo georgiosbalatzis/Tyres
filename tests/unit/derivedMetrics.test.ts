@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
   CAR_VIEWS,
-  DERIVED_LABEL,
   deriveView,
   HEAT_STOPS,
   heatColour,
@@ -9,7 +8,10 @@ import {
   NO_DATA_COLOUR,
   norm,
 } from '../../src/domain/derivedMetrics.ts';
+import { PAGE, STRINGS } from '../../src/ui/strings.ts';
 import { fixtureRace } from '../fixtures/races.ts';
+
+const TEXT = PAGE.derivedText;
 
 describe('derived metrics (visualisation only)', () => {
   it('maps ratings 1–5 onto 0–1 and keeps null as null', () => {
@@ -25,30 +27,31 @@ describe('derived metrics (visualisation only)', () => {
   });
 
   it('weights braking to the fronts and traction to the rears (longitudinal)', () => {
-    const v = deriveView(fixtureRace(), 'longitudinal'); // braking 5, traction 1
+    const v = deriveView(fixtureRace(), 'longitudinal', TEXT); // braking 5, traction 1
     expect(v.corners.FL.intensity).toBeCloseTo(0.65);
     expect(v.corners.RL.intensity).toBeCloseTo(0.35);
     expect(v.corners.FL.intensity).toBe(v.corners.FR.intensity);
   });
 
-  it('never invents values: a missing rating yields null intensity and "Not provided"', () => {
+  it('never invents values: a missing rating yields null intensity and "Δεν δόθηκε"', () => {
     const r = fixtureRace();
     r.characteristics.lateral = null;
-    const v = deriveView(r, 'lateral');
+    const v = deriveView(r, 'lateral', TEXT);
     expect(v.corners.FL.intensity).toBeNull();
-    expect(v.corners.FL.display).toBe('Not provided');
+    expect(v.corners.FL.display).toBe('Δεν δόθηκε');
   });
 
   it('maps pressures on a fixed psi scale and labels them as minimums', () => {
-    const v = deriveView(fixtureRace(), 'pressures'); // 24 / 22 psi on 18–30
+    const v = deriveView(fixtureRace(), 'pressures', TEXT); // 24 / 22 psi on 18–30
     expect(v.corners.FL.intensity).toBeCloseTo(0.5);
-    expect(v.corners.RL.display).toBe('22.0 psi minimum');
+    expect(v.corners.RL.display).toBe('22,0 psi ελάχιστο');
   });
 
   it('never describes derived colours as temperature', () => {
     for (const view of CAR_VIEWS)
-      expect(deriveView(fixtureRace(), view).method.toLowerCase()).not.toContain('temperature');
-    expect(DERIVED_LABEL).toMatch(/Derived visualisation/);
+      expect(deriveView(fixtureRace(), view, TEXT).method.toLowerCase()).not.toMatch(/θερμοκρασ|temperature/);
+    expect(`${PAGE.derivedLabel} ${PAGE.derivedNote}`).toBe(STRINGS.el.derived);
+    expect(STRINGS.el.derived).toMatch(/όχι θερμοκρασία/);
   });
 
   it('uses scale endpoints and a neutral for missing data', () => {

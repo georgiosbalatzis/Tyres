@@ -22,15 +22,9 @@ import {
   WebGLRenderer,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import {
-  CORNERS,
-  type Corner,
-  DERIVED_LABEL,
-  deriveView,
-  heatColour,
-  VIEW_TITLES,
-} from '../domain/derivedMetrics.ts';
+import { CORNERS, type Corner, deriveView, heatColour } from '../domain/derivedMetrics.ts';
 import type { RaceRecord, TrackShape } from '../domain/schema.ts';
+import { PAGE, STRINGS } from '../ui/strings.ts';
 import { type Mode, sortedCompounds, type ViewState } from '../ui/templates.ts';
 import type { CarModel } from './car.ts';
 import { buildCircuit } from './circuit.ts';
@@ -321,7 +315,7 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
   /* ---------- data → visuals ---------- */
   function applyCarView(dur: number) {
     if (!car) return;
-    const d = deriveView(record, view.carView);
+    const d = deriveView(record, view.carView, PAGE.derivedText);
     for (const c of CORNERS) {
       const mat = car.tyreMaterials[c];
       const u = mat.userData.uniforms;
@@ -392,13 +386,14 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
 
   function ariaLabel() {
     if (view.mode === 'car') {
-      return `3D model of a generic Formula 1 car. Tyres coloured by ${VIEW_TITLES[view.carView].toLowerCase()} demand. ${DERIVED_LABEL}. Use arrow keys to rotate, plus and minus to zoom.`;
+      return PAGE.viewer.ariaCar(STRINGS.el.demandView[view.carView].toLowerCase());
     }
-    if (view.mode === 'circuit')
-      return `3D outline of ${record.circuit.name ?? 'the circuit'}. Use arrow keys to rotate.`;
-    return `3D view of the weekend compounds: ${sortedCompounds(record)
-      .map((c) => `${c.compound} ${c.raceLabel}`)
-      .join(', ')}.`;
+    if (view.mode === 'circuit') return PAGE.viewer.ariaCircuit(record.circuit.name);
+    return PAGE.viewer.ariaTyres(
+      sortedCompounds(record)
+        .map((c) => `${c.compound} ${STRINGS.el.compound[c.raceLabel] ?? c.raceLabel}`)
+        .join(', '),
+    );
   }
 
   /* ---------- input ---------- */
@@ -479,10 +474,10 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
     dispose();
     opts.onFailure(reason);
   }
-  renderer.debug.onShaderError = () => fail('The 3D view hit a graphics error.');
+  renderer.debug.onShaderError = () => fail(PAGE.viewer.graphicsError);
   canvas.addEventListener('webglcontextlost', (e) => {
     e.preventDefault();
-    fail('The 3D view lost its graphics context.');
+    fail(PAGE.viewer.contextLost);
   });
 
   function dispose() {
@@ -545,7 +540,7 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
     renderer.render(scene, camera);
     opts.onReady();
     schedule();
-  })().catch(() => fail('The 3D view couldn’t be built.'));
+  })().catch(() => fail(PAGE.viewer.buildFailed));
 
   return {
     setRace(nextRecord, nextTrack, nextView) {

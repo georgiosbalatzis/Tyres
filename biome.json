@@ -10,7 +10,8 @@
       "!playwright-report",
       "!.idea",
       "!tests/fixtures",
-      "!data"
+      "!data",
+      "!public/f1stories-social.svg"
     ]
   },
   "formatter": { "indentStyle": "space", "indentWidth": 2, "lineWidth": 110 },

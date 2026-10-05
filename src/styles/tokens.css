@@ -53,7 +53,8 @@
   size-adjust: 98%;
 }
 
-/* Light "paper and ink" is the default theme; [data-theme="dark"] is the charcoal edition. */
+/* Values mirror f1StoriesPage/docs/design-tokens.md. Light values live on :root; the dark edition on [data-theme="dark"].
+   public/theme.js always sets data-theme explicitly (stored choice, then the OS preference, then dark). */
 :root {
   color-scheme: light;
 
@@ -72,9 +73,22 @@
   /* Boundaries of interactive controls: ≥ 3:1 against every neutral surface (WCAG 1.4.11). */
   --c-control: #73766a;
   --c-text: #20251f;
-  --c-text-2: #545b50;
+  --c-text-2: #5b6256;
   /* Focus ring, hovered links: the readable form of the signal red. */
   --c-accent: #a82e1c;
+  --c-accent-hover: #8e281a;
+  /* Translucent wash only, never the sole indicator of a state. */
+  --c-accent-muted: #ed4c3214;
+  /* Text and icons on a solid signal fill (4.77:1). */
+  --c-signal-ink: #17191b;
+
+  /* Fixed ink colophon and sponsor strip, identical in both themes */
+  --c-colophon-bg: #20251f;
+  --c-colophon-text: #e9e3d6;
+  --c-colophon-text-2: #c0bfb2;
+  --c-colophon-rule: rgba(233, 227, 214, 0.18);
+  --c-sponsor-paper: #f2eee4;
+  --c-sponsor-text: #5b6256;
 
   /* Semantic — data only */
   --c-hard: #f2f1ec;
@@ -115,7 +129,11 @@
   --s-7: 3rem;
   --s-8: 4rem;
 
-  --gutter: clamp(1rem, 0.4rem + 1.6vw, 3rem);
+  /* Container gutters and the fixed masthead height, as editorial.css (steps, not a clamp). */
+  --gutter: 48px;
+  --shell-max: 1476px;
+  --nav-h: 76px;
+  --ease-editorial: cubic-bezier(0.22, 0.68, 0, 1.02);
   --radius-control: 2px;
   --rule: 1px solid var(--c-rule);
   --rule-strong: 1px solid var(--c-rule-strong);
@@ -128,11 +146,31 @@
   --t-hero: 700ms;
 }
 
-/* Charcoal tokens: the dark theme, the always-dark surfaces (3D bench, colophon) in either theme, and an
+@media (max-width: 1199px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+@media (max-width: 991px) {
+  :root {
+    --nav-h: 68px;
+  }
+}
+@media (max-width: 767px) {
+  :root {
+    --gutter: 22px;
+  }
+}
+@media (max-width: 359px) {
+  :root {
+    --gutter: 17px;
+  }
+}
+
+/* Charcoal tokens: the dark theme, the always-dark 3D bench in either theme, and an
    article embed opened as …/#dark (the f1stories.gr theme bridge sets that fragment; no script in the embed). */
 :root[data-theme="dark"],
 .canvas-host,
-.colophon,
 .e-root:target {
   color-scheme: dark;
   --c-bg: #1b1a19;
@@ -144,6 +182,7 @@
   --c-text: #eee8db;
   --c-text-2: #b6bbac;
   --c-accent: #ff775f;
+  --c-accent-hover: #ff947f;
   --c-hard-text: #f2f1ec;
   --c-medium-text: #f5c518;
   --c-soft-text: #ff6258;
