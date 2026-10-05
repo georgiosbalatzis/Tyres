@@ -23,7 +23,8 @@ import {
 } from '../domain/urlState.ts';
 import type { Viewer } from '../three/viewer.ts';
 import { html, setHtml } from './html.ts';
-import { describe, SITE_NAME, seasonSection } from './page.ts';
+import { describe, seasonSection } from './page.ts';
+import { PAGE, STRINGS } from './strings.ts';
 import {
   compounds,
   DEFAULT_VIEW,
@@ -180,7 +181,7 @@ function tweenFigures(before: Map<string, string>) {
 
 function updateHead() {
   const r = state.record;
-  document.title = `${r.race.name} ${r.season} tyres and circuit | ${SITE_NAME}`;
+  document.title = PAGE.seo.title(r.race.name, r.season);
   document.querySelector('meta[name="description"]')?.setAttribute('content', describe(r));
   document
     .querySelector('link[rel="canonical"]')
@@ -226,8 +227,8 @@ function syncControls() {
   const { prev: p, next: n } = cur ? neighbours(m, cur) : { prev: null, next: null };
   const hadFocus = document.activeElement;
   for (const [el, race, word] of [
-    [prev, p, 'Previous'],
-    [next, n, 'Next'],
+    [prev, p, PAGE.scope.prev],
+    [next, n, PAGE.scope.next],
   ] as const) {
     if (race) {
       el.href = racePath(BASE, race);
@@ -289,14 +290,12 @@ async function goTo(id: string, opts: { history: 'push' | 'replace' | 'none' }) 
     updateHead();
     if (opts.history !== 'none') writeHistory(opts.history);
     state.viewer?.setRace(record, track, state.view);
-    announce(`Showing ${record.race.name} ${record.season}`);
+    announce(PAGE.notice.showing(record.race.name, record.season));
     notice(null);
   } catch (err) {
     if (token !== state.navToken) return;
     const name = summaryOf(id)?.name ?? id;
-    notice(
-      `Couldn’t load ${name} (${(err as Error).message}). Still showing ${state.record.race.name} ${state.record.season}.`,
-    );
+    notice(PAGE.notice.loadFailed(name, (err as Error).message, state.record.race.name, state.record.season));
     syncControls();
   } finally {
     if (token === state.navToken) requestAnimationFrame(() => stage.classList.remove('is-switching'));
@@ -426,7 +425,7 @@ function setupViewer() {
           host.classList.remove('has-3d');
           $('#r-fallback').removeAttribute('aria-hidden');
           ($('#view-tools') as HTMLElement).hidden = true;
-          setHtml(loading, html`${reason} Showing the flat drawing instead.`);
+          setHtml(loading, html`${reason} ${PAGE.viewer.flat}`);
           loading.hidden = false;
         },
       });
@@ -434,16 +433,11 @@ function setupViewer() {
       // WebGLRenderer throws when no context can be created (no GPU, blocked, or disabled).
       const noGl = /webgl|context/i.test(String((err as Error)?.message));
       host.dataset.webgl = noGl ? 'unavailable' : 'failed';
-      setHtml(
-        loading,
-        noGl
-          ? html`3D view unavailable on this device. Showing the flat drawing instead.`
-          : html`3D view couldn’t load. Showing the flat drawing instead.`,
-      );
+      setHtml(loading, noGl ? html`${STRINGS.el.noGl}` : html`${STRINGS.el.failed3d}`);
     }
   };
   if (conn?.saveData) {
-    setHtml(loading, html`<button type="button" class="chip" id="load-3d">Load 3D view</button>`);
+    setHtml(loading, html`<button type="button" class="chip" id="load-3d">${PAGE.viewer.load}</button>`);
     loading.hidden = false;
     $('#load-3d').addEventListener('click', () => void start(), { once: true });
     return;
@@ -512,7 +506,7 @@ function setupEmbedDialog() {
     const panel = doc?.querySelector('.e');
     if (!doc || !panel || !src || !state.record) {
       code.value = '';
-      if (src) status.textContent = 'The preview couldn’t load.';
+      if (src) status.textContent = PAGE.embedDialog.previewFailed;
       return;
     }
     const height = Math.ceil(panel.getBoundingClientRect().height);
@@ -532,7 +526,7 @@ function setupEmbedDialog() {
     } else {
       // Same shape as the other f1stories.gr tool embeds; html`` escapes every attribute value.
       code.value =
-        html`<iframe src="${src}" title="${`${title} (F1 Stories Tyre Intelligence)`}" width="100%" height="${height}" loading="lazy" style="border:0;width:100%;max-width:100%;display:block;"></iframe>`.value;
+        html`<iframe src="${src}" title="${PAGE.embedDialog.iframeTitle(title)}" width="100%" height="${height}" loading="lazy" style="border:0;width:100%;max-width:100%;display:block;"></iframe>`.value;
     }
     copy.disabled = false;
   });
@@ -548,10 +542,10 @@ function setupEmbedDialog() {
   copy.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(code.value);
-      status.textContent = 'Copied. Paste it into the article.';
+      status.textContent = PAGE.embedDialog.copied;
     } catch {
       code.select();
-      status.textContent = 'Copy blocked by the browser. The code is selected: press Ctrl/⌘ + C.';
+      status.textContent = PAGE.embedDialog.copyBlocked;
     }
   });
 }
@@ -571,7 +565,7 @@ export async function start() {
   };
   const rec = parseWith(RaceRecord, boot.record);
   if (!rec.ok) {
-    notice('This page’s built-in race data is damaged. Loading the race list instead.');
+    notice(PAGE.notice.bootDamaged);
   }
   const trk = boot.track ? parseWith(TrackSchema, boot.track) : null;
 
@@ -591,9 +585,7 @@ export async function start() {
     if (!parsed.ok) throw new Error('invalid');
     state.manifest = parsed.value;
   } catch {
-    notice(
-      'The race list couldn’t load, so other previews aren’t selectable right now. This page’s data is complete.',
-    );
+    notice(PAGE.notice.manifestFailed);
   }
 
   if (state.manifest) {
@@ -614,7 +606,7 @@ export async function start() {
     } else if (location.search && race) {
       writeHistory('replace');
     }
-    if (msg && !boot.notFound) notice(msg);
+    if (msg && !boot.notFound) notice(PAGE.notice.resolve(msg));
     history.replaceState({ raceId: state.record.id }, '');
   }
   if (!state.record) return;

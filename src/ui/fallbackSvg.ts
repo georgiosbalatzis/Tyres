@@ -5,6 +5,7 @@
 import { type Corner, type DerivedView, heatColour } from '../domain/derivedMetrics.ts';
 import type { TrackShape } from '../domain/schema.ts';
 import { html, type SafeHtml } from './html.ts';
+import { PAGE } from './strings.ts';
 
 export function trackPathD(track: TrackShape, size = 1000): { d: string; viewBox: string } {
   const xs = track.points.map((p) => p[0]);
@@ -23,14 +24,14 @@ export function trackPathD(track: TrackShape, size = 1000): { d: string; viewBox
   };
 }
 
-export function circuitSvg(track: TrackShape | null, label: string): SafeHtml {
+export function circuitSvg(track: TrackShape | null, name: string | null): SafeHtml {
   if (!track) {
-    return html`<div class="plate" role="img" aria-label="Track outline not available">
-      <p>Track outline not available for this circuit yet.</p>
+    return html`<div class="plate" role="img" aria-label="${PAGE.noOutlineAria}">
+      <p>${PAGE.noOutline}</p>
     </div>`;
   }
   const { d, viewBox } = trackPathD(track);
-  return html`<svg class="fallback-circuit" viewBox="${viewBox}" role="img" aria-label="${`Outline of ${label}`}">
+  return html`<svg class="fallback-circuit" viewBox="${viewBox}" role="img" aria-label="${PAGE.circuitOutline(name)}">
     <path d="${d}" class="track-casing" />
     <path d="${d}" class="track-line" pathLength="1" />
   </svg>`;
@@ -44,10 +45,7 @@ const TYRE_RECT: Record<Corner, [number, number, number, number]> = {
 };
 
 /** Plan view of a generic single-seater, nose up. Tyre fills come from the derived view. */
-export function carPlanSvg(
-  view: DerivedView | null,
-  label = 'Plan view of a generic Formula 1 car with tyres coloured by the selected derived view',
-): SafeHtml {
+export function carPlanSvg(view: DerivedView | null, label: string = PAGE.carPlan): SafeHtml {
   const tyre = (c: Corner) => {
     const [x, y, w, h] = TYRE_RECT[c];
     const fill = heatColour(view?.corners[c].intensity ?? null);

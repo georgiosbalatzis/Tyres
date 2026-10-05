@@ -6,11 +6,14 @@
 import type { Manifest, RaceRecord, TrackShape } from '../domain/schema.ts';
 import { seasonStrip } from './embed.ts';
 import { escapeHtml, html, inlineJson, SafeHtml } from './html.ts';
+import { PAGE, STRINGS } from './strings.ts';
 import {
   archive,
   compounds,
+  credits,
   DEFAULT_VIEW,
   dataTable,
+  embedDialog,
   fallbackVisual,
   heroWord,
   identity,
@@ -24,8 +27,6 @@ import {
   titleBlock,
 } from './templates.ts';
 
-export const SITE_NAME = 'F1 Stories — Tyre Intelligence';
-
 export interface PageContext {
   manifest: Manifest;
   record: RaceRecord;
@@ -38,9 +39,12 @@ export interface PageContext {
 }
 
 export function describe(r: RaceRecord): string {
-  const list = sortedCompounds(r).map((c) => c.compound);
-  const comp = list.length ? `Compounds ${list.join(', ')}` : 'Tyre compounds';
-  return `${comp} for the ${r.season} ${r.race.name}${r.circuit.name ? ` at ${r.circuit.name}` : ''}: track demands, starting pressures, camber limits and circuit data from Pirelli's race preview. Unofficial visualisation.`;
+  return PAGE.seo.description(
+    sortedCompounds(r).map((c) => c.compound),
+    r.race.name,
+    r.season,
+    r.circuit.name,
+  );
 }
 
 export function mainRegions(ctx: PageContext): SafeHtml {
@@ -48,24 +52,24 @@ export function mainRegions(ctx: PageContext): SafeHtml {
   const s = DEFAULT_VIEW;
   return html`
   <section class="identity" aria-labelledby="race-title" id="r-identity">${identity(r)}</section>
-  <section class="specs" aria-label="Circuit facts" id="r-specs">${specs(r)}</section>
+  <section class="specs" aria-label="${PAGE.aria.facts}" id="r-specs">${specs(r)}</section>
   <section class="viewport" aria-labelledby="viz-title">
-    <h2 id="viz-title" class="visually-hidden">Visualisation</h2>
+    <h2 id="viz-title" class="visually-hidden">${PAGE.viz}</h2>
     <div class="modebar">
-      <div class="modes" role="group" aria-label="View">
-        ${MODES.map((m) => html`<button type="button" class="mode" data-mode="${m}" aria-pressed="${String(m === s.mode)}">${m}</button>`)}
+      <div class="modes" role="group" aria-label="${PAGE.modes.label}">
+        ${MODES.map((m) => html`<button type="button" class="mode" data-mode="${m}" aria-pressed="${String(m === s.mode)}">${PAGE.modes[m]}</button>`)}
       </div>
     </div>
     <div class="canvas-host" id="canvas-host">
       <p class="hero-word" id="r-hero" aria-hidden="true">${heroWord(r)}</p>
       <div class="fallback" id="r-fallback">${fallbackVisual(r, track, s)}</div>
-      <p class="loading-3d" id="loading-3d" hidden>Loading 3D view</p>
+      <p class="loading-3d" id="loading-3d" hidden>${STRINGS.el.loading3d}</p>
       <span class="sweep" aria-hidden="true"></span>
       <div class="view-tools" id="view-tools" hidden>
-        <button type="button" class="tool" data-action="reset" aria-label="Reset camera">
+        <button type="button" class="tool" data-action="reset" aria-label="${STRINGS.el.reset}">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 8.5A6 6 0 1 1 5 13.5M4.5 3.5v5h5" /></svg>
         </button>
-        <button type="button" class="tool" data-action="rotate" aria-pressed="false" aria-label="Auto-rotate">
+        <button type="button" class="tool" data-action="rotate" aria-pressed="false" aria-label="${PAGE.autoRotate}">
           <svg viewBox="0 0 20 20" aria-hidden="true" class="i-play"><path d="M7 5l8 5-8 5z" /></svg>
           <svg viewBox="0 0 20 20" aria-hidden="true" class="i-pause"><path d="M7 5v10M13 5v10" /></svg>
         </button>
@@ -74,20 +78,20 @@ export function mainRegions(ctx: PageContext): SafeHtml {
     <div class="data-panel" id="r-data" role="region" aria-labelledby="data-caption" tabindex="0" hidden>${dataTable(r)}</div>
     <div class="readout" id="r-readout">${readout(r, track, s)}</div>
   </section>
-  <section class="demands" aria-label="Track demands and setup">
+  <section class="demands" aria-label="${PAGE.aria.demandsAndSetup}">
     <div id="r-ratings">${ratings(r)}</div>
     <div id="r-setup" class="setup">${setup(r)}</div>
   </section>
   <section class="compounds" id="r-compounds" aria-labelledby="compounds-title">${compounds(r, null)}</section>
-  <section class="titleblock" id="r-source" aria-label="Source">${titleBlock(r)}</section>
+  <section class="titleblock" id="r-source" aria-label="${PAGE.source.title}">${titleBlock(r)}</section>
   <section class="season" id="r-season" aria-labelledby="season-title">${seasonSection(ctx.manifest, r)}</section>`;
 }
 
 /** The season band: compound choices for every published round of this race's season. */
 export function seasonSection(manifest: Manifest, r: RaceRecord): SafeHtml {
   const races = manifest.years.find((y) => y.year === r.season)?.races ?? [];
-  return html`<header class="section-title"><h2 id="season-title">Compound choices, ${r.season} season</h2><p class="section-aside">${races.length} published Pirelli previews</p></header>
-    ${seasonStrip(races, 'en', r.id)}`;
+  return html`<header class="section-title"><h2 id="season-title">${STRINGS.el.seasonTitle(r.season)}</h2><p class="section-aside">${STRINGS.el.roundsNote(races.length)}</p></header>
+    ${seasonStrip(races, 'el', r.id)}`;
 }
 
 /** JSON inside <script type="application/json">: neutralise "<" so no payload can close the tag. */
@@ -95,15 +99,11 @@ export function seasonSection(manifest: Manifest, r: RaceRecord): SafeHtml {
 export function renderPage(template: string, ctx: PageContext): string {
   const { record: r, siteUrl } = ctx;
   const canonical = `${siteUrl}${ctx.path}`;
-  const title = ctx.notFound
-    ? `Page not found | ${SITE_NAME}`
-    : `${r.race.name} ${r.season} tyres and circuit | ${SITE_NAME}`;
+  const title = ctx.notFound ? PAGE.seo.notFoundTitle : PAGE.seo.title(r.race.name, r.season);
   const description = describe(r);
   // Per-race card rendered at deploy time by scripts/og-images.ts; the generic image covers the 404 page.
   const ogImage = ctx.notFound ? `${siteUrl}og.png` : `${siteUrl}og/${r.season}/${r.slug}.png`;
-  const ogAlt = ctx.notFound
-    ? 'F1 Stories Tyre Intelligence: a generic Formula 1 car with tyres coloured by track demand'
-    : `Tyre summary for the ${r.season} ${r.race.name}: compounds, circuit outline and Pirelli track-demand ratings`;
+  const ogAlt = ctx.notFound ? PAGE.seo.ogAltGeneric : PAGE.seo.ogAlt(r.race.name, r.season);
   const event =
     r.race.startDate && r.race.endDate
       ? {
@@ -121,7 +121,8 @@ export function renderPage(template: string, ctx: PageContext): string {
     <meta name="description" content="${description}" />
     ${ctx.notFound ? html`<meta name="robots" content="noindex" />` : html`<link rel="canonical" href="${canonical}" />`}
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="${SITE_NAME}" />
+    <meta property="og:site_name" content="${PAGE.seo.siteName}" />
+    <meta property="og:locale" content="el_GR" />
     <meta property="og:title" content="${title}" />
     <meta property="og:description" content="${description}" />
     <meta property="og:url" content="${canonical}" />
@@ -141,8 +142,8 @@ export function renderPage(template: string, ctx: PageContext): string {
     .replace('<!--app:main-->', () => mainRegions(ctx).value)
     .replace('<!--app:archive-->', () => archive(ctx.manifest, ctx.base, ctx.notFound ? null : r.id).value)
     .replace('<!--app:stepper-->', () => stepper(ctx.manifest, ctx.base, r.id).value)
+    .replace('<!--app:credits-->', () => credits().value)
+    .replace('<!--app:embedDialog-->', () => embedDialog().value)
     .replace('<!--app:boot-->', () => `<script type="application/json" id="boot">${boot}</script>`)
-    .replace('<!--app:notice-->', () =>
-      ctx.notFound ? `<p>${escapeHtml('That page does not exist. Showing the latest preview.')}</p>` : '',
-    );
+    .replace('<!--app:notice-->', () => (ctx.notFound ? `<p>${escapeHtml(PAGE.notice.notFound)}</p>` : ''));
 }

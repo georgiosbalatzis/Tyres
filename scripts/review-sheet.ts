@@ -11,6 +11,7 @@ import path from 'node:path';
 import { characteristicsFor, fixed, signedDeg } from '../src/domain/format.ts';
 import { parseWith, RaceRecord } from '../src/domain/schema.ts';
 import { html, safeUrl } from '../src/ui/html.ts';
+import { STRINGS } from '../src/ui/strings.ts';
 import { sortedCompounds } from '../src/ui/templates.ts';
 import { type Json, mergeRecord } from './lib/merge.ts';
 
@@ -71,7 +72,7 @@ async function sheet() {
         c.pitStopLoss ? `${c.pitStopLoss.seconds} s (${c.pitStopLoss.kind})` : 'Not provided',
       ],
       ...characteristicsFor(r).map((x): [string, string] => [
-        x.label,
+        STRINGS.en.rating[x.key],
         String(r.characteristics[x.key] ?? 'Not provided'),
       ]),
       [

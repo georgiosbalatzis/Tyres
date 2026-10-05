@@ -67,13 +67,13 @@ describe('resolveRequest', () => {
   it('falls back to latest with a notice for an unknown race', () => {
     const r = resolveRequest(manifest, { year: 2026, race: 'atlantis' }, latest);
     expect(r.race?.id).toBe('2026-bh');
-    expect(r.notice).toMatch(/atlantis/);
+    expect(r.notice).toEqual({ kind: 'noRace', race: 'atlantis', year: 2026 });
   });
 
   it('falls back to latest with a notice for an unknown year', () => {
     const r = resolveRequest(manifest, { year: 1999, race: 'monza' }, latest);
     expect(r.race?.id).toBe('2026-bh');
-    expect(r.notice).toMatch(/1999/);
+    expect(r.notice).toEqual({ kind: 'noYear', year: 1999 });
   });
 
   it('selects the latest preview of a requested year when no race is given', () => {

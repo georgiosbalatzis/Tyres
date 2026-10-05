@@ -26,7 +26,12 @@ export function parseLocation(pathname: string, search: string, base: string): R
   };
 }
 
-export type Resolution = { race: ManifestRace | null; notice: string | null };
+/** Why the requested race was not shown; the UI words it (PAGE.notice.resolve), so no copy lives here. */
+export type ResolveNotice =
+  | { kind: 'noRace'; race: string; year: number }
+  | { kind: 'noYear'; year: number }
+  | { kind: 'noSeason' };
+export type Resolution = { race: ManifestRace | null; notice: ResolveNotice | null };
 
 /** Resolves a request against the manifest; anything unknown falls back to `latest` with an explanatory notice. */
 export function resolveRequest(manifest: Manifest, req: Requested, latest: ManifestRace | null): Resolution {
@@ -38,16 +43,16 @@ export function resolveRequest(manifest: Manifest, req: Requested, latest: Manif
     return {
       race: latest,
       notice: hasYear
-        ? `No preview for “${req.race}” in ${req.year}. Showing the latest preview instead.`
-        : `No previews for ${req.year} yet. Showing the latest preview instead.`,
+        ? { kind: 'noRace', race: req.race, year: req.year }
+        : { kind: 'noYear', year: req.year },
     };
   }
   if (req.year != null) {
     const inYear = pickLatest(manifest.years.find((y) => y.year === req.year)?.races ?? []);
     if (inYear) return { race: inYear, notice: null };
-    return { race: latest, notice: `No previews for ${req.year} yet. Showing the latest preview instead.` };
+    return { race: latest, notice: { kind: 'noYear', year: req.year } };
   }
-  return { race: latest, notice: 'That link is missing a season. Showing the latest preview instead.' };
+  return { race: latest, notice: { kind: 'noSeason' } };
 }
 
 /** Canonical path for a race; these are real prerendered files on GitHub Pages. */

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { eventDates, publishedText, signedDeg } from '../../src/domain/format.ts';
 import { html, inlineJson, safeUrl } from '../../src/ui/html.ts';
+import { fmt, STRINGS } from '../../src/ui/strings.ts';
 import { dataTable, ratings, setup, specs, titleBlock } from '../../src/ui/templates.ts';
 import { fixtureRace } from '../fixtures/races.ts';
 
@@ -36,32 +36,33 @@ describe('missing data', () => {
     r.circuit.laps = null;
     r.circuit.pitStopLoss = null;
     r.setup.camberLimitDeg = null;
-    expect(specs(r).value).toContain('Not provided');
+    expect(specs(r).value).toContain('Δεν δόθηκε');
     expect(specs(r).value).not.toMatch(/data-figure="laps">0</);
-    expect(setup(r).value).toContain('Not provided');
-    expect(ratings(r).value).toMatch(/Asphalt abrasion[\s\S]*Not provided/);
+    expect(setup(r).value).toContain('Δεν δόθηκε');
+    expect(ratings(r).value).toMatch(/Τραχύτητα ασφάλτου[\s\S]*Δεν δόθηκε/);
     expect(dataTable(r).value).toContain('class="is-missing"');
   });
 
   it('only shows Downforce when the source format had it', () => {
-    expect(ratings(fixtureRace()).value).not.toContain('Downforce');
+    expect(ratings(fixtureRace()).value).not.toContain('Κάθετη δύναμη');
     const r = fixtureRace();
     r.characteristics.downforce = 3;
-    expect(ratings(r).value).toContain('Downforce');
+    expect(ratings(r).value).toContain('Κάθετη δύναμη');
   });
 });
 
 describe('formatting', () => {
-  it('formats event dates, publication time and camber', () => {
-    expect(eventDates({ ...fixtureRace().race, startDate: '2026-10-02', endDate: '2026-10-04' })).toBe(
-      '2–4 Oct 2026',
+  it('formats event dates, publication time and camber in Greek', () => {
+    const f = fmt(STRINGS.el);
+    expect(f.dates({ ...fixtureRace().race, startDate: '2026-10-02', endDate: '2026-10-04' })).toBe(
+      '2–4 Οκτ 2026',
     );
-    expect(eventDates({ ...fixtureRace().race, startDate: '2026-10-30', endDate: '2026-11-01' })).toBe(
-      '30 Oct – 1 Nov 2026',
+    expect(f.dates({ ...fixtureRace().race, startDate: '2026-10-30', endDate: '2026-11-01' })).toBe(
+      '30 Οκτ – 1 Νοε 2026',
     );
-    expect(publishedText('2026-09-29T10:36:03+02:00')).toBe('29 Sept 2026, 10:36 UTC+02');
-    expect(publishedText(null)).toBe('Not provided');
-    expect(signedDeg(-1.75)).toBe('−1.75°');
+    expect(f.publishedTime('2026-09-29T10:36:03+02:00')).toBe('29 Σεπ 2026, 10:36 UTC+02');
+    expect(f.publishedTime(null)).toBeNull();
+    expect(f.num(-1.75, 2, '°')).toBe('−1,75°');
   });
 });
 

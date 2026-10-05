@@ -2,10 +2,11 @@
  * 1200×630 social card for one race, as a self-contained HTML document (inline CSS, font as data URL).
  * Rendered to PNG at deploy time by scripts/og-images.ts. Everything shown is data from the record.
  */
-import { characteristicsFor, compoundCssVar, eventDates, NOT_PROVIDED } from '../domain/format.ts';
+import { characteristicsFor, compoundCssVar } from '../domain/format.ts';
 import type { RaceRecord, TrackShape } from '../domain/schema.ts';
 import { trackPathD } from './fallbackSvg.ts';
 import { html, SafeHtml } from './html.ts';
+import { fmt, STRINGS } from './strings.ts';
 import { sortedCompounds } from './templates.ts';
 
 // Light "paper and ink" edition, matching the site; the circuit map sits on the dark bench.
@@ -21,7 +22,8 @@ export interface CardFonts {
 
 export function ogCardHtml(r: RaceRecord, track: TrackShape | null, fonts: CardFonts): string {
   const path = track ? trackPathD(track, 1000) : null;
-  const dates = eventDates(r.race);
+  const t = STRINGS.el;
+  const dates = fmt(t).dates(r.race);
   const ratings = characteristicsFor(r).filter((c) => c.key !== 'downforce');
   const css = `
 @font-face{font-family:P;src:url(${fonts.text}) format('woff2');font-weight:400 600}
@@ -52,19 +54,19 @@ h1{font-size:64px;line-height:1.02;font-weight:600;letter-spacing:-.025em;max-wi
 -webkit-mask:repeating-linear-gradient(90deg,#000 0 calc(20% - 3px),transparent calc(20% - 3px) 20%)}
 .foot{grid-column:4;align-self:end;color:var(--c-text-2);font-size:13px;line-height:1.35}`;
 
-  const card = html`<!doctype html><html lang="en"><head><meta charset="utf-8"><style>${new SafeHtml(css)}</style></head>
+  const card = html`<!doctype html><html lang="el"><head><meta charset="utf-8"><style>${new SafeHtml(css)}</style></head>
 <body>
 <div class="sheet">
-  <header><span class="brand">F1 STORIES<span class="dot">.</span></span><span class="kicker">Tyre intelligence</span>
-    <span class="round">${r.round ? `Round ${r.round}, ` : ''}${r.season} season</span></header>
+  <header><span class="brand">F1 STORIES<span class="dot">.</span></span><span class="kicker">TYRES</span>
+    <span class="round">${r.round ? `${t.round(r.round)} · ` : ''}Σεζόν ${r.season}</span></header>
   <main>
     <div class="id">
       <h1>${r.race.name}</h1>
-      <p class="venue">${r.circuit.name ?? NOT_PROVIDED}</p>
+      <p class="venue">${r.circuit.name ?? t.notProvided}</p>
       <p class="dates">${[r.race.location, dates].filter(Boolean).join(', ')}</p>
       <div class="comps">${sortedCompounds(r).map(
         (c) =>
-          html`<span class="comp ${c.raceLabel}" style="--tone:${compoundCssVar(c.raceLabel)}"><span class="disc">${c.compound}</span><span class="label">${c.raceLabel}</span></span>`,
+          html`<span class="comp ${c.raceLabel}" style="--tone:${compoundCssVar(c.raceLabel)}"><span class="disc">${c.compound}</span><span class="label">${t.compound[c.raceLabel] ?? c.raceLabel}</span></span>`,
       )}</div>
     </div>
     <div class="map">${
@@ -76,9 +78,9 @@ h1{font-size:64px;line-height:1.02;font-weight:600;letter-spacing:-.025em;max-wi
   <section class="ratings">
     ${ratings.map((c) => {
       const v = r.characteristics[c.key] ?? null;
-      return html`<div class="r" style="--val:${v ?? 0};--heat:${v ? `var(--heat-${v})` : 'transparent'}"><span>${c.label}</span><span class="v">${v ?? '–'}</span><span class="scale"></span></div>`;
+      return html`<div class="r" style="--val:${v ?? 0};--heat:${v ? `var(--heat-${v})` : 'transparent'}"><span>${t.rating[c.key]}</span><span class="v">${v ?? '–'}</span><span class="scale"></span></div>`;
     })}
-    <p class="foot">Unofficial. Data: Pirelli Motorsport race preview.</p>
+    <p class="foot">Ανεπίσημο. Δεδομένα: προεπισκόπηση αγώνα Pirelli Motorsport.</p>
   </section>
 </div>
 </body></html>`;

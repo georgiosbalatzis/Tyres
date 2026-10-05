@@ -18,7 +18,7 @@ test('prerendered HTML carries the full race data without JavaScript', async ({ 
   const page = await ctx.newPage();
   await page.goto(BASE);
   await expect(title(page)).toHaveText('Bahrain Grand Prix');
-  await expect(page.locator('#r-specs')).toContainText('5.543');
+  await expect(page.locator('#r-specs')).toContainText('5,543');
   await expect(page.locator('#r-compounds')).toContainText('C2');
   await expect(page.locator('#r-source a').first()).toHaveAttribute('href', /press\.pirelli\.com/);
   const manifest = await (await page.request.get(`${BASE}data/manifest.json`)).json();
@@ -66,7 +66,7 @@ test('changing season selects that season’s latest preview', async ({ page }) 
   // thread for a few seconds; allow for it, as the 3D test does.
   await expect(page).toHaveURL(`${BASE}2025/yas-marina/`, { timeout: 15_000 });
   await expect(title(page)).toHaveText('Abu Dhabi Grand Prix');
-  await expect(page.locator('#r-ratings')).toContainText('Downforce');
+  await expect(page.locator('#r-ratings')).toContainText('Κάθετη δύναμη');
 });
 
 test('previous/next step through races and work as plain links', async ({ page }) => {
@@ -74,7 +74,7 @@ test('previous/next step through races and work as plain links', async ({ page }
   await expect(page.locator('#next')).toHaveAttribute('href', `${BASE}2026/madring/`);
   await page.locator('#next').click();
   await expect(title(page)).toHaveText('Spanish Grand Prix');
-  await expect(page.locator('#r-specs')).toContainText('Not provided'); // Madring has no lap record yet
+  await expect(page.locator('#r-specs')).toContainText('Δεν δόθηκε'); // Madring has no lap record yet
 });
 
 test('query-string state is honoured and normalised to the static path', async ({ page }) => {
@@ -102,9 +102,9 @@ test('without WebGL the SVG drawing and every value remain available', async ({ 
   const errors = trackConsole(page);
   await page.goto(BASE);
   await page.locator('#canvas-host').scrollIntoViewIfNeeded();
-  await expect(page.locator('#loading-3d')).toContainText('3D view unavailable');
+  await expect(page.locator('#loading-3d')).toContainText('Το 3D δεν είναι διαθέσιμο');
   await expect(page.locator('.fallback-car')).toBeVisible();
-  await page.getByRole('button', { name: 'circuit' }).click();
+  await page.getByRole('button', { name: 'Πίστα', exact: true }).click();
   await expect(page.locator('.fallback-circuit')).toBeVisible();
   await expect(page.locator('#canvas-host canvas')).toHaveCount(0);
   expect(errors).toEqual([]);
@@ -114,22 +114,24 @@ test('a missing race file keeps the current race and explains the failure', asyn
   await page.route('**/data/races/2026-az.json', (r) => r.fulfill({ status: 200, body: '{"broken":true}' }));
   await page.goto(BASE);
   await page.locator('#race').selectOption('2026-az');
-  await expect(page.locator('#notice')).toContainText('Couldn’t load');
+  await expect(page.locator('#notice')).toContainText('Δεν φορτώθηκε');
   await expect(title(page)).toHaveText('Bahrain Grand Prix');
 });
 
 test('keyboard users can switch modes, views and tyres', async ({ page }) => {
   await page.goto(BASE);
-  const circuit = page.getByRole('button', { name: 'circuit', exact: true });
+  const circuit = page.getByRole('button', { name: 'Πίστα', exact: true });
   await circuit.focus();
   await page.keyboard.press('Enter');
   await expect(circuit).toHaveAttribute('aria-pressed', 'true');
-  const data = page.getByRole('button', { name: 'data', exact: true });
+  const data = page.getByRole('button', { name: 'Πίνακας', exact: true });
   await data.focus();
   await page.keyboard.press('Space');
   await expect(page.locator('#r-data table')).toBeVisible();
-  await expect(page.locator('#r-data').getByRole('table')).toContainText('Camber limit, rear');
-  await page.getByRole('button', { name: 'car', exact: true }).click();
+  await expect(page.locator('#r-data').getByRole('table')).toContainText(
+    'Όριο camber στο τέλος της ευθείας, πίσω',
+  );
+  await page.getByRole('button', { name: 'Μονοθέσιο', exact: true }).click();
   const fl = page.locator('.corner[data-corner="FL"]');
   await fl.focus();
   await page.keyboard.press('Enter');
@@ -178,7 +180,7 @@ test('the latest choice wins when an earlier race is still loading', async ({ pa
 
 test('tyres mode keeps a selected compound across races', async ({ page }) => {
   await page.goto(BASE);
-  await page.getByRole('button', { name: 'tyres', exact: true }).click();
+  await page.getByRole('button', { name: 'Ελαστικά', exact: true }).click();
   await page.locator('#race').selectOption('2026-az');
   await expect(page.locator('.compound[aria-pressed="true"]')).toHaveCount(1);
   await expect(page.locator('#r-readout')).toContainText('C4');
@@ -203,7 +205,7 @@ test('follows the OS and remembers the choice under f1stories-theme', async ({ p
   await page.reload();
   await expect(root).toHaveAttribute('data-theme', 'light');
   expect(await stored()).toBeNull(); // only the toggle writes
-  const toggle = page.getByRole('button', { name: 'Dark theme' });
+  const toggle = page.getByRole('button', { name: 'Σκούρο θέμα' });
   await expect(toggle).toHaveAttribute('aria-pressed', 'false');
   await toggle.click();
   await expect(root).toHaveAttribute('data-theme', 'dark');
@@ -256,12 +258,12 @@ test('the Embed dialog copies an iframe snippet for the current race', async ({
   test.skip(isMobile, 'The embed tool is desktop-only.');
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto(BASE);
-  await page.getByRole('button', { name: 'Embed' }).click();
-  await page.locator('#embed-dialog').getByText('Track demands', { exact: true }).click();
-  const copy = page.getByRole('button', { name: 'Copy code' });
+  await page.getByRole('button', { name: 'Ενσωμάτωση' }).click();
+  await page.locator('#embed-dialog').getByText('Απαιτήσεις πίστας', { exact: true }).click();
+  const copy = page.getByRole('button', { name: 'Αντιγραφή κώδικα' });
   await expect(copy).toBeEnabled();
   await copy.click();
-  await expect(page.locator('#embed-status')).toContainText('Copied');
+  await expect(page.locator('#embed-status')).toContainText('Αντιγράφηκε');
   const snippet = await page.evaluate(() => navigator.clipboard.readText());
   expect(snippet).toMatch(
     /^<iframe src="http:\/\/localhost:\d+\/Tyres\/embed\/el\/2026\/sepang\/demands\/" title="[^"]+" width="100%" height="\d+"/,
@@ -307,23 +309,23 @@ test('embeds switch to the dark theme with #dark, without a reload or a height c
 test('the Embed dialog offers a panel image with alt text from the panel', async ({ page, isMobile }) => {
   test.skip(isMobile, 'The embed tool is desktop-only.');
   await page.goto(BASE);
-  await page.getByRole('button', { name: 'Embed' }).click();
+  await page.getByRole('button', { name: 'Ενσωμάτωση' }).click();
   const dialog = page.locator('#embed-dialog');
-  await dialog.getByText('Image for social and newsletters').click();
-  await expect(page.getByRole('button', { name: 'Copy code' })).toBeEnabled();
+  await dialog.getByText('Εικόνα για social και newsletter').click();
+  await expect(page.getByRole('button', { name: 'Αντιγραφή κώδικα' })).toBeEnabled();
   const snippet = await page.locator('#embed-code').inputValue();
   expect(snippet).toMatch(/^<img src="http:\/\/localhost:\d+\/Tyres\/img\/el\/2026\/sepang\/summary\.png"/);
   expect(snippet).toContain('alt="Ελαστικά αγώνα');
   expect(snippet).toContain('Πηγή: Pirelli');
   await expect(page.locator('#embed-download')).toBeVisible();
-  await dialog.getByText('3D view', { exact: true }).click();
+  await dialog.getByText('Τρισδιάστατη προβολή', { exact: true }).click();
   await expect(dialog.locator('input[value="image"]')).toBeDisabled();
 });
 
 test('the season strip shows on the race page and as an embed of constant height', async ({ page }) => {
   await page.goto(BASE);
   const band = page.locator('#r-season');
-  await expect(band).toContainText('Compound choices, 2026 season');
+  await expect(band).toContainText('Επιλογές γομών, σεζόν 2026');
   await expect(band.locator('th.is-current')).toContainText('R16');
   const heights: number[] = [];
   for (const width of [300, 968]) {
