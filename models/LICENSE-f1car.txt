@@ -1,0 +1,13 @@
+f1car.glb — "Low Poly-F1" by salasilma13
+Source: https://sketchfab.com/3d-models/low-poly-f1-0ac02bfa81f64549be15acaa78f36f29
+Author: https://sketchfab.com/salasilma13
+Licence: Creative Commons Attribution 4.0 International (CC BY 4.0)
+         https://creativecommons.org/licenses/by/4.0/
+
+A generic single-seater: no team livery, logos or textures.
+
+Changes made for F1 Stories — Tyre Intelligence:
+- Taken from the F1 Stories ghostcar project (same file), with EXT_meshopt_compression decoded so the
+  browser needs no WebAssembly decoder (the site's CSP does not allow one). Geometry is otherwise unchanged.
+- At runtime (src/three/modelLoader.ts) the body is recoloured graphite/carbon and the model's tyres are
+  hidden and replaced by procedural wheels that carry the derived tyre-demand colouring.
