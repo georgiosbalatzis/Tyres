@@ -16,7 +16,7 @@ Status list below up to date in this file as part of each phase's commit. Read t
 - [x] Phase 7 — Tests and visual parity pass
 - [x] Phase 8 — Docs
 - [x] Phase 9 — `site:check` drift script
-- [ ] Phase 10 — Cross-repo: add TYRES to the Race Desk switcher (f1StoriesPage, Telemetry, Ghost Car)
+- [~] Phase 10 — Cross-repo: add TYRES to the Race Desk switcher (f1StoriesPage, Telemetry, Ghost Car) (prepared and tested locally on branch `race-desk-tyres` in each repo; not pushed, no PRs opened. Open them in this order: f1StoriesPage first, then Telemetry and Ghost Car.)
 
 ---
 

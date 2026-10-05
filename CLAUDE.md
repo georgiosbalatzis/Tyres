@@ -6,8 +6,8 @@ interactive visualisation of Pirelli F1 race-preview data, built as a static sit
 Stack: Vite + TypeScript + Three.js (lazy), zod/mini, Biome, Vitest, Playwright. Node ≥ 24 (runs `.ts` scripts natively).
 
 > **Redesign nearly done.** Phases 0–9 of `docs/REDESIGN-GUIDE.md` are merged: the Race Desk shell, body, Greek copy, head,
-> embeds, tests, docs and the `npm run site:check` drift check. Left: Phase 10 (adding TYRES to the Race Desk switcher in
-> f1StoriesPage, Telemetry and Ghost Car; ask the user before any push or PR). `site:check` reports the missing TYRES link until then. Delete this note and the
+> embeds, tests, docs and the `npm run site:check` drift check. Phase 10 (adding TYRES to the Race Desk switcher in
+> f1StoriesPage, Telemetry and Ghost Car) is prepared locally but **not pushed**: ask the user before any push or PR. `site:check` reports the missing TYRES link until then. Delete this note and the
 > guide's mentions once Phase 10 has merged.
 
 ## Hard rules
