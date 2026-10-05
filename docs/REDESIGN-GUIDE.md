@@ -1,8 +1,31 @@
 # TYRES. redesign guide — joining the F1 Stories Race Desk
 
-This guide is for the implementing agent (Claude Sonnet). Work through it **in order, one phase per commit**, and keep the
-Status list below up to date in this file as part of each phase's commit. Read the whole guide once before starting.
-`CLAUDE.md` describes the target state; this guide describes how to get there.
+> **Completed 2026-10-05, kept as history.** Every phase below shipped: Tyres [#4](https://github.com/georgiosbalatzis/Tyres/pull/4),
+> f1StoriesPage [#245](https://github.com/georgiosbalatzis/f1StoriesPage/pull/245), f1-telemetry-dashboard
+> [#21](https://github.com/georgiosbalatzis/f1-telemetry-dashboard/pull/21) and ghostcar
+> [#20](https://github.com/georgiosbalatzis/ghostcar/pull/20). `CLAUDE.md` and `docs/DESIGN-SYSTEM.md` describe the result;
+> this file records how it was planned and where the implementation departs from the plan (next section). Do not use it as a
+> to-do list.
+
+This guide was written for the implementing agent (Claude Sonnet). It asked for one phase per commit, with the Status list
+below kept up to date in each phase's commit.
+
+## Where the result departs from this guide
+
+- **Band slogan** appears from 1024 px (as on Telemetry), not 768 px; at 768 px it made the band wrap.
+- **Hero and band** sit just before `<main>`, not inside it, so `main.stage` stays the grid container the controller uses.
+- **Font preloads** (Latin, Greek, Barlow) are injected by the build hook in `vite.config.ts` from the hashed bundle names;
+  links in `index.html` left unresolved placeholders in the prerendered pages.
+- **Social icons** carry visually hidden text rather than `aria-label` (the linter rejected the label form), and the copied
+  icon sprite is excluded from Biome.
+- **`.colophon` stays in the charcoal selector until Phase 3**, when the old colophon was replaced.
+- **`PAGE`** differs from the listing in Phase 2: `PAGE.identity` is gone, `table.caption` is a function, and keys for the
+  3D viewer, the readout and the derived text were added. `deriveView` takes its text as an argument.
+- **The archive** moved into the page body in Phase 4; Phase 3 left it above the sponsors strip so the commit stayed working.
+- **Phase 10:** the Telemetry PR also carries a one-line change giving its slow `VisualWorkflow` test an explicit 20 s
+  timeout; that test had been failing on pull-request runs and once on `main`.
+- **Open items recorded elsewhere:** the critical-JS and three.js chunk budgets are over (`docs/ARCHITECTURE.md`), and
+  `site:check` is deliberately not part of CI.
 
 ## Status
 
@@ -16,7 +39,7 @@ Status list below up to date in this file as part of each phase's commit. Read t
 - [x] Phase 7 — Tests and visual parity pass
 - [x] Phase 8 — Docs
 - [x] Phase 9 — `site:check` drift script
-- [~] Phase 10 — Cross-repo: add TYRES to the Race Desk switcher (f1StoriesPage, Telemetry, Ghost Car) (prepared and tested locally on branch `race-desk-tyres` in each repo; not pushed, no PRs opened. Open them in this order: f1StoriesPage first, then Telemetry and Ghost Car.)
+- [x] Phase 10 — Cross-repo: add TYRES to the Race Desk switcher (f1StoriesPage #245, Telemetry #21, Ghost Car #20; all merged)
 
 ---
 
