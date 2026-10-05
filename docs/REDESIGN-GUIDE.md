@@ -12,7 +12,7 @@ Status list below up to date in this file as part of each phase's commit. Read t
 - [x] Phase 3 — Site shell: masthead, Race Desk hero, signal band, sponsors, colophon, countdown
 - [x] Phase 4 — Product body: scope row, context row, tabs, stage + sidebar, panels, archive
 - [x] Phase 5 — Head, SEO, notices, 404 in Greek
-- [ ] Phase 6 — Embeds and social/panel images
+- [x] Phase 6 — Embeds and social/panel images
 - [ ] Phase 7 — Tests and visual parity pass
 - [ ] Phase 8 — Docs
 - [ ] Phase 9 — `site:check` drift script

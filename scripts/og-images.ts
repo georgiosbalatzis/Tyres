@@ -1,6 +1,6 @@
 /**
  * Renders, after `npm run build` (needs Playwright's Chromium: `npx playwright install chromium`):
- *   - a 1200×630 social card per race into <out>/og/{season}/{slug}.png
+ *   - a 1200×630 social card per race into <out>/og/{season}/{slug}.png, plus the generic <out>/og.png
  *   - every static embed panel, both languages, as an image for social posts and newsletters into
  *     <out>/img/{lang}/{season}/{slug}/{panel}.png, straight from the built embed pages (no server).
  *
@@ -41,6 +41,7 @@ const fontUrl = async (file: string) =>
   `data:font/woff2;base64,${(await readFile(path.join(ROOT, 'src/assets/fonts', file))).toString('base64')}`;
 const fonts = {
   text: await fontUrl('ibm-plex-sans-400-600.woff2'),
+  textGreek: await fontUrl('ibm-plex-sans-400-600-greek.woff2'),
   brand: await fontUrl('barlow-condensed-700.woff2'),
 };
 
@@ -60,6 +61,10 @@ for (const summary of manifest.years.flatMap((y) => y.races)) {
   await writeFile(file, await page.screenshot({ type: 'png' }));
   count++;
 }
+// The generic card: the 404 page and anything without a race of its own (replaces a checked-in og.png).
+await page.setContent(ogCardHtml(null, null, fonts), { waitUntil: 'load' });
+await page.evaluate(() => document.fonts.ready);
+await writeFile(path.join(OUT, 'og.png'), await page.screenshot({ type: 'png' }));
 console.log(`og: ${count} card(s) → ${path.relative(ROOT, path.join(OUT, 'og'))}/`);
 
 /* Panel images: load the built embed pages from <out>, mapping the site's base path onto it. */

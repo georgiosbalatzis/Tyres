@@ -105,6 +105,7 @@ describe('social card', () => {
     r.race.name = 'Fixture <b>Alpha</b> Grand Prix';
     const doc = ogCardHtml(r, null, {
       text: 'data:font/woff2;base64,AAAA',
+      textGreek: 'data:font/woff2;base64,AAAA',
       brand: 'data:font/woff2;base64,AAAA',
     });
     expect(doc).toContain('Fixture &lt;b&gt;Alpha&lt;/b&gt; Grand Prix');
@@ -152,5 +153,26 @@ describe('document head', () => {
     expect(out).toContain('https://x.test/Tyres/og.png');
     expect(out).toContain('Αυτή η σελίδα δεν υπάρχει.');
     expect(out).not.toContain('rel="canonical"');
+  });
+});
+
+describe('social card, Race Desk edition', () => {
+  const fonts = { text: 'data:,', textGreek: 'data:,', brand: 'data:,' };
+  it('shows the race, its status-free facts and the Race Desk marks, in Greek', async () => {
+    const { ogCardHtml } = await import('../../src/ui/ogCard.ts');
+    const r = fixtureRace();
+    const doc = ogCardHtml(r, null, fonts);
+    expect(doc).toContain('F1 STORIES / RACE DESK');
+    expect(doc).toContain('EVERY COMPOUND COUNTS.');
+    expect(doc).toContain('Προεπισκόπηση Pirelli');
+    expect(doc).toContain(`Σεζόν ${r.season}`);
+    expect(doc).not.toMatch(/Tyre intelligence|Round \d|season</);
+  });
+
+  it('renders a generic card without a race: no compound numbers, nothing invented', async () => {
+    const { ogCardHtml } = await import('../../src/ui/ogCard.ts');
+    const doc = ogCardHtml(null, null, fonts);
+    expect(doc).toContain('Κάθε γόμα, μια ιστορία.');
+    expect(doc).not.toMatch(/\bC\d\b|Αγώνας \d|Σεζόν \d/);
   });
 });
