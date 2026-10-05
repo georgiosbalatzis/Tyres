@@ -23,6 +23,7 @@
     "data:review": "node scripts/review-sheet.ts",
     "data:verify": "node scripts/review-sheet.ts --verify",
     "data:check-sources": "node scripts/check-sources.ts",
+    "site:check": "node scripts/check-site.ts",
     "track:import": "node scripts/import-track.ts"
   },
   "dependencies": {

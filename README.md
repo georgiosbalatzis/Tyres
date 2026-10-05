@@ -33,6 +33,7 @@ Useful commands:
 | `npm run test:e2e` | Playwright browser tests (desktop + mobile) against the production build |
 | `npm run build` | `data:build` + `vite build` → `dist/` including `/{year}/{slug}/` pages and `404.html` |
 | `npm run preview` | Serve `dist/` locally |
+| `npm run site:check` | Network: has f1stories.gr's masthead, footer, Race Desk switcher, calendar, tokens or logo drifted from our copies? Exits 1 on a difference |
 | `npm run og` | Render a Race Desk social card per race into `dist/og/`, the generic `dist/og.png` and every panel image into `dist/img/` (needs Playwright Chromium; the deploy workflow runs it) |
 
 First Playwright run: `npx playwright install chromium`.

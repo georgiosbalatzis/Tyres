@@ -15,7 +15,7 @@ Status list below up to date in this file as part of each phase's commit. Read t
 - [x] Phase 6 — Embeds and social/panel images
 - [x] Phase 7 — Tests and visual parity pass
 - [x] Phase 8 — Docs
-- [ ] Phase 9 — `site:check` drift script
+- [x] Phase 9 — `site:check` drift script
 - [ ] Phase 10 — Cross-repo: add TYRES to the Race Desk switcher (f1StoriesPage, Telemetry, Ghost Car)
 
 ---

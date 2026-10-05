@@ -189,5 +189,8 @@ generic card (no race) carries no compound numbers and no race facts.
 
 The shell is copied, not imported (the apps are separate deployments). When f1stories.gr changes its nav, footer,
 Race Desk switcher or next-race calendar, update `index.html`, `src/ui/countdown.ts` and `src/styles/shell.css` to match.
-`tests/e2e/shell.spec.ts` pins the nav order, the single current item, the switcher, the 44 px targets, the masthead
+`npm run site:check` (network, `scripts/check-site.ts`) fetches the site's `partials/nav.html`, `partials/footer.html`,
+`standings/index.html` (the Race Desk switcher), `scripts/shared-nav.js` (the calendar), `docs/design-tokens.json` and the
+logo, and reports every difference from our copies; it exits 1 on drift. It is not part of `npm run check` or CI, because
+it needs the network and depends on another repository's current state. `tests/e2e/shell.spec.ts` pins the nav order, the single current item, the switcher, the 44 px targets, the masthead
 layering and the colophon.
