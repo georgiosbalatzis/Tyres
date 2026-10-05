@@ -5,11 +5,6 @@ interactive visualisation of Pirelli F1 race-preview data, built as a static sit
 (`georgiosbalatzis.github.io/Tyres/`). It must look and behave like part of f1stories.gr, not like a separate app.
 Stack: Vite + TypeScript + Three.js (lazy), zod/mini, Biome, Vitest, Playwright. Node ≥ 24 (runs `.ts` scripts natively).
 
-> **Redesign nearly done.** Phases 0–9 of `docs/REDESIGN-GUIDE.md` are merged: the Race Desk shell, body, Greek copy, head,
-> embeds, tests, docs and the `npm run site:check` drift check. Phase 10 (adding TYRES to the Race Desk switcher in
-> f1StoriesPage, Telemetry and Ghost Car) is prepared locally but **not pushed**: ask the user before any push or PR. `site:check` reports the missing TYRES link until then. Delete this note and the
-> guide's mentions once Phase 10 has merged.
-
 ## Hard rules
 
 - **Static only.** There's no runtime backend and no runtime fetches to Pirelli, f1stories.gr or any third party. The browser loads
@@ -101,4 +96,5 @@ npm run track:import -- <bacinger-id> <track-id> "<name>"
 Tests are required for domain logic, parsers and anything touching data integrity or the shared shell (nav order, current
 items, Race Desk links). Update `tests/fixtures/pirelli/` when Pirelli markup changes, rather than loosening the parser.
 
-Docs: `docs/REDESIGN-GUIDE.md` (in progress), `docs/ARCHITECTURE.md`, `docs/DATA-SOURCES.md`, `docs/DATA-PIPELINE.md`, `docs/DESIGN-SYSTEM.md`.
+Docs: `docs/ARCHITECTURE.md`, `docs/DATA-SOURCES.md`, `docs/DATA-PIPELINE.md`, `docs/DESIGN-SYSTEM.md`. `docs/REDESIGN-GUIDE.md` is the
+history of the Race Desk redesign (how it was planned and where the result departs from the plan); it is not a to-do list.
