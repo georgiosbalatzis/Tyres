@@ -51,38 +51,43 @@ export function mainRegions(ctx: PageContext): SafeHtml {
   const { record: r, track } = ctx;
   const s = DEFAULT_VIEW;
   return html`
-  <section class="specs" aria-label="${PAGE.aria.facts}" id="r-specs">${specs(r)}</section>
-  <section class="viewport" aria-labelledby="viz-title">
-    <h2 id="viz-title" class="visually-hidden">${PAGE.viz}</h2>
-    <div class="modebar">
-      <div class="modes" role="group" aria-label="${PAGE.modes.label}">
-        ${MODES.map((m) => html`<button type="button" class="mode" data-mode="${m}" aria-pressed="${String(m === s.mode)}">${PAGE.modes[m]}</button>`)}
+  <section class="context-row" aria-label="${PAGE.aria.facts}" id="r-specs">${specs(r)}</section>
+  <div class="tab-strip modes" role="group" aria-label="${PAGE.modes.label}">
+    ${MODES.map((m) => html`<button type="button" class="mode" data-mode="${m}" aria-pressed="${String(m === s.mode)}">${PAGE.modes[m]}</button>`)}
+  </div>
+  <div class="desk-layout">
+    <section class="viewport" aria-labelledby="viz-title">
+      <h2 id="viz-title" class="visually-hidden">${PAGE.viz}</h2>
+      <div class="canvas-host" id="canvas-host">
+        <div class="fallback" id="r-fallback">${fallbackVisual(r, track, s)}</div>
+        <p class="loading-3d" id="loading-3d" hidden>${STRINGS.el.loading3d}</p>
+        <span class="sweep" aria-hidden="true"></span>
+        <div class="view-tools" id="view-tools" hidden>
+          <button type="button" class="tool" data-action="reset" aria-label="${STRINGS.el.reset}">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 8.5A6 6 0 1 1 5 13.5M4.5 3.5v5h5" /></svg>
+          </button>
+          <button type="button" class="tool" data-action="rotate" aria-pressed="false" aria-label="${PAGE.autoRotate}">
+            <svg viewBox="0 0 20 20" aria-hidden="true" class="i-play"><path d="M7 5l8 5-8 5z" /></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true" class="i-pause"><path d="M7 5v10M13 5v10" /></svg>
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="canvas-host" id="canvas-host">
-      <div class="fallback" id="r-fallback">${fallbackVisual(r, track, s)}</div>
-      <p class="loading-3d" id="loading-3d" hidden>${STRINGS.el.loading3d}</p>
-      <span class="sweep" aria-hidden="true"></span>
-      <div class="view-tools" id="view-tools" hidden>
-        <button type="button" class="tool" data-action="reset" aria-label="${STRINGS.el.reset}">
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 8.5A6 6 0 1 1 5 13.5M4.5 3.5v5h5" /></svg>
-        </button>
-        <button type="button" class="tool" data-action="rotate" aria-pressed="false" aria-label="${PAGE.autoRotate}">
-          <svg viewBox="0 0 20 20" aria-hidden="true" class="i-play"><path d="M7 5l8 5-8 5z" /></svg>
-          <svg viewBox="0 0 20 20" aria-hidden="true" class="i-pause"><path d="M7 5v10M13 5v10" /></svg>
-        </button>
-      </div>
-    </div>
-    <div class="data-panel" id="r-data" role="region" aria-labelledby="data-caption" tabindex="0" hidden>${dataTable(r)}</div>
-    <div class="readout" id="r-readout">${readout(r, track, s)}</div>
-  </section>
-  <section class="demands" aria-label="${PAGE.aria.demandsAndSetup}">
-    <div id="r-ratings">${ratings(r)}</div>
-    <div id="r-setup" class="setup">${setup(r)}</div>
-  </section>
-  <section class="compounds" id="r-compounds" aria-labelledby="compounds-title">${compounds(r, null)}</section>
-  <section class="titleblock" id="r-source" aria-label="${PAGE.source.title}">${titleBlock(r)}</section>
-  <section class="season" id="r-season" aria-labelledby="season-title">${seasonSection(ctx.manifest, r)}</section>`;
+      <div class="data-panel" id="r-data" role="region" aria-labelledby="data-caption" tabindex="0" hidden>${dataTable(r)}</div>
+      <div class="readout" id="r-readout">${readout(r, track, s)}</div>
+    </section>
+    <aside class="desk-aside" aria-labelledby="aside-title">
+      <h2 class="aside-title" id="aside-title">${PAGE.aside.title}</h2>
+      <p class="aside-sub">${PAGE.aside.sub}</p>
+      <section class="aside-block compounds" id="r-compounds" aria-labelledby="compounds-title">${compounds(r, null)}</section>
+      <section class="aside-block" aria-label="${PAGE.aria.demandsAndSetup}">
+        <div id="r-ratings">${ratings(r)}</div>
+        <div id="r-setup" class="setup">${setup(r)}</div>
+      </section>
+    </aside>
+  </div>
+  <section class="panel titleblock" id="r-source" aria-label="${PAGE.source.title}">${titleBlock(r)}</section>
+  <section class="panel season" id="r-season" aria-labelledby="season-title">${seasonSection(ctx.manifest, r)}</section>
+  <section class="panel archive-panel">${archive(ctx.manifest, ctx.base, ctx.notFound ? null : r.id)}</section>`;
 }
 
 /** The season band: compound choices for every published round of this race's season. */
@@ -140,7 +145,6 @@ export function renderPage(template: string, ctx: PageContext): string {
     .replace('<!--app:identity-->', () => identity(r).value)
     .replace('<!--app:band-->', () => band(r).value)
     .replace('<!--app:main-->', () => mainRegions(ctx).value)
-    .replace('<!--app:archive-->', () => archive(ctx.manifest, ctx.base, ctx.notFound ? null : r.id).value)
     .replace('<!--app:stepper-->', () => stepper(ctx.manifest, ctx.base, r.id).value)
     .replace(
       '<span data-current-year>2026</span>',

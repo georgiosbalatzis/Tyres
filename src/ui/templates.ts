@@ -80,8 +80,19 @@ export function specs(r: RaceRecord): SafeHtml {
   const c = r.circuit;
   const lr = c.lapRecord;
   const pit = c.pitStopLoss;
-  return html`<h2 class="section-title">${T.panel.circuit}</h2>
-    <dl class="spec-list">
+  const list = sortedCompounds(r);
+  return html`<dl class="spec-list">
+      <div class="spec spec-compounds${list.length ? '' : ' is-missing'}">
+        <dt>${T.panel.compounds}</dt>
+        <dd>${
+          list.length
+            ? html`<ul class="mini-compounds">${list.map(
+                (x) =>
+                  html`<li data-label="${x.raceLabel}" style="--tone:${compoundCssVar(x.raceLabel)}"><span class="mini-disc" aria-hidden="true"></span><span class="mini-text"><span class="mini-label">${compoundName(x.raceLabel)}</span> ${x.compound}</span></li>`,
+              )}</ul>`
+            : html`<span class="figure">${NP}</span>`
+        }</dd>
+      </div>
       ${spec(T.length, num(c.lengthKm, 3), 'km', null, 'length')}
       ${spec(T.laps, c.laps == null ? NP : String(c.laps), null, null, 'laps')}
       ${spec(T.distance, distanceKm(c.raceDistanceKm), 'km', null, 'distance')}
@@ -140,8 +151,8 @@ export function setup(r: RaceRecord): SafeHtml {
 export function compounds(r: RaceRecord, selected: string | null): SafeHtml {
   const list = sortedCompounds(r);
   if (!list.length)
-    return html`<h2 class="section-title" id="compounds-title">${T.panel.compounds}</h2><p class="muted">${T.noCompounds}</p>`;
-  return html`<h2 class="section-title" id="compounds-title">${T.panel.compounds}</h2>
+    return html`<h2 class="section-title" id="compounds-title"><span>${T.panel.compounds}</span></h2><p class="muted">${T.noCompounds}</p>`;
+  return html`<h2 class="section-title" id="compounds-title"><span>${T.panel.compounds}</span></h2>
     <ul class="compound-list">
       ${list.map(
         (c) => html`<li>
@@ -337,7 +348,7 @@ export function fallbackVisual(r: RaceRecord, track: TrackShape | null, s: ViewS
 
 export function archive(manifest: Manifest, base: string, currentId: string | null): SafeHtml {
   return html`<nav class="archive" aria-labelledby="archive-title">
-    <h2 id="archive-title" class="section-title">${PAGE.archive.title}</h2>
+    <header class="section-title"><h2 id="archive-title">${PAGE.archive.title}</h2><p class="section-aside">${PAGE.archive.aside(allRaces(manifest).length)}</p></header>
     ${manifest.years.map(
       (y) => html`<div class="archive-year"><h3>${y.year}</h3><ul>
         ${[...y.races].map(

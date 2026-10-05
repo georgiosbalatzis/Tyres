@@ -144,9 +144,18 @@ test('layout has no horizontal overflow and touch targets are large enough', asy
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
   );
   expect(overflow).toBeLessThanOrEqual(0);
-  for (const sel of ['.mode', '.chip', '.corner', '.compound', '#race', '#year']) {
+  for (const sel of [
+    '.mode',
+    '.chip',
+    '.corner',
+    '.compound',
+    '#race',
+    '#year',
+    '#prev',
+    '.race-desk-nav a',
+  ]) {
     const box = await page.locator(sel).first().boundingBox();
-    expect(box?.height, sel).toBeGreaterThanOrEqual(40);
+    expect(box?.height, sel).toBeGreaterThanOrEqual(44);
   }
 });
 
@@ -335,4 +344,34 @@ test('the season strip shows on the race page and as an embed of constant height
   }
   expect(heights[0]).toBe(heights[1]);
   await expect(page.locator('caption')).toHaveText('Επιλογές γομών, σεζόν 2026');
+});
+
+test('the body follows the Race Desk pattern: key figures, underlined tabs, sidebar, archive in the page', async ({
+  page,
+}) => {
+  await page.goto(BASE);
+  await expect(page.locator('#r-specs .spec')).toHaveCount(6);
+  await expect(page.locator('#r-specs .spec-compounds')).toContainText('C3');
+  const mode = page.getByRole('button', { name: 'Μονοθέσιο', exact: true });
+  await expect(mode).toHaveAttribute('aria-pressed', 'true');
+  const [bg, bar] = await mode.evaluate((el) => {
+    const cs = getComputedStyle(el);
+    return [cs.backgroundColor, cs.borderBottomColor];
+  });
+  expect(bg).toBe('rgba(0, 0, 0, 0)'); // no ink block: the old selected-tab look
+  expect(bar).toBe('rgb(237, 76, 50)'); // 3px --c-signal underline
+  await expect(page.locator('.desk-aside .aside-title')).toHaveText('Δελτίο ελαστικών');
+  await expect(page.locator('main .archive a').first()).toBeVisible(); // the archive moved out of the footer
+  await expect(page.locator('footer .archive')).toHaveCount(0);
+  // Panels are unboxed: no bordered cards.
+  for (const sel of ['.compound', '.corner', '.chip', '.mode']) {
+    const widths = await page
+      .locator(sel)
+      .first()
+      .evaluate((el) => {
+        const cs = getComputedStyle(el);
+        return [cs.borderTopWidth, cs.borderLeftWidth, cs.borderRightWidth];
+      });
+    expect(widths, sel).toEqual(['0px', '0px', '0px']);
+  }
 });

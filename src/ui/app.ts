@@ -165,15 +165,16 @@ function tweenFigures(before: Map<string, string>) {
   for (const el of document.querySelectorAll<HTMLElement>('[data-figure]')) {
     const to = el.textContent ?? '';
     const from = before.get(el.dataset.figure!) ?? '';
-    const a = Number.parseFloat(from);
-    const b = Number.parseFloat(to);
-    if (!/^\d+(\.\d+)?$/.test(to) || Number.isNaN(a) || a === b) continue;
-    const digits = to.split('.')[1]?.length ?? 0;
+    // Figures are printed with a decimal comma ("5,543"); count in plain numbers and print the same way.
+    const a = Number.parseFloat(from.replace(',', '.'));
+    const b = Number.parseFloat(to.replace(',', '.'));
+    if (!/^\d+(,\d+)?$/.test(to) || Number.isNaN(a) || a === b) continue;
+    const digits = to.split(',')[1]?.length ?? 0;
     const t0 = performance.now();
     const step = (now: number) => {
       const t = Math.min(1, (now - t0) / 550);
       const e = 1 - (1 - t) ** 3;
-      el.textContent = t < 1 ? (a + (b - a) * e).toFixed(digits) : to;
+      el.textContent = t < 1 ? (a + (b - a) * e).toFixed(digits).replace('.', ',') : to;
       if (t < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
@@ -379,7 +380,7 @@ function bindEvents() {
           ? (sortedCompounds(state.record)[1]?.compound ?? null)
           : state.view.compound;
       setView({ mode, compound });
-      announce(`${mode} view`);
+      announce(PAGE.modes[mode]);
       return;
     }
     const view = t.closest<HTMLElement>('.chip')?.dataset.view as CarView | undefined;

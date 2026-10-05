@@ -69,25 +69,21 @@
       </div>
     </header>
 
-    <div class="sheet">
-      <div class="masthead">
-        <nav class="picker" aria-label="Επιλογή αγώνα">
-          <label class="field"><span class="field-label">Σεζόν</span><select id="year" disabled></select></label>
-          <label class="field field-race"><span class="field-label">Grand Prix</span><select id="race" disabled></select></label>
-          <!--app:stepper-->
-        </nav>
-        <button type="button" class="step embed-open" id="embed-open" aria-haspopup="dialog" hidden>
+    <div class="scope">
+      <div class="shell scope-inner">
+        <label class="field"><span class="field-label">Σεζόν</span><select id="year" disabled></select></label>
+        <label class="field field-race"><span class="field-label">Grand Prix</span><select id="race" disabled></select></label>
+        <!--app:stepper-->
+        <button type="button" class="text-action embed-open" id="embed-open" aria-haspopup="dialog" hidden>
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6 3 10l4 4M13 6l4 4-4 4" /></svg>
           <span>Ενσωμάτωση</span>
         </button>
       </div>
-
-      <div class="notice" id="notice" role="status" aria-live="polite"><!--app:notice--></div>
-
-      <main id="main" class="stage" tabindex="-1" data-mode="car"><!--app:main--></main>
     </div>
 
-    <section class="shell archive-band"><!--app:archive--></section>
+    <div class="shell"><div class="notice" id="notice" role="status" aria-live="polite"><!--app:notice--></div></div>
+
+    <main id="main" class="shell stage" tabindex="-1" data-mode="car"><!--app:main--></main>
 
     <section class="sponsor-strip" aria-labelledby="sponsors-heading">
       <div class="shell sponsor-strip-layout">
