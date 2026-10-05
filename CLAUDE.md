@@ -5,9 +5,10 @@ interactive visualisation of Pirelli F1 race-preview data, built as a static sit
 (`georgiosbalatzis.github.io/Tyres/`). It must look and behave like part of f1stories.gr, not like a separate app.
 Stack: Vite + TypeScript + Three.js (lazy), zod/mini, Biome, Vitest, Playwright. Node ≥ 24 (runs `.ts` scripts natively).
 
-> **Redesign in progress.** The UI is being rebuilt to the Race Desk shell. Follow `docs/REDESIGN-GUIDE.md` phase by
-> phase, and check off its "Status" list as you go. Where the code and this file disagree, this file describes the
-> target. Delete this note once the guide's last phase is merged.
+> **Redesign nearly done.** Phases 0–8 of `docs/REDESIGN-GUIDE.md` are merged: the Race Desk shell, body, Greek copy, head,
+> embeds, tests and docs. Left: Phase 9 (`npm run site:check`, the drift check against f1stories.gr) and Phase 10 (adding TYRES to
+> the Race Desk switcher in f1StoriesPage, Telemetry and Ghost Car; ask the user before any push or PR). Delete this note and the
+> guide's mentions once Phase 10 has merged.
 
 ## Hard rules
 

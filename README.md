@@ -4,8 +4,12 @@ An unofficial, interactive look at each Formula 1 weekend's tyre challenge: the 
 brings, how hard the circuit works the tyres, setup limits, and the circuit itself — on a generic 3D
 single-seater, a circuit model and a fully accessible data table.
 
+TYRES. is the fourth **Race Desk** product of [f1stories.gr](https://f1stories.gr), after THE GRID, TELEMETRY and
+GHOST CAR. The page is in Greek and wears the site's masthead, theme and footer; see
+[docs/DESIGN-SYSTEM.md](docs/DESIGN-SYSTEM.md).
+
 - Opens on the **latest Pirelli race preview** in the dataset (by publication time).
-- Every value links to its Pirelli source; missing values read "Not provided".
+- Every value links to its Pirelli source; missing values read "Δεν δόθηκε" (Not provided).
 - Static site for **GitHub Pages**: no backend, no runtime calls to Pirelli.
 
 Unofficial. Not affiliated with or endorsed by Pirelli, Formula 1 or the FIA.
@@ -29,7 +33,7 @@ Useful commands:
 | `npm run test:e2e` | Playwright browser tests (desktop + mobile) against the production build |
 | `npm run build` | `data:build` + `vite build` → `dist/` including `/{year}/{slug}/` pages and `404.html` |
 | `npm run preview` | Serve `dist/` locally |
-| `npm run og` | Render a 1200×630 social card per race into `dist/og/` (needs Playwright Chromium; the deploy workflow runs it) |
+| `npm run og` | Render a Race Desk social card per race into `dist/og/`, the generic `dist/og.png` and every panel image into `dist/img/` (needs Playwright Chromium; the deploy workflow runs it) |
 
 First Playwright run: `npx playwright install chromium`.
 
@@ -92,7 +96,7 @@ The JSON Schemas in `data/schemas/` (generated from `src/domain/schema.ts`) give
 
 ## Embedding in f1stories.gr articles
 
-Open a race, press **Embed** (desktop), choose a panel and language, and copy the
+Open a race, press **Ενσωμάτωση** (desktop), choose a panel and language, and copy the
 iframe snippet into the article. Choose **Image** for a PNG of the same panel
 (social posts, newsletters) with ready alt text; images are rendered at deploy.
 **Season compounds** embeds the season's compound choices by round. Embeds live at
@@ -124,10 +128,11 @@ from the PR or close/reopen it. Actions are pinned by commit SHA; Dependabot kee
 
 ```
 data/        generated/ overrides/ tracks/ reference/ schemas/ sources/
-docs/        ARCHITECTURE, DATA-SOURCES, DATA-PIPELINE, DESIGN-SYSTEM
+docs/        ARCHITECTURE, DATA-SOURCES, DATA-PIPELINE, DESIGN-SYSTEM, REDESIGN-GUIDE (history)
 scripts/     update-pirelli.ts, build-data.ts, import-track.ts, check-sources.ts, pirelli/*
 src/domain/  schema, selection (latest race), URL state, derived metrics, formatting
-src/ui/      templates (shared by browser + prerender), controller, SVG fallback
+src/ui/      strings (all wording), templates (shared by browser + prerender), page, controller, embeds, SVG fallback
+src/styles/  tokens, shell (site chrome), app, bench, season, embed
 src/three/   viewer, GLB car loader (procedural fallback), tyre shader, circuit ribbon, studio
 tests/       unit/ (Vitest), e2e/ (Playwright), fixtures/
 ```
