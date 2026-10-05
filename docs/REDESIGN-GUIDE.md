@@ -13,7 +13,7 @@ Status list below up to date in this file as part of each phase's commit. Read t
 - [x] Phase 4 — Product body: scope row, context row, tabs, stage + sidebar, panels, archive
 - [x] Phase 5 — Head, SEO, notices, 404 in Greek
 - [x] Phase 6 — Embeds and social/panel images
-- [ ] Phase 7 — Tests and visual parity pass
+- [x] Phase 7 — Tests and visual parity pass
 - [ ] Phase 8 — Docs
 - [ ] Phase 9 — `site:check` drift script
 - [ ] Phase 10 — Cross-repo: add TYRES to the Race Desk switcher (f1StoriesPage, Telemetry, Ghost Car)
@@ -609,7 +609,7 @@ canonical pages, so don't "improve" them:
 .signal-sep { width: 1px; height: 18px; background: color-mix(in srgb, var(--c-signal-ink) 33.333333%, transparent); }
 .signal-band :focus-visible { outline-color: var(--c-signal-ink); }
 .signal-slogan { display: none; margin-left: auto; font: 700 24px/1 var(--font-brand); letter-spacing: -.01em; text-transform: uppercase; }
-@media (min-width: 768px) { .signal-slogan { display: block; } }
+@media (min-width: 1024px) { .signal-slogan { display: block; } }
 
 /* Sponsors and colophon: copy tele/src/index.css .sponsor-strip … .colophon-legal (≈ lines 1014–1057) verbatim,
    renamed per docs/REDESIGN-GUIDE.md §P1, with .page-shell → .shell. */
@@ -829,19 +829,19 @@ Update `tests/e2e/app.spec.ts`. Change these assertions and leave the rest alone
 Then run the visual parity pass (Playwright MCP or a scratch script; nothing committed). At 1440, 1280, 1024, 768, 390
 and 375px, in both themes, screenshot TYRES next to Telemetry and THE GRID and check:
 
-- [ ] The masthead is pixel-aligned with the site: 75px (67px ≤991), logo 38px (32px ≤575), wordmark 28px, links 14px/500 with gap 22.4px,
+- [x] The masthead is pixel-aligned with the site: 75px (67px ≤991), logo 38px (32px ≤575), wordmark 28px, links 14px/500 with gap 22.4px,
       the current-link stub under "Δεδομένα", and the countdown visibility rules.
-- [ ] The left edges of the logo, kicker, H1, band text, scope, panels, sponsors label and colophon wordmark are on one vertical line
+- [x] The left edges of the logo, kicker, H1, band text, scope, panels, sponsors label and colophon wordmark are on one vertical line
       (same `--gutter`) at every width.
-- [ ] The kicker rule, switcher bar position, H1 size/leading, descriptor and aside match Telemetry's hero.
-- [ ] Band height 58px, slogan hidden below 768px.
-- [ ] No box/card borders remain anywhere outside the bench, data table cells and the embed code box.
-- [ ] Tabs look different from the switcher (underline below vs bar above).
-- [ ] Dark theme: no light-only colours leak (search `app.css` for raw hex, which should only be in tokens and the bench).
-- [ ] Keyboard: Tab order is skip link → masthead → switcher → scope → tabs → stage controls → aside → panels → footer. Every
+- [x] The kicker rule, switcher bar position, H1 size/leading, descriptor and aside match Telemetry's hero.
+- [x] Band height 58px (59 on phones), slogan hidden below 1024px, as on Telemetry.
+- [x] No box/card borders remain anywhere outside the bench, data table cells and the embed code box.
+- [x] Tabs look different from the switcher (underline below vs bar above).
+- [x] Dark theme: no light-only colours leak (search `app.css` for raw hex, which should only be in tokens and the bench).
+- [x] Keyboard: Tab order is skip link → masthead → switcher → scope → tabs → stage controls → aside → panels → footer. Every
       focus ring is fully visible (check the tab strip's inset ring and the mobile menu rows).
-- [ ] `prefers-reduced-motion`: there's no sweep or bar/underline transition.
-- [ ] Lighthouse a11y on `/Tyres/` ≥ 95. There are no console errors.
+- [x] `prefers-reduced-motion`: there's no sweep or bar/underline transition.
+- [x] Lighthouse a11y on `/Tyres/` ≥ 95. There are no console errors.
 
 Commit: `Tests: Greek copy, Race Desk shell parity`.
 

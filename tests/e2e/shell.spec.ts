@@ -110,3 +110,37 @@ test('desktop nav links sit centred in the 75px masthead, in the page ink', asyn
   ]);
   expect(a).toBe(b);
 });
+
+test('the band slogan appears from 1024px, as on Telemetry, and the band stays one line', async ({
+  page,
+}) => {
+  for (const [width, slogan] of [
+    [1440, true],
+    [1024, true],
+    [768, false],
+    [390, false],
+  ] as const) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(BASE);
+    await expect(page.locator('.signal-slogan'))[slogan ? 'toBeVisible' : 'toBeHidden']();
+    const h = (await page.locator('.signal-band').boundingBox())!.height;
+    expect(h, `${width}px`).toBeLessThanOrEqual(59);
+  }
+});
+
+test('reduced motion switches off the bar, underline and tab transitions', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(BASE);
+  const durations = await page.evaluate(() => {
+    const d = (sel: string, pseudo?: string) =>
+      getComputedStyle(document.querySelector(sel)!, pseudo).transitionDuration;
+    return [
+      d('.race-desk-nav a[aria-current]', '::before'),
+      d('.site-nav-links a', '::after'),
+      d('.mode'),
+      d('.sponsor-logo img'),
+    ];
+  });
+  expect(durations).toEqual(['0s', '0s', '0s', '0s']);
+});

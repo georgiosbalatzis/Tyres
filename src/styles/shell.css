@@ -461,7 +461,7 @@
   letter-spacing: -0.01em;
   text-transform: uppercase;
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .signal-slogan {
     display: block;
   }
@@ -697,5 +697,14 @@
   .colophon-social {
     justify-content: flex-start;
     gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav-links a::after,
+  .race-desk-nav a::before,
+  .sponsor-logo,
+  .sponsor-logo img {
+    transition: none;
   }
 }
