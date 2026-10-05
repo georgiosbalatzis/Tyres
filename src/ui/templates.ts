@@ -41,12 +41,6 @@ export interface ViewState {
 
 export const DEFAULT_VIEW: ViewState = { mode: 'car', carView: 'longitudinal', corner: null, compound: null };
 
-export const heroWord = (r: RaceRecord) =>
-  r.slug
-    .split('-')
-    .map((w) => w[0]!.toUpperCase() + w.slice(1))
-    .join(' ');
-
 export const sortedCompounds = (r: RaceRecord) =>
   [...(r.compounds ?? [])].sort(
     (a, b) => RACE_LABEL_ORDER.indexOf(a.raceLabel) - RACE_LABEL_ORDER.indexOf(b.raceLabel),
@@ -55,13 +49,14 @@ export const sortedCompounds = (r: RaceRecord) =>
 /* ------------------------------------------------------------------ identity */
 
 export function identity(r: RaceRecord): SafeHtml {
-  const dates = F.dates(r.race);
-  return html`
-    <p class="kicker">${r.round ? T.round(r.round) : PAGE.identity.roundMissing}<span class="kicker-sep"><span class="visually-hidden">, </span></span>${PAGE.identity.season(r.season)}</p>
-    <h1 id="race-title" class="race-title">${r.race.name}</h1>
-    <p class="venue">${r.circuit.name ?? NP}</p>
-    <p class="place">${r.race.location ?? ''}</p>
-    <p class="dates">${dates ? html`<time datetime="${r.race.startDate}">${dates}</time>` : html`<span class="muted">${PAGE.identity.datesMissing}</span>`}</p>`;
+  const meta = [r.circuit.name, r.race.location, F.dates(r.race)].filter(Boolean).join(' · ');
+  return html`<h2 id="race-title" class="hero-subtitle">${r.race.name}</h2>${meta ? html`<p class="hero-meta">${meta}</p>` : ''}`;
+}
+
+/** The signal band: what this page is and how far to trust it. The status is always visible. */
+export function band(r: RaceRecord): SafeHtml {
+  const sep = html`<span class="signal-sep" aria-hidden="true"></span>`;
+  return html`<span class="signal-live">${PAGE.band.preview} · ${PAGE.band.season(r.season)}</span>${r.round ? html`${sep}<span>${T.round(r.round)}</span>` : ''}${sep}<span data-status="${r.validation.status}">${T.status[r.validation.status]}</span>`;
 }
 
 /* ------------------------------------------------------------------ specs */

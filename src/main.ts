@@ -1,4 +1,5 @@
 import './styles/tokens.css';
+import './styles/shell.css';
 import './styles/app.css';
 import { start } from './ui/app.ts';
 

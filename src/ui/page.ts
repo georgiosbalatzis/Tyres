@@ -9,13 +9,13 @@ import { escapeHtml, html, inlineJson, SafeHtml } from './html.ts';
 import { PAGE, STRINGS } from './strings.ts';
 import {
   archive,
+  band,
   compounds,
   credits,
   DEFAULT_VIEW,
   dataTable,
   embedDialog,
   fallbackVisual,
-  heroWord,
   identity,
   MODES,
   ratings,
@@ -51,7 +51,6 @@ export function mainRegions(ctx: PageContext): SafeHtml {
   const { record: r, track } = ctx;
   const s = DEFAULT_VIEW;
   return html`
-  <section class="identity" aria-labelledby="race-title" id="r-identity">${identity(r)}</section>
   <section class="specs" aria-label="${PAGE.aria.facts}" id="r-specs">${specs(r)}</section>
   <section class="viewport" aria-labelledby="viz-title">
     <h2 id="viz-title" class="visually-hidden">${PAGE.viz}</h2>
@@ -61,7 +60,6 @@ export function mainRegions(ctx: PageContext): SafeHtml {
       </div>
     </div>
     <div class="canvas-host" id="canvas-host">
-      <p class="hero-word" id="r-hero" aria-hidden="true">${heroWord(r)}</p>
       <div class="fallback" id="r-fallback">${fallbackVisual(r, track, s)}</div>
       <p class="loading-3d" id="loading-3d" hidden>${STRINGS.el.loading3d}</p>
       <span class="sweep" aria-hidden="true"></span>
@@ -139,9 +137,15 @@ export function renderPage(template: string, ctx: PageContext): string {
   return template
     .replace(/<title>.*?<\/title>/s, () => '')
     .replace('<!--app:head-->', () => head.value)
+    .replace('<!--app:identity-->', () => identity(r).value)
+    .replace('<!--app:band-->', () => band(r).value)
     .replace('<!--app:main-->', () => mainRegions(ctx).value)
     .replace('<!--app:archive-->', () => archive(ctx.manifest, ctx.base, ctx.notFound ? null : r.id).value)
     .replace('<!--app:stepper-->', () => stepper(ctx.manifest, ctx.base, r.id).value)
+    .replace(
+      '<span data-current-year>2026</span>',
+      () => `<span data-current-year>${new Date().getUTCFullYear()}</span>`,
+    )
     .replace('<!--app:credits-->', () => credits().value)
     .replace('<!--app:embedDialog-->', () => embedDialog().value)
     .replace('<!--app:boot-->', () => `<script type="application/json" id="boot">${boot}</script>`)

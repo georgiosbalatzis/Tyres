@@ -314,11 +314,6 @@ export const PAGE = {
     next: 'Επόμενος',
     embed: 'Ενσωμάτωση',
   },
-  identity: {
-    roundMissing: 'Ο αριθμός αγώνα δεν δόθηκε',
-    season: (y: number) => `Σεζόν ${y}`,
-    datesMissing: 'Οι ημερομηνίες δεν δόθηκαν',
-  },
   viz: 'Απεικόνιση',
   modes: { label: 'Προβολή', car: 'Μονοθέσιο', circuit: 'Πίστα', tyres: 'Ελαστικά', data: 'Πίνακας' },
   aria: {

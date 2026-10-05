@@ -22,15 +22,16 @@ import {
   seasonImagePath,
 } from '../domain/urlState.ts';
 import type { Viewer } from '../three/viewer.ts';
+import { formatCountdown, nextRace } from './countdown.ts';
 import { html, setHtml } from './html.ts';
 import { describe, seasonSection } from './page.ts';
 import { PAGE, STRINGS } from './strings.ts';
 import {
+  band,
   compounds,
   DEFAULT_VIEW,
   dataTable,
   fallbackVisual,
-  heroWord,
   identity,
   type Mode,
   ratings,
@@ -119,6 +120,7 @@ function renderRace(animate: boolean) {
   const { record: r, view } = state;
   const figuresBefore = readFigures();
   setHtml($('#r-identity'), identity(r));
+  setHtml($('#r-band'), band(r));
   setHtml($('#r-specs'), specs(r));
   setHtml($('#r-ratings'), ratings(r));
   setHtml($('#r-setup'), setup(r));
@@ -126,7 +128,6 @@ function renderRace(animate: boolean) {
   setHtml($('#r-source'), titleBlock(r));
   if (state.manifest) setHtml($('#r-season'), seasonSection(state.manifest, r));
   setHtml($('#r-data'), dataTable(r));
-  $('#r-hero').textContent = heroWord(r);
   renderView();
   if (animate && !reducedMotion.matches) {
     tweenFigures(figuresBefore);
@@ -550,7 +551,23 @@ function setupEmbedDialog() {
   });
 }
 
+/** The masthead's next-GP countdown, from the bundled calendar. Stays hidden once the calendar has run out. */
+function startCountdown() {
+  const el = document.getElementById('nav-countdown');
+  if (!el) return;
+  const tick = () => {
+    const race = nextRace(Date.now());
+    el.hidden = !race;
+    if (!race) return;
+    el.querySelector('.nav-countdown-name')!.textContent = race.name;
+    el.querySelector('.nav-countdown-time')!.textContent = formatCountdown(race.start - Date.now());
+  };
+  tick();
+  setInterval(tick, 60_000);
+}
+
 export async function start() {
+  startCountdown();
   window.addEventListener('unhandledrejection', (e) => {
     console.warn('Unhandled:', e.reason);
     e.preventDefault();

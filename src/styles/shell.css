@@ -1,0 +1,701 @@
+/* Masthead, Race Desk hero, signal band, sponsors and colophon. Mirrors f1stories.gr via Telemetry's src/index.css
+   ("Site chrome"); keep in step with them, not with the rest of this app. Every number is from the canonical pages. */
+.shell {
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.site-header {
+  position: relative;
+  z-index: 40;
+  padding-top: var(--nav-h);
+}
+:root {
+  scroll-padding-top: var(--nav-h);
+}
+.site-nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1;
+  background: var(--c-surface);
+  background-image: radial-gradient(ellipse at 5% 0%, #ffffff4d, transparent 65%);
+  border-bottom: 1px solid color-mix(in srgb, var(--c-text) 20%, transparent);
+}
+:root[data-theme="dark"] .site-nav {
+  background-image: linear-gradient(180deg, #ffffff08, transparent 75%);
+  border-color: var(--c-rule);
+}
+.site-nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  min-height: 75px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 8.8px;
+  min-height: 44px;
+  color: inherit;
+  text-decoration: none;
+}
+.brand img {
+  width: 38px;
+  height: 38px;
+}
+.wordmark {
+  font: 700 28px / 1 var(--font-brand);
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.wordmark-dot {
+  color: var(--c-signal);
+}
+.site-nav-links {
+  align-self: stretch;
+  gap: 22.4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.site-nav-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: inherit;
+  text-decoration: none;
+}
+.site-nav-links a.is-current {
+  font-weight: 600;
+}
+.site-nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 21px;
+  height: 2px;
+  background: var(--c-signal);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s var(--ease-editorial);
+}
+.site-nav-links a.is-current::after {
+  right: 60%;
+  transform: scaleX(1);
+}
+.site-nav-links a:is(:hover, :focus-visible)::after {
+  right: 0;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.site-nav a:hover {
+  color: inherit;
+}
+.site-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 9.6px;
+  margin-left: auto;
+  min-width: 0;
+}
+.nav-countdown {
+  display: none;
+  flex-direction: column;
+  margin: 0;
+  padding-left: 19.2px;
+  border-left: 1px solid var(--c-rule);
+  font-size: 12px;
+  line-height: 1.3;
+}
+.nav-countdown-name {
+  max-width: 125px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--c-text-2);
+}
+.nav-countdown-time {
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.theme-toggle,
+.nav-menu {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  color: inherit;
+}
+.theme-toggle {
+  border: 0;
+  color: var(--c-text-2);
+}
+.theme-toggle svg,
+.nav-menu svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+.theme-toggle .i-moon {
+  fill: currentColor;
+  stroke: none;
+}
+.theme-toggle[aria-pressed="true"] .i-moon,
+.theme-toggle[aria-pressed="false"] .i-sun,
+.theme-toggle:not([aria-pressed]) .i-sun {
+  display: none;
+}
+.nav-menu {
+  border: 1px solid var(--c-rule);
+}
+.site-nav :focus-visible {
+  outline-offset: 2px;
+}
+
+/* Desktop (≥992px): links inline. Below, the links are the native popover panel (Esc and light-dismiss for free). */
+@media (min-width: 992px) {
+  /* The links are a popover below 992px; here the UA popover box (fit-content size, CanvasText colour) is undone. */
+  .site-nav-links {
+    display: flex;
+    position: static;
+    inset: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    overflow: visible;
+  }
+  .nav-menu {
+    display: none;
+  }
+}
+@media (max-width: 1199px) {
+  .site-nav-inner {
+    gap: 20px;
+  }
+}
+@media (max-width: 991px) {
+  .site-nav-inner {
+    min-height: 67px;
+    gap: 16px;
+  }
+  .brand .wordmark {
+    font-size: 25.6px;
+  }
+  .site-nav-links:popover-open {
+    position: fixed;
+    inset: 67px 0 auto;
+    display: grid;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-height: min(430px, calc(100svh - 68px));
+    overflow-y: auto;
+    background: var(--c-surface);
+    color: var(--c-text);
+    border: 0;
+    border-top: 1px solid var(--c-rule);
+    border-bottom: 1px solid var(--c-rule);
+  }
+  .site-nav-links a {
+    min-height: 52px;
+    padding: 12.8px 24px;
+    border-left: 3px solid transparent;
+    border-bottom: 1px solid var(--c-rule);
+    font-size: 14.72px;
+  }
+  .site-nav-links a::after {
+    display: none;
+  }
+  .site-nav-links a.is-current {
+    border-left-color: var(--c-signal);
+  }
+  .site-nav-links a[target="_blank"]::after {
+    display: block;
+    position: static;
+    content: "↗";
+    height: auto;
+    margin-left: auto;
+    background: none;
+    transform: none;
+    color: var(--c-text-2);
+  }
+  .site-nav-links a:is(:hover, :focus-visible) {
+    background: #20251f0a;
+  }
+  :root[data-theme="dark"] .site-nav-links a:is(:hover, :focus-visible) {
+    background: #ffffff0a;
+  }
+  .site-nav-links a:focus-visible {
+    outline-offset: -5px;
+  }
+}
+@media (max-width: 575px) {
+  .brand .wordmark {
+    font-size: 23.2px;
+  }
+  .brand {
+    gap: 7.2px;
+  }
+  .brand img {
+    width: 32px;
+    height: 32px;
+  }
+  .site-nav-right {
+    gap: 2.4px;
+  }
+}
+/* Countdown: full at 768–991 and ≥1200px, time only at 576–767px, hidden on phones and compact desktop (site rule). */
+@media (min-width: 576px) and (max-width: 767px) {
+  .nav-countdown:not([hidden]) {
+    display: flex;
+  }
+  .nav-countdown-name {
+    display: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px), (min-width: 1200px) {
+  .nav-countdown:not([hidden]) {
+    display: flex;
+  }
+}
+
+/* Race Desk hero */
+.desk-hero {
+  padding: 24px 0 32px;
+  background: linear-gradient(180deg, var(--c-surface), var(--c-bg));
+}
+.kicker-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--c-text);
+}
+.kicker,
+.display-descriptor {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.race-desk-nav {
+  display: flex;
+  gap: 24px;
+  margin-top: -12px;
+}
+.race-desk-nav a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font: 700 15px / 1 var(--font-brand);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: var(--c-text-2);
+  text-decoration: none;
+}
+.race-desk-nav a::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--c-signal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease-editorial);
+}
+.race-desk-nav a:is(:hover, [aria-current="page"]) {
+  color: var(--c-text);
+}
+.race-desk-nav a[aria-current="page"]::before {
+  transform: scaleX(1);
+}
+.race-desk-nav a:focus-visible {
+  outline-offset: 2px;
+}
+@media (max-width: 767px) {
+  .kicker-row {
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .race-desk-nav {
+    flex: 1 0 100%;
+    margin-top: 10px;
+    border-top: 1px solid var(--c-rule);
+    justify-content: space-between;
+  }
+}
+/* Four products must fit 320px. */
+@media (max-width: 400px) {
+  .race-desk-nav {
+    gap: 12px;
+  }
+  .race-desk-nav a {
+    letter-spacing: 0.03em;
+  }
+}
+.display {
+  margin: 0;
+  font: 700 clamp(64px, 10vw, 150px) / 0.84 var(--font-brand);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.display .dot {
+  color: var(--c-signal);
+}
+.display-descriptor {
+  display: block;
+  margin-top: 14px;
+  color: var(--c-text-2);
+  font-family: var(--font);
+  line-height: 1.5;
+}
+.hero-grid {
+  display: grid;
+  gap: 24px;
+  align-items: end;
+  margin-top: 22px;
+}
+.hero-subtitle {
+  margin: 14px 0 0;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+.hero-meta {
+  margin: 6px 0 0;
+  color: var(--c-text-2);
+  font-size: 14px;
+}
+.hero-aside {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .desk-hero {
+    padding: 28px 0 40px;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr 290px;
+    gap: 40px;
+    margin-top: 36px;
+  }
+  .hero-subtitle {
+    font-size: 30px;
+  }
+  .hero-aside {
+    display: block;
+    padding-left: 24px;
+    border-left: 1px solid var(--c-rule);
+    color: var(--c-text-2);
+  }
+  .hero-aside strong {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+  .hero-aside p {
+    margin: 0;
+    font-size: 13px;
+  }
+}
+
+/* Signal band */
+.signal-band {
+  background: var(--c-signal);
+  color: var(--c-signal-ink);
+}
+.signal-band-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  min-height: 58px;
+  padding-block: 7px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.signal-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  margin: 0;
+}
+.signal-live::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.signal-sep {
+  width: 1px;
+  height: 18px;
+  background: color-mix(in srgb, var(--c-signal-ink) 33.333333%, transparent);
+}
+.signal-band :focus-visible {
+  outline-color: var(--c-signal-ink);
+}
+.signal-slogan {
+  display: none;
+  margin-left: auto;
+  font: 700 24px / 1 var(--font-brand);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) {
+  .signal-slogan {
+    display: block;
+  }
+}
+
+/* Sponsors and colophon: Telemetry's rules, renamed to this app's tokens. */
+/* Homepage partners: muted logos that take colour on interaction. Light mode continues the page paper, as on f1stories.gr.
+   Dark mode continues the dark page: the marks are drawn for paper, so at rest they are inverted monochrome, and on
+   hover or focus a paper chip carries the true colours. */
+.sponsor-strip {
+  margin-top: 40px;
+  padding: 36px 0 56px;
+  background: var(--c-bg);
+  color: var(--c-text);
+  color-scheme: light;
+}
+.sponsor-strip-layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(16px, 2vw, 32px);
+  align-items: center;
+}
+.sponsor-strip-layout::before {
+  content: "";
+  grid-column: 1 / -1;
+  height: 1px;
+  margin-bottom: 28px;
+  background: var(--c-rule);
+}
+.sponsor-strip-label {
+  grid-column: 1 / 3;
+  margin: 0;
+  color: var(--c-text-2);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+}
+.sponsor-logos {
+  grid-column: 3 / 13;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: clamp(16px, 2vw, 32px);
+  margin: 0;
+  padding: 10px 16px;
+  list-style: none;
+}
+.sponsor-logos li {
+  min-width: 0;
+}
+.sponsor-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 6px 0;
+  border-radius: 4px;
+}
+.sponsor-logo img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  mix-blend-mode: multiply;
+  filter: grayscale(1) contrast(1.05);
+  opacity: 0.68;
+  transition:
+    filter 0.35s cubic-bezier(0.22, 0.68, 0, 1.02),
+    opacity 0.35s cubic-bezier(0.22, 0.68, 0, 1.02);
+}
+.sponsor-logo:is(:hover, :focus-visible) img {
+  filter: none;
+  opacity: 1;
+}
+.sponsor-logo:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+.sponsor-logo span {
+  color: var(--c-text-2);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-align: center;
+  line-height: 1.6;
+}
+:root[data-theme="dark"] .sponsor-strip {
+  background: var(--c-bg);
+  color: var(--c-text);
+  color-scheme: dark;
+}
+:root[data-theme="dark"] .sponsor-strip-layout::before {
+  background: var(--c-rule);
+}
+:root[data-theme="dark"] :is(.sponsor-strip-label, .sponsor-logo span) {
+  color: var(--c-text-2);
+}
+:root[data-theme="dark"] .sponsor-logo {
+  margin-inline: -8px;
+  padding-inline: 8px;
+  transition: background-color 0.35s cubic-bezier(0.22, 0.68, 0, 1.02);
+}
+:root[data-theme="dark"] .sponsor-logo img {
+  mix-blend-mode: normal;
+  filter: grayscale(1) invert(1);
+}
+:root[data-theme="dark"] .sponsor-logo:is(:hover, :focus-visible) {
+  background: var(--c-sponsor-paper);
+}
+:root[data-theme="dark"] .sponsor-logo:is(:hover, :focus-visible) img {
+  filter: none;
+}
+:root[data-theme="dark"] .sponsor-logo:is(:hover, :focus-visible) span {
+  color: var(--c-sponsor-text);
+}
+@media (max-width: 991px) {
+  .sponsor-strip-label,
+  .sponsor-logos {
+    grid-column: 1 / -1;
+  }
+  .sponsor-logos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 16px;
+    margin-top: 20px;
+  }
+}
+.sponsor-strip + .colophon {
+  margin-top: 0;
+}
+.colophon {
+  margin-top: 40px;
+  padding: 52px 0 calc(52px + env(safe-area-inset-bottom));
+  background: var(--c-colophon-bg) radial-gradient(ellipse at 100% 0%, #e9e3d60e, transparent 65%);
+  color: var(--c-colophon-text);
+  border-top: 1px solid var(--c-colophon-rule);
+}
+.colophon > .shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22.4px 48px;
+}
+@media (hover: hover) {
+  .colophon a:hover {
+    color: #fff;
+  }
+}
+.colophon-brand {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--c-colophon-rule);
+}
+.colophon-brand .wordmark {
+  font: 700 28px / 1 var(--font-brand);
+  letter-spacing: -0.035em;
+}
+.colophon-brand .wordmark span {
+  color: var(--c-signal);
+}
+.colophon-brand p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--c-colophon-text-2);
+  line-height: 1.65;
+}
+.colophon-links {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.colophon-links a,
+.colophon-legal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.colophon-meta {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.colophon-meta span:first-child {
+  max-width: 25.2em;
+}
+.colophon-meta span:last-child {
+  color: var(--c-colophon-text-2);
+}
+.colophon-social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 11.2px;
+}
+.colophon-social a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid transparent;
+}
+.colophon-social a:is(:hover, :focus-visible) {
+  border-color: #e9e3d659;
+}
+.colophon-social svg {
+  fill: currentColor;
+}
+.colophon-legal {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding-top: 22.4px;
+  border-top: 1px solid var(--c-colophon-rule);
+  font-size: 12px;
+  color: var(--c-colophon-text-2);
+}
+@media (max-width: 767px) {
+  .colophon > .shell {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 19.2px;
+  }
+  .colophon-social {
+    justify-content: flex-start;
+    gap: 8px;
+  }
+}

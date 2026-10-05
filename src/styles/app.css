@@ -130,268 +130,6 @@ svg {
   color: var(--c-text-2);
 }
 
-/* ------------------------------------------------------------------ site nav (shared F1 Stories masthead) */
-
-.site-nav {
-  position: relative;
-  z-index: 20;
-  border-bottom: 1px solid rgb(32 37 31 / 0.2);
-  background: var(--c-paper) radial-gradient(ellipse at 5% 0%, rgb(255 255 255 / 0.3), transparent 65%);
-  color: var(--c-ink);
-}
-
-:root[data-theme="dark"] .site-nav {
-  border-bottom-color: var(--c-rule);
-  background: var(--c-surface) linear-gradient(180deg, rgb(255 255 255 / 0.03), transparent 75%);
-  color: var(--c-text);
-}
-
-.nav-inner {
-  display: flex;
-  align-items: center;
-  gap: var(--s-6);
-  width: min(1476px, 100%);
-  min-height: 75px;
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-}
-
-.nav-brand {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 0.55rem;
-  text-decoration: none;
-}
-
-.nav-brand:hover {
-  color: inherit;
-}
-
-.nav-brand img {
-  width: 38px;
-  height: 38px;
-  object-fit: contain;
-  transition: transform 350ms var(--ease-out);
-}
-
-.nav-brand:hover img {
-  transform: rotate(-8deg);
-}
-
-.wordmark {
-  font-family: var(--font-brand);
-  font-size: 1.75rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.035em;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.wordmark-dot {
-  color: var(--c-signal);
-}
-
-.nav-links {
-  display: flex;
-  align-self: stretch;
-  gap: 1.4rem;
-}
-
-.nav-links a {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.nav-links a:hover {
-  color: inherit;
-}
-
-/* Racing-red underline: a short stub marks this page, hover draws it full width. */
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 21px;
-  height: 2px;
-  background: var(--c-signal);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 280ms var(--ease-out);
-}
-
-.nav-links a[aria-current="page"] {
-  font-weight: 600;
-}
-
-.nav-links a[aria-current="page"]::after {
-  right: 60%;
-  transform: scaleX(1);
-}
-
-.nav-links a:is(:hover, :focus-visible)::after {
-  right: 0;
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-.nav-links a[target="_blank"]::before {
-  content: "↗";
-  order: 1;
-  margin-left: 0.3em;
-  color: var(--c-text-2);
-  font-size: 0.75em;
-}
-
-.site-nav :focus-visible {
-  outline-color: currentColor;
-}
-
-.nav-tools {
-  display: flex;
-  gap: var(--s-1);
-  margin-left: auto;
-}
-
-.nav-icon {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 1px solid transparent;
-  border-radius: 50%;
-  background: transparent;
-  transition:
-    border-color 220ms ease,
-    transform 350ms ease;
-}
-
-.nav-icon:hover {
-  border-color: currentColor;
-}
-
-.theme-toggle:hover {
-  transform: rotate(16deg);
-}
-
-.nav-icon svg {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-}
-
-.theme-toggle .i-moon {
-  fill: currentColor;
-  stroke: none;
-}
-
-.theme-toggle[aria-pressed="true"] .i-moon,
-.theme-toggle[aria-pressed="false"] .i-sun,
-.theme-toggle:not([aria-pressed]) .i-sun {
-  display: none;
-}
-
-.nav-menu {
-  border-color: currentColor;
-  border-radius: 0;
-}
-
-/* Below 992px the links become a native popover menu (Esc and light-dismiss for free, no JS). */
-@media (max-width: 991px) {
-  .nav-inner {
-    min-height: 67px;
-  }
-  .nav-links {
-    position: fixed;
-    inset: 67px 0 auto;
-    flex-direction: column;
-    gap: 0;
-    width: 100%;
-    max-height: calc(100svh - 67px);
-    margin: 0;
-    padding: 0;
-    overflow-y: auto;
-    border: 0;
-    border-top: 1px solid rgb(32 37 31 / 0.2);
-    background: var(--c-paper);
-    color: var(--c-ink);
-  }
-  :root[data-theme="dark"] .nav-links {
-    border-top-color: var(--c-rule);
-    background: var(--c-surface);
-    color: var(--c-text);
-  }
-  .nav-links:not(:popover-open) {
-    display: none;
-  }
-  .nav-links a {
-    min-height: 52px;
-    padding: 0.8rem var(--gutter);
-    border-bottom: 1px solid rgb(32 37 31 / 0.12);
-    border-left: 3px solid transparent;
-  }
-  .nav-links a::after {
-    content: none;
-  }
-  .nav-links a[aria-current="page"] {
-    border-left-color: var(--c-signal);
-  }
-  .nav-links a[target="_blank"]::before {
-    margin-left: auto;
-  }
-}
-
-@media (min-width: 992px) {
-  .nav-menu {
-    display: none;
-  }
-  /* The popover is only a popover on small screens; here it is the inline link row. */
-  .nav-links,
-  .nav-links:not(:popover-open) {
-    position: static;
-    display: flex;
-    inset: auto;
-    width: auto;
-    height: auto;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-    border: 0;
-    background: transparent;
-    color: inherit;
-  }
-}
-
-@media (max-width: 575px) {
-  .wordmark {
-    font-size: 1.45rem;
-  }
-  .nav-brand img {
-    width: 32px;
-    height: 32px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nav-brand img,
-  .nav-links a::after,
-  .nav-icon {
-    transition: none;
-  }
-  .nav-brand:hover img,
-  .theme-toggle:hover {
-    transform: none;
-  }
-}
-
 /* ------------------------------------------------------------------ sheet */
 
 .sheet {
@@ -412,18 +150,6 @@ svg {
   padding: var(--s-3) 0 var(--s-5);
   border-top: var(--rule-strong);
   border-bottom: var(--rule);
-}
-
-.page-kicker {
-  align-self: start;
-  font-size: var(--fs-kicker);
-  font-weight: 600;
-  letter-spacing: var(--tracking-kicker);
-  text-transform: uppercase;
-}
-
-.page-kicker-sub {
-  color: var(--c-text-2);
 }
 
 .picker {
@@ -465,9 +191,6 @@ svg {
   .masthead {
     margin-top: var(--s-4);
     padding-bottom: var(--s-4);
-  }
-  .page-kicker-sub {
-    display: none;
   }
   .demands > .setup {
     margin-top: var(--s-6);
@@ -546,7 +269,7 @@ svg {
 .stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "ident" "view" "specs" "demands" "comp" "tb" "season";
+  grid-template-areas: "view" "specs" "demands" "comp" "tb" "season";
   outline: none;
 }
 
@@ -556,9 +279,6 @@ svg {
   min-width: 0;
 }
 
-.identity {
-  grid-area: ident;
-}
 .specs {
   grid-area: specs;
 }
@@ -593,20 +313,12 @@ svg {
   .stage {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     grid-template-areas:
-      "ident specs"
+      "specs specs"
       "view view"
       "demands demands"
       "comp comp"
       "tb tb"
       "season season";
-  }
-  .stage > .identity {
-    padding-right: var(--s-5);
-  }
-  .stage > .specs {
-    border-top: 0;
-    border-left: var(--rule);
-    padding-left: var(--s-5);
   }
   .stage > .viewport {
     padding-top: var(--s-5);
@@ -631,15 +343,13 @@ svg {
 @media (min-width: 1280px) {
   .stage {
     grid-template-columns: minmax(270px, 1fr) minmax(0, 2.5fr) minmax(330px, 1.1fr);
-    grid-template-rows: auto auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
     grid-template-areas:
-      "ident view demands"
       "specs view demands"
       "comp view demands"
       "tb tb tb"
       "season season season";
   }
-  .stage > .identity,
   .stage > .specs,
   .stage > .compounds {
     border-right: var(--rule);
@@ -716,51 +426,6 @@ svg {
 
 .section-title > .section-aside {
   margin-left: auto;
-}
-
-/* ------------------------------------------------------------------ identity */
-
-/* "01 —— ANALYSIS": the f1stories.gr story kicker, with its racing-red rule. */
-.kicker {
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  font-size: var(--fs-kicker);
-  font-weight: 600;
-  letter-spacing: var(--tracking-kicker);
-  text-transform: uppercase;
-}
-
-.kicker-sep {
-  width: 40px;
-  height: 2px;
-  background: var(--c-signal);
-}
-
-.race-title {
-  margin-top: var(--s-2);
-  font-size: var(--fs-title);
-  font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  text-wrap: balance;
-  hyphens: auto;
-}
-
-.venue {
-  margin-top: var(--s-3);
-  font-size: var(--fs-lead);
-  font-weight: 550;
-  line-height: 1.25;
-}
-
-.place {
-  color: var(--c-text-2);
-}
-
-.dates {
-  margin-top: var(--s-3);
-  font-weight: 600;
 }
 
 .spec-list {
@@ -897,22 +562,6 @@ svg {
     aspect-ratio: 4 / 3;
     min-height: 240px;
   }
-}
-
-.hero-word {
-  position: absolute;
-  top: -0.1em;
-  left: 0.06em;
-  z-index: 0;
-  color: #2a2927;
-  font-family: var(--font-brand);
-  font-size: var(--fs-hero);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
 }
 
 .loading-3d {
@@ -1441,49 +1090,10 @@ svg {
   }
 }
 
-/* ------------------------------------------------------------------ colophon */
+/* ------------------------------------------------------------------ archive (moves into the page body in Phase 4) */
 
-/* A dark, quiet end to the page in both themes, as on f1stories.gr (charcoal tokens via tokens.css). */
-.colophon {
-  margin-top: var(--s-8);
-  border-top: 1px solid rgb(233 227 214 / 0.18);
-  background: var(--c-ink) radial-gradient(ellipse at 100% 0%, rgb(233 227 214 / 0.055), transparent 65%);
-  color: var(--c-paper);
-}
-
-.colophon-inner {
-  display: grid;
-  gap: var(--s-6);
-  width: min(1476px, 100%);
-  margin-inline: auto;
-  padding: var(--s-6) var(--gutter);
-}
-
-.colophon-brand {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px var(--s-5);
-  padding-bottom: var(--s-4);
-  border-bottom: 1px solid rgb(233 227 214 / 0.18);
-}
-
-.colophon-brand .wordmark:hover {
-  color: inherit;
-}
-
-.colophon-mission {
-  color: var(--c-text-2);
-  font-size: 0.875rem;
-}
-
-@media (min-width: 1280px) {
-  .colophon-inner {
-    grid-template-columns: 7fr 5fr;
-  }
-  .colophon-brand {
-    grid-column: 1 / -1;
-  }
+.archive-band {
+  padding-block: var(--s-6);
 }
 
 .archive {
@@ -1521,15 +1131,6 @@ svg {
 
 .archive-round {
   width: 2.2rem;
-  color: var(--c-text-2);
-  font-size: var(--fs-caption);
-}
-
-.legal {
-  display: grid;
-  align-content: start;
-  gap: var(--s-3);
-  max-width: 72ch;
   color: var(--c-text-2);
   font-size: var(--fs-caption);
 }
