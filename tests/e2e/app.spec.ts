@@ -50,7 +50,13 @@ test('changing race updates content, URL, title and survives reload and back', a
   await page.locator('#race').selectOption('2026-az');
   await expect(page).toHaveURL(`${BASE}2026/baku/`);
   await expect(title(page)).toHaveText('Azerbaijan Grand Prix');
-  await expect(page).toHaveTitle(/Azerbaijan Grand Prix 2026/);
+  await expect(page).toHaveTitle(
+    'TYRES — Azerbaijan Grand Prix 2026: γόμες και απαιτήσεις πίστας | F1 Stories',
+  );
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    'content',
+    /Γόμες C3, C4, C5 για το Azerbaijan Grand Prix 2026/,
+  );
   await expect(page.locator('#r-compounds')).toContainText('C5');
   await page.reload();
   await expect(title(page)).toHaveText('Azerbaijan Grand Prix');
@@ -200,6 +206,10 @@ test('every prerendered page has resolved asset URLs', async ({ request }) => {
     const body = await (await request.get(`${BASE}${path}`)).text();
     expect(body, path).not.toContain('__VITE_ASSET__');
     expect(body, path).toMatch(/rel="preload" href="\/Tyres\/assets\/ibm-plex-sans-400-600-[\w-]+\.woff2"/);
+    expect(body, path).toMatch(
+      /rel="preload" href="\/Tyres\/assets\/ibm-plex-sans-400-600-greek-[\w-]+\.woff2"/,
+    );
+    expect(body, path).toMatch(/rel="preload" href="\/Tyres\/assets\/barlow-condensed-700-[\w-]+\.woff2"/);
     expect(body, path).toContain('<script src="/Tyres/theme.js"></script>');
   }
 });

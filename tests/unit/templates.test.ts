@@ -112,3 +112,45 @@ describe('social card', () => {
     expect(doc).not.toMatch(/(src|href)="https?:/);
   });
 });
+
+describe('document head', () => {
+  const template = '<html><head><title>x</title><!--app:head--></head><body><!--app:notice--></body></html>';
+  const ctx = (notFound?: boolean) => ({
+    manifest: {
+      schemaVersion: 1 as const,
+      generatedAt: '2099-01-01T00:00:00Z',
+      latest: fixtureRace().id,
+      years: [],
+    },
+    record: fixtureRace(),
+    track: null,
+    base: '/Tyres/',
+    siteUrl: 'https://x.test/Tyres/',
+    path: '2026/fixture/',
+    notFound,
+  });
+
+  it('is Greek: title, description, locale and image alt', async () => {
+    const { renderPage } = await import('../../src/ui/page.ts');
+    const r = fixtureRace();
+    const out = renderPage(template, ctx());
+    expect(out).toContain(
+      `<title>TYRES — ${r.race.name} ${r.season}: γόμες και απαιτήσεις πίστας | F1 Stories</title>`,
+    );
+    expect(out).toContain('<meta property="og:locale" content="el_GR" />');
+    expect(out).toContain('Ανεπίσημη απεικόνιση.');
+    expect(out).toContain('og:image:alt" content="Σύνοψη ελαστικών');
+    expect(out).toContain('<link rel="canonical" href="https://x.test/Tyres/2026/fixture/" />');
+    expect(out).not.toMatch(/Tyre Intelligence|Unofficial|Showing the latest/);
+  });
+
+  it('marks the 404 noindex, with the generic card and a Greek notice', async () => {
+    const { renderPage } = await import('../../src/ui/page.ts');
+    const out = renderPage(template, ctx(true));
+    expect(out).toContain('<title>Η σελίδα δεν βρέθηκε | TYRES | F1 Stories</title>');
+    expect(out).toContain('<meta name="robots" content="noindex" />');
+    expect(out).toContain('https://x.test/Tyres/og.png');
+    expect(out).toContain('Αυτή η σελίδα δεν υπάρχει.');
+    expect(out).not.toContain('rel="canonical"');
+  });
+});

@@ -206,7 +206,7 @@ function embedDocument(template: string, d: Shell): string {
     <div class="e-body">${d.body}</div>
     <footer class="e-foot">
       <p class="e-source">${t.source}: ${d.source}</p>
-      <p class="e-brand"><a href="${d.canonical}" target="_blank" rel="noopener"><span class="e-wordmark">F1 STORIES<span class="e-dot">.</span></span> <span class="e-open">${t.open} ↗</span><span class="e-site" hidden>Tyre Intelligence · ${d.siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span></a></p>
+      <p class="e-brand"><a href="${d.canonical}" target="_blank" rel="noopener"><span class="e-wordmark">F1 STORIES<span class="e-dot">.</span></span> <span class="e-open">${t.open} ↗</span><span class="e-site" hidden>TYRES · ${d.siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span></a></p>
     </footer>
   </article></div>${d.after ?? ''}`;
   return template

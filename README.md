@@ -1,4 +1,4 @@
-# F1 Stories — Tyre Intelligence
+# F1 Stories — TYRES.
 
 An unofficial, interactive look at each Formula 1 weekend's tyre challenge: the compounds Pirelli
 brings, how hard the circuit works the tyres, setup limits, and the circuit itself — on a generic 3D
