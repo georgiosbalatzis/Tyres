@@ -1,18 +1,20 @@
 import { expect, test } from '@playwright/test';
 
-const BASE = '/Tyres/';
+import { BASE, SEPANG } from './data.ts';
+
 const panel = '#r-weather';
 
 test('weather tab has three daily columns, selectable time zones and standard / sprint schedules', async ({
   page,
+  baseURL,
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   const externalRequests: string[] = [];
   page.on('request', (request) => {
-    if (!request.url().startsWith('http://localhost:4173') && !request.url().startsWith('data:'))
+    if (!request.url().startsWith('data:') && new URL(request.url()).origin !== new URL(baseURL!).origin)
       externalRequests.push(request.url());
   });
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   const tab = page.getByRole('button', { name: 'Καιρός τριημέρου', exact: true });
   await tab.focus();
   await page.keyboard.press('Enter');

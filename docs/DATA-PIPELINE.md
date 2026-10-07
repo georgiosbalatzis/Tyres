@@ -95,7 +95,21 @@ says the record is awaiting review.
 
 `.github/workflows/update-pirelli.yml` runs every 6 hours (and on demand):
 update → build data → test. If `data/` changed it pushes branch
-`data/pirelli-update` and opens/updates a PR. If the review report is non-empty
+`data/pirelli-update` and opens/updates a PR. It then explicitly dispatches `CI`
+on that branch with `gh workflow run ci.yml --ref data/pirelli-update`, using
+`GITHUB_TOKEN` with `actions: write`. This avoids depending on bot-origin PR
+triggers, which may be suppressed or require approval. `CI` supports manual
+`workflow_dispatch` as well as push and PR events; its runtime permissions stay
+read-only. Dispatching branch CI never deploys that unmerged branch: deployment
+from CI remains restricted to successful push runs on `main`.
+
+Browser tests read the served manifest and race record for home-page, fallback,
+current-round and status assertions. Checks of known circuit facts, compounds,
+times and embed URLs open the corresponding explicit historical race route, so
+new previews with incomplete data or `needs-review` status do not break them.
+`E2E_PORT` can select a separate preview port for isolated ingestion checks.
+
+If the review report is non-empty
 it is attached as an artefact and posted to a single tracking issue
 (`data-review`). No paid services, no secrets beyond `GITHUB_TOKEN`.
 

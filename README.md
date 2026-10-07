@@ -143,9 +143,9 @@ Workflows (`.github/workflows/`):
 
 | Workflow | Trigger | Does |
 |---|---|---|
-| `ci.yml` | push, PR | lint, typecheck, data validation, unit tests, build, Playwright |
+| `ci.yml` | push, PR, manual / data updater dispatch | lint, typecheck, data validation, unit tests, build, Playwright |
 | `deploy.yml` | CI success on `main`, every 6 h, manual | refresh schedules/weather → build with Pages base path → `actions/deploy-pages` |
-| `update-pirelli.yml` | every 6 h, manual | discover → normalise → validate → PR + review issue |
+| `update-pirelli.yml` | every 6 h, manual | discover → normalise → validate → PR + branch CI + review issue |
 
 PRs opened with the default `GITHUB_TOKEN` do not trigger CI automatically (GitHub rule); re-run CI
 from the PR or close/reopen it. Actions are pinned by commit SHA; Dependabot keeps them current.

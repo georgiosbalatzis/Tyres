@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
-const BASE = '/Tyres/';
+import { BASE, SEPANG } from './data.ts';
+
 const panel = '#r-circuit-info';
 
 test('the full circuit embed stays readable at every width, language and theme', async ({ page }) => {
@@ -51,7 +52,7 @@ test('opening Embed from the circuit sheet selects it and offers its iframe and 
   isMobile,
 }) => {
   test.skip(isMobile, 'The embed dialog is desktop-only.');
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await page.getByRole('button', { name: 'Στοιχεία πίστας', exact: true }).click();
   await page.getByRole('button', { name: 'Ενσωμάτωση', exact: true }).click();
   const dialog = page.locator('#embed-dialog');
@@ -72,7 +73,7 @@ test('opening Embed from the circuit sheet selects it and offers its iframe and 
 
 test('circuit information follows race selection and restores the other views', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   const tab = page.getByRole('button', { name: 'Στοιχεία πίστας', exact: true });
   await tab.focus();
   await page.keyboard.press('Enter');

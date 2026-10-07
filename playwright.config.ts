@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /** Runs against the production build served under a GitHub Pages-style base path. */
-const PORT = 4173;
+const PORT = Number(process.env.E2E_PORT ?? 4173);
 export const BASE = '/Tyres/';
 
 export default defineConfig({

@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { BASE } from '../../playwright.config.ts';
+import { STRINGS } from '../../src/ui/strings.ts';
+import { BASE, publishedLatest } from './data.ts';
 
 /** The shared f1stories.gr shell: global nav, Race Desk switcher, signal band, sponsors and colophon. */
 
@@ -26,7 +27,8 @@ test('the global nav is the site nav: seven links, Δεδομένα current, no 
   await expect(nav.getByText('Race Desk')).toHaveCount(0);
 });
 
-test('Race Desk lists the four products, TYRES current, same tab, one H1', async ({ page }) => {
+test('Race Desk lists the four products, TYRES current, same tab, one H1', async ({ page, request }) => {
+  const { record } = await publishedLatest(request);
   await page.goto(BASE);
   const desk = page.getByRole('navigation', { name: 'Race Desk' });
   await expect(desk.locator('a')).toHaveText(['THE GRID', 'TELEMETRY', 'GHOST CAR', 'TYRES']);
@@ -36,7 +38,10 @@ test('Race Desk lists the four products, TYRES current, same tab, one H1', async
   await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/^TYRES\./);
   await expect(page.getByRole('heading', { name: /Race Desk/i })).toHaveCount(0);
-  await expect(page.locator('.signal-band')).toContainText('Μεταγραφή, προς έλεγχο'); // status is always visible
+  const status = page.locator('.signal-band [data-status]');
+  await expect(status).toBeVisible();
+  await expect(status).toHaveAttribute('data-status', record.validation.status);
+  await expect(status).toHaveText(STRINGS.el.status[record.validation.status]);
 });
 
 for (const width of [1440, 1024, 768, 390, 375, 320]) {

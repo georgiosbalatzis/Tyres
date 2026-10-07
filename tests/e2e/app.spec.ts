@@ -1,6 +1,6 @@
 import { expect, type Page, test } from '@playwright/test';
 
-const BASE = '/Tyres/';
+import { BASE, publishedLatest, SEPANG } from './data.ts';
 
 function trackConsole(page: Page) {
   const errors: string[] = [];
@@ -13,21 +13,31 @@ function trackConsole(page: Page) {
 
 const title = (page: Page) => page.locator('#race-title');
 
-test('prerendered HTML carries the full race data without JavaScript', async ({ browser }) => {
+test('prerendered HTML carries the latest race data without JavaScript', async ({ browser, request }) => {
+  const { manifest, record } = await publishedLatest(request);
   const ctx = await browser.newContext({ javaScriptEnabled: false });
   const page = await ctx.newPage();
   await page.goto(BASE);
-  await expect(title(page)).toHaveText('Bahrain Grand Prix');
-  await expect(page.locator('#r-specs')).toContainText('5,543');
-  await expect(page.locator('#r-compounds')).toContainText('C2');
+  await expect(title(page)).toHaveText(record.race.name);
+  for (const compound of record.compounds ?? [])
+    await expect(page.locator('#r-compounds')).toContainText(compound.compound);
+  if (record.circuit.lengthKm != null)
+    await expect(page.locator('#r-specs')).toContainText(
+      new Intl.NumberFormat('el-GR', { minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(
+        record.circuit.lengthKm,
+      ),
+    );
   await expect(page.locator('#r-source a').first()).toHaveAttribute('href', /press\.pirelli\.com/);
-  const manifest = await (await page.request.get(`${BASE}data/manifest.json`)).json();
-  const total = manifest.years.reduce((n: number, y: { races: unknown[] }) => n + y.races.length, 0);
+  const total = manifest.years.reduce((n, y) => n + y.races.length, 0);
   await expect(page.locator('.archive a')).toHaveCount(total);
   await ctx.close();
 });
 
-test('opens on the latest Pirelli preview and loads the 3D view without errors', async ({ page }) => {
+test('opens on the latest Pirelli preview and loads the 3D view without errors', async ({
+  page,
+  request,
+}) => {
+  const { record } = await publishedLatest(request);
   const errors = trackConsole(page);
   const fallbacks: string[] = [];
   page.on('console', (m) => {
@@ -35,8 +45,8 @@ test('opens on the latest Pirelli preview and loads the 3D view without errors',
   });
   const model = page.waitForResponse((r) => r.url().endsWith(`${BASE}models/f1car.glb`));
   await page.goto(BASE);
-  await expect(title(page)).toHaveText('Bahrain Grand Prix');
-  await expect(page.locator('#race')).toHaveValue('2026-bh');
+  await expect(title(page)).toHaveText(record.race.name);
+  await expect(page.locator('#race')).toHaveValue(record.id);
   await page.locator('#canvas-host').scrollIntoViewIfNeeded();
   await expect(page.locator('#canvas-host canvas')).toBeVisible({ timeout: 15_000 });
   await expect(page.locator('#canvas-host')).toHaveClass(/has-3d/);
@@ -46,7 +56,7 @@ test('opens on the latest Pirelli preview and loads the 3D view without errors',
 });
 
 test('changing race updates content, URL, title and survives reload and back', async ({ page }) => {
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await page.locator('#race').selectOption('2026-az');
   await expect(page).toHaveURL(`${BASE}2026/baku/`);
   await expect(title(page)).toHaveText('Azerbaijan Grand Prix');
@@ -66,7 +76,7 @@ test('changing race updates content, URL, title and survives reload and back', a
 });
 
 test('changing season selects that season’s latest preview', async ({ page }) => {
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await page.locator('#year').selectOption('2025');
   // On GPU-less CI runners the 3D view compiles in software right after load and can hold the main
   // thread for a few seconds; allow for it, as the 3D test does.
@@ -89,12 +99,13 @@ test('query-string state is honoured and normalised to the static path', async (
   await expect(page).toHaveURL(`${BASE}2025/marina-bay/`);
 });
 
-test('invalid URL state falls back to the latest preview with a notice', async ({ page }) => {
+test('invalid URL state falls back to the latest preview with a notice', async ({ page, request }) => {
+  const { record } = await publishedLatest(request);
   await page.goto(`${BASE}?year=1999&race=atlantis`);
-  await expect(title(page)).toHaveText('Bahrain Grand Prix');
+  await expect(title(page)).toHaveText(record.race.name);
   await expect(page.locator('#notice')).toContainText('1999');
-  await page.goto(`${BASE}?year=2026&race=%3Cscript%3E`);
-  await expect(title(page)).toHaveText('Bahrain Grand Prix');
+  await page.goto(`${BASE}?year=${record.season}&race=%3Cscript%3E`);
+  await expect(title(page)).toHaveText(record.race.name);
 });
 
 test('without WebGL the SVG drawing and every value remain available', async ({ page }) => {
@@ -106,7 +117,7 @@ test('without WebGL the SVG drawing and every value remain available', async ({ 
     };
   });
   const errors = trackConsole(page);
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await page.locator('#canvas-host').scrollIntoViewIfNeeded();
   await expect(page.locator('#loading-3d')).toContainText('Το 3D δεν είναι διαθέσιμο');
   await expect(page.locator('.fallback-car')).toBeVisible();
@@ -118,14 +129,14 @@ test('without WebGL the SVG drawing and every value remain available', async ({ 
 
 test('a missing race file keeps the current race and explains the failure', async ({ page }) => {
   await page.route('**/data/races/2026-az.json', (r) => r.fulfill({ status: 200, body: '{"broken":true}' }));
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await page.locator('#race').selectOption('2026-az');
   await expect(page.locator('#notice')).toContainText('Δεν φορτώθηκε');
   await expect(title(page)).toHaveText('Bahrain Grand Prix');
 });
 
 test('keyboard users can switch modes, views and tyres', async ({ page }) => {
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   const circuit = page.getByRole('button', { name: 'Πίστα', exact: true });
   await circuit.focus();
   await page.keyboard.press('Enter');
@@ -145,7 +156,7 @@ test('keyboard users can switch modes, views and tyres', async ({ page }) => {
 });
 
 test('layout has no horizontal overflow and touch targets are large enough', async ({ page }) => {
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
   );
@@ -165,9 +176,10 @@ test('layout has no horizontal overflow and touch targets are large enough', asy
   }
 });
 
-test('unknown static path falls back gracefully', async ({ page }) => {
+test('unknown static path falls back gracefully', async ({ page, request }) => {
+  const { record } = await publishedLatest(request);
   await page.goto(`${BASE}2031/nowhere/`);
-  await expect(title(page)).toHaveText('Bahrain Grand Prix');
+  await expect(title(page)).toHaveText(record.race.name);
 });
 
 test('captures reference screenshots', async ({ page }, info) => {
@@ -181,7 +193,7 @@ test('captures reference screenshots', async ({ page }, info) => {
 });
 
 test('the latest choice wins when an earlier race is still loading', async ({ page }) => {
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await page.route('**/data/races/2026-az.json', async (r) => {
     await new Promise((res) => setTimeout(res, 1200));
     await r.continue();
@@ -194,7 +206,7 @@ test('the latest choice wins when an earlier race is still loading', async ({ pa
 });
 
 test('tyres mode keeps a selected compound across races', async ({ page }) => {
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await page.getByRole('button', { name: 'Ελαστικά', exact: true }).click();
   await page.locator('#race').selectOption('2026-az');
   await expect(page.locator('.compound[aria-pressed="true"]')).toHaveCount(1);
@@ -218,7 +230,7 @@ test('follows the OS and remembers the choice under f1stories-theme', async ({ p
   const root = page.locator('html');
   const stored = () => page.evaluate(() => localStorage.getItem('f1stories-theme'));
   await page.emulateMedia({ colorScheme: 'dark' });
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await expect(root).toHaveAttribute('data-theme', 'dark');
   await page.emulateMedia({ colorScheme: 'light' });
   await page.reload();
@@ -242,7 +254,7 @@ test('migrates the legacy theme key once and leaves foreign values alone', async
     }
   });
   await page.emulateMedia({ colorScheme: 'light' });
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   expect(
     await page.evaluate(() => [localStorage.getItem('f1stories-theme'), localStorage.getItem('theme')]),
@@ -276,7 +288,7 @@ test('the Embed dialog copies an iframe snippet for the current race', async ({
 }) => {
   test.skip(isMobile, 'The embed tool is desktop-only.');
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await page.getByRole('button', { name: 'Ενσωμάτωση' }).click();
   await page.locator('#embed-dialog').getByText('Απαιτήσεις πίστας', { exact: true }).click();
   const copy = page.getByRole('button', { name: 'Αντιγραφή κώδικα' });
@@ -327,7 +339,7 @@ test('embeds switch to the dark theme with #dark, without a reload or a height c
 
 test('the Embed dialog offers a panel image with alt text from the panel', async ({ page, isMobile }) => {
   test.skip(isMobile, 'The embed tool is desktop-only.');
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await page.getByRole('button', { name: 'Ενσωμάτωση' }).click();
   const dialog = page.locator('#embed-dialog');
   await dialog.getByText('Εικόνα για social και newsletter').click();
@@ -341,25 +353,29 @@ test('the Embed dialog offers a panel image with alt text from the panel', async
   await expect(dialog.locator('input[value="image"]')).toBeDisabled();
 });
 
-test('the season strip shows on the race page and as an embed of constant height', async ({ page }) => {
+test('the season strip shows on the race page and as an embed of constant height', async ({
+  page,
+  request,
+}) => {
+  const { record } = await publishedLatest(request);
   await page.goto(BASE);
   const band = page.locator('#r-season');
-  await expect(band).toContainText('Επιλογές γομών, σεζόν 2026');
-  await expect(band.locator('th.is-current')).toContainText('R16');
+  await expect(band).toContainText(`Επιλογές γομών, σεζόν ${record.season}`);
+  if (record.round != null) await expect(band.locator('th.is-current')).toContainText(`R${record.round}`);
   const heights: number[] = [];
   for (const width of [300, 968]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto(`${BASE}embed/el/2026/season/`);
+    await page.goto(`${BASE}embed/el/${record.season}/season/`);
     heights.push(await page.locator('.e').evaluate((e) => Math.ceil(e.getBoundingClientRect().height)));
   }
   expect(heights[0]).toBe(heights[1]);
-  await expect(page.locator('caption')).toHaveText('Επιλογές γομών, σεζόν 2026');
+  await expect(page.locator('caption')).toHaveText(`Επιλογές γομών, σεζόν ${record.season}`);
 });
 
 test('the body follows the Race Desk pattern: key figures, underlined tabs, sidebar, archive in the page', async ({
   page,
 }) => {
-  await page.goto(BASE);
+  await page.goto(SEPANG);
   await expect(page.locator('#r-specs .spec')).toHaveCount(6);
   await expect(page.locator('#r-specs .spec-compounds')).toContainText('C3');
   const mode = page.getByRole('button', { name: 'Μονοθέσιο', exact: true });

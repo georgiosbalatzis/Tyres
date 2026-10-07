@@ -27,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
+      actions: write # explicitly dispatch CI for bot-created data PRs
       contents: write # push the data/pirelli-update branch
       pull-requests: write # open/update the review PR
       issues: write # post the review report
@@ -83,6 +84,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Open or update data PR
+        id: data-pr
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -102,6 +104,13 @@ jobs:
             gh pr create --head "$branch" --base "${{ github.event.repository.default_branch }}" \
               --title "Pirelli data update" --body "$body"
           fi
+          echo 'changed=true' >> "$GITHUB_OUTPUT"
+
+      - name: Run CI on the updated data branch
+        if: ${{ steps.data-pr.outputs.changed == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run ci.yml --ref data/pirelli-update
 
       - name: Post review report to tracking issue
         if: ${{ hashFiles('review-report.md') != '' }}
