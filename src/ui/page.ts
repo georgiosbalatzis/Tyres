@@ -4,6 +4,8 @@
  */
 
 import type { Manifest, RaceRecord, TrackShape } from '../domain/schema.ts';
+import type { Weekend } from '../domain/weekend.ts';
+import { circuitInfo } from './circuitInfo.ts';
 import { seasonStrip } from './embed.ts';
 import { escapeHtml, html, inlineJson, SafeHtml } from './html.ts';
 import { PAGE, STRINGS } from './strings.ts';
@@ -26,11 +28,13 @@ import {
   stepper,
   titleBlock,
 } from './templates.ts';
+import { weatherPreview } from './weather.ts';
 
 export interface PageContext {
   manifest: Manifest;
   record: RaceRecord;
   track: TrackShape | null;
+  weekend?: Weekend | null;
   base: string;
   siteUrl: string;
   /** Path of this document relative to base ('' for the index). */
@@ -55,6 +59,8 @@ export function mainRegions(ctx: PageContext): SafeHtml {
   <div class="tab-strip modes" role="group" aria-label="${PAGE.modes.label}">
     ${MODES.map((m) => html`<button type="button" class="mode" data-mode="${m}" aria-pressed="${String(m === s.mode)}">${PAGE.modes[m]}</button>`)}
   </div>
+  <section class="circuit-info" id="r-circuit-info" aria-labelledby="circuit-info-title" hidden>${circuitInfo(r, track, ctx.base)}</section>
+  <section class="weather-preview" id="r-weather" aria-labelledby="weather-title" hidden>${weatherPreview(ctx.weekend ?? null)}</section>
   <div class="desk-layout">
     <section class="viewport" aria-labelledby="viz-title">
       <h2 id="viz-title" class="visually-hidden">${PAGE.viz}</h2>
@@ -136,7 +142,13 @@ export function renderPage(template: string, ctx: PageContext): string {
     <meta name="twitter:card" content="summary_large_image" />
     ${event ? html`<script type="application/ld+json">${new SafeHtml(inlineJson(event))}</script>` : ''}`;
 
-  const boot = inlineJson({ raceId: r.id, record: r, track: ctx.track, notFound: !!ctx.notFound });
+  const boot = inlineJson({
+    raceId: r.id,
+    record: r,
+    track: ctx.track,
+    weekend: ctx.weekend ?? null,
+    notFound: !!ctx.notFound,
+  });
 
   // Function replacers: data text must never be read as `$&`/`$'` replacement patterns.
   return template

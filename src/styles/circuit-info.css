@@ -1,0 +1,209 @@
+.stage[data-mode="circuit-info"] .desk-layout {
+  display: none;
+}
+
+.circuit-info[hidden] {
+  display: none;
+}
+
+.circuit-info {
+  padding: 32px 0 24px;
+}
+
+.circuit-info-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.circuit-flag {
+  flex: none;
+  width: 80px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.circuit-info-header h2 {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: clamp(2rem, 3.6vw, 3.5rem);
+  line-height: 1.1;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.circuit-info-header p {
+  margin: 10px 0 0;
+  color: var(--c-text-2);
+  font-size: var(--fs-body);
+}
+
+.circuit-info-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.circuit-map {
+  min-width: 0;
+  margin: 0;
+}
+
+.circuit-map > svg {
+  display: block;
+  width: 100%;
+  height: 480px;
+}
+
+.circuit-map .track-casing {
+  stroke: var(--c-text);
+  stroke-width: 26;
+  stroke-linecap: round;
+}
+
+.circuit-map .track-line {
+  stroke: var(--c-signal);
+  stroke-width: 10;
+  animation: none;
+}
+
+.circuit-map figcaption {
+  max-width: 65ch;
+  margin: 24px 0 0;
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+}
+
+.circuit-map .plate {
+  width: 100%;
+}
+
+.circuit-facts {
+  min-width: 0;
+  margin: 0;
+  padding-left: 32px;
+  border-left: var(--rule);
+}
+
+.circuit-fact {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  padding: 22px 0;
+}
+
+.circuit-fact + .circuit-fact {
+  border-top: var(--rule);
+}
+
+.circuit-fact:first-child {
+  padding-top: 0;
+}
+
+.circuit-fact:last-child {
+  padding-bottom: 0;
+}
+
+.circuit-fact > svg {
+  width: 44px;
+  height: 44px;
+  fill: none;
+  stroke: var(--c-accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.circuit-fact dt {
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+}
+
+.circuit-fact dd {
+  margin: 4px 0 0;
+  line-height: 1.1;
+}
+
+.circuit-fact-value {
+  font-family: var(--font-brand);
+  font-size: clamp(2.5rem, 3.8vw, 3.75rem);
+  font-weight: 700;
+}
+
+.circuit-fact-unit {
+  margin-left: 8px;
+  font-size: var(--fs-lead);
+}
+
+.circuit-fact-note {
+  display: block;
+  margin-top: 8px;
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+  line-height: 1.5;
+}
+
+.circuit-fact.is-missing .circuit-fact-value {
+  font-family: var(--font);
+  font-size: var(--fs-lead);
+  font-weight: 400;
+  color: var(--c-text-2);
+}
+
+.circuit-info-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: var(--rule);
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+}
+
+@media (max-width: 900px) {
+  .circuit-info-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .circuit-map > svg {
+    height: auto;
+    max-height: 400px;
+  }
+
+  .circuit-facts {
+    padding: 24px 0 0;
+    border-left: 0;
+    border-top: var(--rule);
+  }
+}
+
+@media (max-width: 480px) {
+  .circuit-info {
+    padding-top: 16px;
+  }
+
+  .circuit-info-header {
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .circuit-flag {
+    width: 56px;
+    height: 42px;
+  }
+
+  .circuit-fact {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .circuit-fact > svg {
+    width: 36px;
+    height: 36px;
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "raceId": "2025-ae",
+  "timeZone": "Asia/Dubai",
+  "dates": [
+    "2025-12-05",
+    "2025-12-06",
+    "2025-12-07"
+  ],
+  "sessions": [
+    {
+      "id": "fp1",
+      "start": "2025-12-05T09:30:00.000Z"
+    },
+    {
+      "id": "fp2",
+      "start": "2025-12-05T13:00:00.000Z"
+    },
+    {
+      "id": "fp3",
+      "start": "2025-12-06T10:30:00.000Z"
+    },
+    {
+      "id": "qualifying",
+      "start": "2025-12-06T14:00:00.000Z"
+    },
+    {
+      "id": "race",
+      "start": "2025-12-07T13:00:00.000Z"
+    }
+  ],
+  "scheduleUrl": "https://www.formula1.com/en/racing/2025/united-arab-emirates",
+  "scheduleRetrievedAt": "2026-10-07T20:25:01.387Z",
+  "weather": {
+    "kind": "archived-forecast",
+    "retrievedAt": "2026-10-07T20:25:01.387Z",
+    "latitude": 24.469356894736837,
+    "longitude": 54.6055902406015,
+    "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=24.469356894736837&longitude=54.6055902406015&timezone=Asia%2FDubai&start_date=2025-12-05&end_date=2025-12-07&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
+    "days": [
+      {
+        "date": "2025-12-05",
+        "code": 3,
+        "highC": 28.1,
+        "lowC": 19.2,
+        "humidityPct": 66,
+        "rainChancePct": 0
+      },
+      {
+        "date": "2025-12-06",
+        "code": 3,
+        "highC": 28.2,
+        "lowC": 16.8,
+        "humidityPct": 66,
+        "rainChancePct": 0
+      },
+      {
+        "date": "2025-12-07",
+        "code": 3,
+        "highC": 29.9,
+        "lowC": 19.2,
+        "humidityPct": 68,
+        "rainChancePct": 8
+      }
+    ]
+  }
+}

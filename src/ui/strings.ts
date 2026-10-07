@@ -30,6 +30,15 @@ export interface Strings {
   pitLoss: string;
   pitKind: { estimate: string; average: string };
   lapRecord: string;
+  circuitInfo: {
+    firstGrandPrix: string;
+    firstGrandPrixNote: string;
+    mapNote: string;
+    historySource: string;
+    factsSource: string;
+    outlineLead: string;
+    outlineLabel: (name: string) => string;
+  };
   noCompounds: string;
   noTrack: string;
   source: string;
@@ -73,6 +82,7 @@ export const STRINGS: Record<EmbedLang, Strings> = {
       '3d': 'Τρισδιάστατη προβολή',
       setup: 'Όρια ρυθμίσεων',
       circuit: 'Η πίστα',
+      'circuit-info': 'Στοιχεία πίστας',
     },
     rating: {
       traction: 'Πρόσφυση',
@@ -110,6 +120,16 @@ export const STRINGS: Record<EmbedLang, Strings> = {
     pitLoss: 'Απώλεια χρόνου στο pit stop',
     pitKind: { estimate: 'εκτίμηση Pirelli', average: 'μέσος όρος Pirelli' },
     lapRecord: 'Ρεκόρ γύρου',
+    circuitInfo: {
+      firstGrandPrix: 'Πρώτο Grand Prix',
+      firstGrandPrixNote: 'Στο Παγκόσμιο Πρωτάθλημα Formula 1',
+      mapNote:
+        'Δεν υπάρχουν επαληθευμένα όρια τομέων, αριθμοί στροφών ή σημείο εκκίνησης για αυτή τη χάραξη.',
+      historySource: 'Ιστορικό πίστας: Formula 1',
+      factsSource: 'Στοιχεία αγώνα: Pirelli',
+      outlineLead: 'Χάραξη:',
+      outlineLabel: (name) => `Χάραξη της πίστας ${name}`,
+    },
     noCompounds: 'Οι γόμες δεν έχουν ανακοινωθεί.',
     noTrack: 'Δεν υπάρχει ακόμη χάρτης της πίστας.',
     source: 'Πηγή',
@@ -163,6 +183,7 @@ export const STRINGS: Record<EmbedLang, Strings> = {
       '3d': '3D view',
       setup: 'Setup limits',
       circuit: 'Circuit',
+      'circuit-info': 'Circuit information',
     },
     rating: {
       traction: 'Traction',
@@ -199,6 +220,16 @@ export const STRINGS: Record<EmbedLang, Strings> = {
     pitLoss: 'Pit-stop time loss',
     pitKind: { estimate: 'Pirelli estimate', average: 'Pirelli average' },
     lapRecord: 'Lap record',
+    circuitInfo: {
+      firstGrandPrix: 'First Grand Prix',
+      firstGrandPrixNote: 'In the Formula 1 World Championship',
+      mapNote:
+        'Verified sector boundaries, turn numbers and a start/finish point are not available for this outline.',
+      historySource: 'Circuit history: Formula 1',
+      factsSource: 'Race facts: Pirelli',
+      outlineLead: 'Outline:',
+      outlineLabel: (name) => `Outline of ${name}`,
+    },
     noCompounds: 'Compounds not announced yet.',
     noTrack: 'Track outline not available yet.',
     source: 'Source',
@@ -315,7 +346,63 @@ export const PAGE = {
     embed: 'Ενσωμάτωση',
   },
   viz: 'Απεικόνιση',
-  modes: { label: 'Προβολή', car: 'Μονοθέσιο', circuit: 'Πίστα', tyres: 'Ελαστικά', data: 'Πίνακας' },
+  weather: {
+    title: 'Καιρός τριημέρου',
+    forecast: 'Πρόγνωση για την πίστα',
+    archived: 'Αρχειοθετημένη πρόγνωση',
+    noForecast: 'Η πρόγνωση δεν είναι διαθέσιμη',
+    unavailable: 'Δεν υπάρχει διαθέσιμο πρόγραμμα για αυτό το τριήμερο.',
+    forecastWindow:
+      'Η πρόγνωση καλύπτει έως 16 ημέρες μπροστά. Αν δεν υπάρχουν ακόμη δεδομένα ή η πηγή δεν είναι διαθέσιμη, εμφανίζεται μόνο το πρόγραμμα.',
+    stale: 'Η πρόγνωση είναι παλαιότερη από 24 ώρες. Ελέγξτε την ημερομηνία ενημέρωσης.',
+    sessionTimeZone: 'Ώρες συνεδριών',
+    athens: 'Ώρα Ελλάδας',
+    track: 'Ώρα πίστας',
+    sprintWeekend: 'Τριήμερο Sprint',
+    temperature: 'Θερμοκρασία αέρα',
+    maximum: 'μέγιστη',
+    minimum: 'Ελάχιστη',
+    humidity: 'Υγρασία',
+    rainChance: 'Πιθανότητα βροχής',
+    sessions: 'Πρόγραμμα',
+    noSchedule: 'Οι ώρες δεν έχουν δοθεί.',
+    scrollHint: 'Σύρετε οριζόντια για τις τρεις ημέρες.',
+    dailyNote:
+      'Ημερήσια μέγιστη / ελάχιστη θερμοκρασία, μέση υγρασία και μέγιστη πιθανότητα βροχής. Η υγρασία αφορά τον αέρα.',
+    daysNote: (zone: string) => `Οι ημέρες ομαδοποιούνται στην ώρα πίστας (${zone}).`,
+    scheduleSource: 'Πρόγραμμα: Formula 1',
+    weatherSource: 'Καιρός: Open-Meteo · CC BY 4.0',
+    updated: 'Ενημέρωση',
+    session: {
+      fp1: 'FP1',
+      fp2: 'FP2',
+      fp3: 'FP3',
+      'sprint-qualifying': 'SPQ',
+      sprint: 'Sprint',
+      qualifying: 'Q',
+      race: 'Αγώνας',
+    },
+    conditions: {
+      sun: 'Ηλιοφάνεια',
+      partial: 'Λίγες νεφώσεις',
+      cloud: 'Συννεφιά',
+      fog: 'Ομίχλη',
+      drizzle: 'Ψιλόβροχο',
+      rain: 'Βροχή',
+      snow: 'Χιόνι',
+      storm: 'Καταιγίδα',
+      unknown: 'Δεν δόθηκε',
+    },
+  },
+  modes: {
+    label: 'Προβολή',
+    car: 'Μονοθέσιο',
+    circuit: 'Πίστα',
+    'circuit-info': 'Στοιχεία πίστας',
+    weather: 'Καιρός τριημέρου',
+    tyres: 'Ελαστικά',
+    data: 'Πίνακας',
+  },
   aria: {
     facts: 'Στοιχεία πίστας',
     demandsAndSetup: 'Απαιτήσεις πίστας και ρυθμίσεις',

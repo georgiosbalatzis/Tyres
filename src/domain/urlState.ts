@@ -64,7 +64,16 @@ export function racePath(base: string, race: Pick<ManifestRace, 'season' | 'slug
 
 export const EMBED_LANGS = ['el', 'en'] as const;
 export type EmbedLang = (typeof EMBED_LANGS)[number];
-export const EMBED_PANELS = ['summary', 'compounds', 'demands', 'car', 'setup', 'circuit', '3d'] as const;
+export const EMBED_PANELS = [
+  'summary',
+  'compounds',
+  'demands',
+  'car',
+  'setup',
+  'circuit',
+  'circuit-info',
+  '3d',
+] as const;
 export type EmbedPanel = (typeof EMBED_PANELS)[number];
 
 /** Panels that also exist as images (the 3D view has no still). */

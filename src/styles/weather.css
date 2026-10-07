@@ -1,0 +1,211 @@
+.stage[data-mode="weather"] .desk-layout {
+  display: none;
+}
+
+.weather-preview {
+  padding: 28px 0 32px;
+  border-bottom: var(--rule);
+}
+
+.weather-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.weather-header h2 {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: var(--fs-title);
+  line-height: 1.2;
+}
+
+.weather-meta {
+  margin: 8px 0 0;
+  color: var(--c-text-2);
+}
+
+.weather-timezone {
+  display: grid;
+  gap: 6px;
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+}
+
+.weather-timezone select {
+  max-width: 100%;
+  min-height: 40px;
+  padding: 8px 28px 8px 12px;
+  border: var(--rule);
+  border-radius: 0;
+  color: var(--c-text);
+  background: var(--c-bg);
+  font: inherit;
+}
+
+.weather-scroll {
+  overflow-x: auto;
+  scrollbar-color: var(--c-text-2) var(--c-bg);
+  scrollbar-width: thin;
+}
+
+.weather-days {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: 570px;
+  border-top: var(--rule);
+  border-bottom: var(--rule);
+}
+
+.weather-day {
+  min-width: 0;
+  padding: 24px 28px;
+}
+
+.weather-day + .weather-day {
+  border-left: var(--rule);
+}
+
+.weather-day h3 {
+  margin: 0;
+  font-size: var(--fs-lead);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.weather-day header > time {
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+}
+
+.weather-condition {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+  min-height: 48px;
+}
+
+.weather-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.weather-measures,
+.weather-sessions dl {
+  margin: 0;
+}
+
+.weather-measures > div,
+.weather-sessions dl > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.weather-measures dt {
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+}
+
+.weather-measures dd,
+.weather-sessions dd {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.weather-measures .weather-temperature {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.weather-temperature dd {
+  font-family: var(--font-brand);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.weather-temperature dd span {
+  display: block;
+  color: var(--c-text-2);
+  font-family: var(--font);
+  font-size: var(--fs-caption);
+  font-weight: 400;
+}
+
+.weather-sessions {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: var(--rule);
+}
+
+.weather-sessions h4 {
+  margin: 0 0 16px;
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+  font-weight: 400;
+}
+
+.weather-sessions dd {
+  font-weight: 600;
+}
+
+.weather-sessions small {
+  display: block;
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+  font-weight: 400;
+}
+
+.weather-notice,
+.weather-empty {
+  margin: 0 0 24px;
+  color: var(--c-text-2);
+}
+
+.weather-explanation {
+  max-width: 75ch;
+  margin: 24px 0 0;
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+}
+
+.weather-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 20px;
+  color: var(--c-text-2);
+  font-size: var(--fs-caption);
+}
+
+.weather-scroll-hint {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .weather-header {
+    flex-direction: column;
+  }
+
+  .weather-day {
+    padding: 20px 16px;
+  }
+
+  .weather-days {
+    min-width: 660px;
+  }
+
+  .weather-scroll-hint {
+    display: block;
+    margin: 0 0 12px;
+    color: var(--c-text-2);
+    font-size: var(--fs-caption);
+  }
+}

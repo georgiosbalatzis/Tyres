@@ -24,7 +24,8 @@
     "data:verify": "node scripts/review-sheet.ts --verify",
     "data:check-sources": "node scripts/check-sources.ts",
     "site:check": "node scripts/check-site.ts",
-    "track:import": "node scripts/import-track.ts"
+    "track:import": "node scripts/import-track.ts",
+    "weekend:update": "node scripts/update-weekends.ts"
   },
   "dependencies": {
     "three": "0.186.1",

@@ -1,0 +1,23 @@
+{
+  "note": "First Formula 1 World Championship Grand Prix at the venue, not the construction year or first non-championship race. Verified against the linked official Formula 1 pages on 2026-10-07. Race-weekend facts remain sourced from Pirelli.",
+  "circuits": [
+    { "trackId": "albert-park", "firstGrandPrix": 1996, "sourceUrl": "https://www.formula1.com/en/racing/2026/australia" },
+    { "trackId": "shanghai", "firstGrandPrix": 2004, "sourceUrl": "https://www.formula1.com/en/racing/2026/china" },
+    { "trackId": "suzuka", "firstGrandPrix": 1987, "sourceUrl": "https://www.formula1.com/en/racing/2026/japan" },
+    { "trackId": "miami", "firstGrandPrix": 2022, "sourceUrl": "https://www.formula1.com/en/racing/2026/miami" },
+    { "trackId": "montreal", "firstGrandPrix": 1978, "sourceUrl": "https://www.formula1.com/en/racing/2026/canada" },
+    { "trackId": "monaco", "firstGrandPrix": 1950, "sourceUrl": "https://www.formula1.com/en/racing/2026/monaco" },
+    { "trackId": "barcelona", "firstGrandPrix": 1991, "sourceUrl": "https://www.formula1.com/en/racing/2026/barcelona-catalunya" },
+    { "trackId": "spielberg", "firstGrandPrix": 1970, "sourceUrl": "https://www.formula1.com/en/racing/2026/austria" },
+    { "trackId": "silverstone", "firstGrandPrix": 1950, "sourceUrl": "https://www.formula1.com/en/racing/2026/great-britain" },
+    { "trackId": "spa", "firstGrandPrix": 1950, "sourceUrl": "https://www.formula1.com/en/racing/2026/belgium" },
+    { "trackId": "hungaroring", "firstGrandPrix": 1986, "sourceUrl": "https://www.formula1.com/en/racing/2026/hungary" },
+    { "trackId": "zandvoort", "firstGrandPrix": 1952, "sourceUrl": "https://www.formula1.com/en/racing/2026/netherlands" },
+    { "trackId": "monza", "firstGrandPrix": 1950, "sourceUrl": "https://www.formula1.com/en/racing/2026/italy" },
+    { "trackId": "madring", "firstGrandPrix": 2026, "sourceUrl": "https://www.formula1.com/en/racing/2026/spain" },
+    { "trackId": "baku", "firstGrandPrix": 2016, "sourceUrl": "https://www.formula1.com/en/racing/2026/azerbaijan" },
+    { "trackId": "sepang", "firstGrandPrix": 1999, "sourceUrl": "https://www.formula1.com/en/latest/article/the-malaysian-grand-prix-did-you-know-.1SsyzCaENkaNRPGJzC0OJG" },
+    { "trackId": "marina-bay", "firstGrandPrix": 2008, "sourceUrl": "https://www.formula1.com/en/racing/2025/singapore" },
+    { "trackId": "yas-marina", "firstGrandPrix": 2009, "sourceUrl": "https://www.formula1.com/en/racing/2025/united-arab-emirates" }
+  ]
+}

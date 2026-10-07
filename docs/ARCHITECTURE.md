@@ -4,8 +4,9 @@
 
 - **Static GitHub Pages.** No runtime backend, no runtime scraping, no CORS
   dependency. The browser only ever loads files from our own origin.
-- **Official provenance.** Every value comes from Pirelli (or is explicitly
-  labelled as derived). Missing is shown as "Δεν δόθηκε" (Not provided), never as 0.
+- **Official provenance.** Weekend facts come from Pirelli; circuit debut years
+  come from linked official Formula 1 history. Computed values are explicitly
+  labelled as derived. Missing is shown as "Δεν δόθηκε" (Not provided), never as 0.
 - **3D is progressive enhancement.** The page is complete, readable and
   indexable before Three.js loads, and remains so if it never does.
 - **Part of the F1 Stories family.** The page wears the f1stories.gr shell (masthead, Race Desk hero,
@@ -19,7 +20,7 @@ press.pirelli.com ──► scripts/update-pirelli.ts ──► data/generated/{
                                                         │
 bacinger/f1-circuits ──► scripts/import-track.ts ──► data/tracks/{trackId}.json
                                                         │
-                         scripts/build-data.ts  merge → validate → public/data/{manifest.json, races/*.json, tracks/*.json}
+                         scripts/build-data.ts  merge → validate → public/data/{manifest.json, races/*.json, tracks/*.json, weekends/*.json}
                                                         │
                          vite build + prerender plugin → dist/ (index.html, /{year}/{slug}/index.html, 404.html)
                                                         │
@@ -63,12 +64,14 @@ public/theme.js           blocking theme resolver (f1stories-theme → OS → da
 src/
   main.ts                 boot: imports tokens.css, shell.css, app.css, then starts the controller
   domain/
+    weekend.ts            weather/session schema, cross-field checks, track-local dates and WMO condition mapping
     schema.ts             zod/mini schema for race records, tracks, manifest (single source of truth)
     selection.ts          latest-race logic, year switching, prev/next
     urlState.ts           ?year=&race= and /{year}/{slug}/ parsing + serialising; typed ResolveNotice
     derivedMetrics.ts     visualisation-only mapping of 1–5 ratings → per-tyre intensities (text supplied by the UI)
     format.ts             rating list, compound colour variables, English helpers for the review sheet only
   ui/
+    weather.ts            shared prerender/runtime three-day weather and standard/Sprint session columns
     strings.ts            ALL wording: STRINGS (page + embeds, el/en), fmt() number and date formats, PAGE (page-only Greek)
     html.ts               escaping tagged template (the only way HTML strings are built)
     templates.ts          pure render functions (used at runtime AND in the prerender): identity, band, specs, ratings,
@@ -152,15 +155,23 @@ f1stories.gr articles embed single panels as iframes, the same way they embed th
 telemetry dashboard and ghostcar (`georgiosbalatzis.github.io` is already allowed by
 the site's CSP and its author tool's iframe whitelist).
 
-- `/embed/{el|en}/{season}/{slug}/{summary|compounds|demands|car|setup|circuit|3d}/` is
+- `/embed/{el|en}/{season}/{slug}/{summary|compounds|demands|car|setup|circuit|circuit-info|3d}/` is
   prerendered for every race from `embed.html` + `src/ui/embed.ts` +
   `src/styles/embed.css`. Language is a path segment (not `?lang=`) so the pages stay
   static and script-free (`script-src 'none'`), `noindex`, canonical to the race page.
 - Greek and English labels, number and date formats live in `STRINGS` in `src/ui/strings.ts` (one
   glossary to review, shared with the main page). Pirelli's own names (races, circuits) stay as published.
-- **Fixed height:** every row has a fixed height and never wraps (ellipsis), so a
-  panel is equally tall at 300 px and 968 px and a fixed iframe `height` fits. An
-  e2e test enforces it. No script on f1stories.gr is needed.
+- **Fixed height:** panels reserve fixed row heights so they are equally tall at
+  300 px and 968 px and a fixed iframe `height` fits. Compact panels use ellipsis;
+  the full circuit sheet permits wrapping as described below. An e2e test
+  enforces the height. No script on f1stories.gr is needed.
+- **Full circuit sheet** (`circuit-info`) shares `src/ui/circuitInfo.ts` with the
+  main tab: host flag and location, map, five facts (length, first championship
+  Grand Prix, lap record with driver/year, laps, distance), and linked sources.
+  This panel allows text to wrap inside reserved row heights instead of using
+  ellipsis, so all circuit information stays readable and iframe height remains
+  constant. Opening the embed dialog from that tab preselects this panel. Both
+  language variants and their PNG images are generated for every race.
 - Every embed shows its source, publication date and data status, and links to the
   full race page.
 - `car` (tyre demand by corner) is the derived visualisation as four small car plans
@@ -240,3 +251,24 @@ redesign added about 3 KB to the critical JS (the strings and the countdown cale
 
 Mobile LCP 1.8 s, desktop LCP 0.4 s, TBT 0 ms, CLS 0. Auto-rotate stays off by default (it once cost Speed Index 5.4 s
 on desktop), and the viewer creates its own WebGL context instead of probing for one.
+
+## Weekend weather
+
+`update-weekends.ts` reads the merged publishable records, resolves official F1
+race routes and host time zones, extracts five-session schedules, and queries
+Open-Meteo using upstream circuit coordinates. It writes validated separate
+`data/weekends/{raceId}.json` snapshots. `build-data.ts` publishes them, writes
+`null` for missing snapshots, and emits `weekend.schema.json`; no other record
+schema or human verification status changes.
+
+Vite includes the selected snapshot in prerendered HTML and boot JSON. Race
+navigation fetches the new race's track and weekend in parallel, then commits both
+under the existing navigation token. The weather tab hides the 3D desk and pauses
+its render loop. Missing/invalid weather never blocks tyre data navigation.
+Three track-local day columns remain horizontal, with an internal scroller on
+phones. The user chooses Greece or track time for sessions; times crossing a local
+calendar day carry an explicit date. Daily weather stays tied to track-local days.
+
+Forecast refreshes are a deployment-time network step and a six-hour scheduled
+redeploy on `main`. Development and offline builds use the checked-in snapshots.
+The weather data pipeline never calls external services from the visitor's browser.

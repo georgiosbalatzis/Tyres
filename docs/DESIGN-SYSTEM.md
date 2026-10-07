@@ -22,7 +22,8 @@ Top to bottom, as in `index.html` and `mainRegions` in `src/ui/page.ts`:
 | Signal band | `--c-signal` band, 58 px: preview · season · round · **data status**, and `EVERY COMPOUND COUNTS.` from 1024 px | `shell.css` |
 | Scope row | Season and Grand Prix selects, previous/next, Ενσωμάτωση (desktop only) | `app.css` |
 | Key figures | Six ruled cells: compounds, circuit length, laps, race distance, pit-stop loss, lap record | `app.css` |
-| Tabs | Μονοθέσιο · Πίστα · Ελαστικά · Πίνακας | `app.css` |
+| Tabs | Μονοθέσιο · Πίστα · Στοιχεία πίστας · Καιρός τριημέρου · Ελαστικά · Πίνακας | `app.css` |
+| Circuit information | A full-width circuit sheet: country flag and venue, large SVG outline, five ruled facts (length, first championship Grand Prix, lap record, laps, race distance), source links. Stacks map above facts on mobile; follows both themes | `circuit-info.css` |
 | Stage + sidebar | The 3D bench / flat drawing / data table, with sub-views and the corner readout, beside **ΔΕΛΤΙΟ ΕΛΑΣΤΙΚΩΝ** (compounds, track demands, setup limits) | `app.css`, `bench.css` |
 | Panels | Source (provenance and status), season compounds, archive of all previews | `app.css`, `season.css` |
 | Sponsors + colophon | "ΜΑΖΙ ΣΤΗΝ ΕΚΚΙΝΗΣΗ" strip, then the ink colophon with the credits | `shell.css` |
@@ -42,6 +43,12 @@ chosen on f1stories.gr is not visible here until the apps are served under one o
 The 3D bench (`.canvas-host`) is dark in both themes. The colophon and sponsor strip use fixed values
 (`--c-colophon-*`, `--c-sponsor-*`). Article embeds are light by default and switch to charcoal with a `#dark`
 fragment.
+
+The **Στοιχεία πίστας** embed shares the circuit sheet renderer and translated
+vocabulary with the main tab. Its layout stacks the flag and venue, map, five
+ruled facts, and sources at all widths, with reserved row heights so the copied
+iframe height fits at both 300px and 968px. No circuit statistic or driver note
+is ellipsized. It is also included in the generated panel images.
 
 ## Colour
 
@@ -172,7 +179,8 @@ All wording lives in `src/ui/strings.ts`: `STRINGS` (shared with the article emb
 ## Article embeds and images
 
 Embeds (`src/ui/embed.ts`, `src/styles/embed.css`) share the tokens and read as the articles do: a 2 px ink top rule, a
-tracked kicker, ruled rows of fixed height that never wrap, and a footer with provenance, status and the TYRES link.
+tracked kicker, ruled rows of fixed height, and a footer with provenance, status and the TYRES link. Compact panels
+keep rows on one line; the full circuit sheet wraps text within reserved heights.
 They are script-free (the 3D embed excepted). The social card (`src/ui/ogCard.ts`) is the Race Desk title on paper: the
 kicker and TYRES mark on the rule, the race, the compound discs, the circuit outline in ink and the signal band. The
 generic card (no race) carries no compound numbers and no race facts.
@@ -194,3 +202,15 @@ Race Desk switcher or next-race calendar, update `index.html`, `src/ui/countdown
 logo, and reports every difference from our copies; it exits 1 on drift. It is not part of `npm run check` or CI, because
 it needs the network and depends on another repository's current state. `tests/e2e/shell.spec.ts` pins the nav order, the single current item, the switcher, the 44 px targets, the masthead
 layering and the colophon.
+
+### Three-day weather tab
+
+**Καιρός τριημέρου** follows the existing underlined view buttons and flat Race
+Desk surfaces. Three aligned daily columns use shared typography, tabular numbers,
+1px rules and small consistent SVG weather icons. Temperature is the main reading;
+humidity and rain probability remain separately labelled. Programme rows align
+session labels and 24-hour times. A native select chooses Greece or track time.
+Phones scroll the columns inside a labelled keyboard-focusable region, with a
+visible swipe hint; the document itself never scrolls horizontally. The panel
+shows archival/stale/missing data states and source attribution without introducing
+new palette, font, elevation or shape tokens.

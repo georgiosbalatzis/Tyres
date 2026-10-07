@@ -1,12 +1,14 @@
 name: Deploy to GitHub Pages
 
-# Deploys only after CI has passed on main (or manually).
+# Deploys CI-approved main, manual requests, and scheduled forecast refreshes.
 on:
   workflow_run:
     workflows: [CI]
     types: [completed]
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
 
 permissions:
   contents: read
@@ -17,7 +19,7 @@ concurrency:
 
 jobs:
   build:
-    if: ${{ (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push') }}
+    if: ${{ ((github.event_name == 'workflow_dispatch' || github.event_name == 'schedule') && github.ref == 'refs/heads/main') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -32,6 +34,8 @@ jobs:
       - id: pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - run: npm ci --ignore-scripts
+      - name: Refresh weekend schedules and forecasts
+        run: npm run weekend:update
       - name: Build
         run: npm run build
         env:

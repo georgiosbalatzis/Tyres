@@ -60,7 +60,7 @@ interface Framing {
   max: number;
 }
 
-const FRAMING: Record<Exclude<Mode, 'data'>, Framing> = {
+const FRAMING: Record<Exclude<Mode, 'data' | 'circuit-info' | 'weather'>, Framing> = {
   car: { pos: [3.7, 2.5, 7.4], target: [0, 0.4, 0], min: 4.2, max: 13 },
   circuit: { pos: [0, 5.3, 3.5], target: [0, 0, 0.1], min: 3, max: 12 },
   tyres: { pos: [0.5, 1.15, 3.9], target: [0, 0.34, 0], min: 2.2, max: 6.5 },
@@ -216,7 +216,15 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
   }
 
   function schedule() {
-    if (!raf && !failed && onScreen && pageVisible && view.mode !== 'data')
+    if (
+      !raf &&
+      !failed &&
+      onScreen &&
+      pageVisible &&
+      view.mode !== 'data' &&
+      view.mode !== 'circuit-info' &&
+      view.mode !== 'weather'
+    )
       raf = requestAnimationFrame(frame);
   }
 
@@ -236,7 +244,7 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
 
   /* ---------- camera ---------- */
   /** What each mode must keep in frame (shadow planes excluded). Null until it exists. */
-  function fitSubject(mode: Exclude<Mode, 'data'>): Object3D[] | null {
+  function fitSubject(mode: Exclude<Mode, 'data' | 'circuit-info' | 'weather'>): Object3D[] | null {
     if (mode === 'car') return car ? [car.root] : null;
     if (mode === 'circuit') return circuit ? [circuit.group] : null;
     return bench.map((b) => b.group);
@@ -249,7 +257,11 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
    * Distance multiplier along the mode's framing direction: the smallest that keeps the subject's
    * bounding box inside the frame (with a margin), for any canvas aspect, circuit shape or car model.
    */
-  function fitScale(mode: Exclude<Mode, 'data'>, target: Vector3, dir: Vector3): number {
+  function fitScale(
+    mode: Exclude<Mode, 'data' | 'circuit-info' | 'weather'>,
+    target: Vector3,
+    dir: Vector3,
+  ): number {
     const subject = fitSubject(mode);
     if (!subject) return Math.min(1.9, Math.max(1, 1.45 / (camera.aspect || 1)));
     fitBox.makeEmpty();
@@ -283,7 +295,7 @@ export function createViewer(host: HTMLElement, opts: ViewerOptions): Viewer {
   }
 
   function frameMode(mode: Mode, dur: number) {
-    if (mode === 'data') return;
+    if (mode === 'data' || mode === 'circuit-info' || mode === 'weather') return;
     const f = FRAMING[mode];
     const target = new Vector3(...f.target);
     const s = fitScale(mode, target, new Vector3(...f.pos).sub(target));

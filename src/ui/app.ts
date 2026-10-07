@@ -21,7 +21,9 @@ import {
   seasonEmbedPath,
   seasonImagePath,
 } from '../domain/urlState.ts';
+import { Weekend, weekendProblems } from '../domain/weekend.ts';
 import type { Viewer } from '../three/viewer.ts';
+import { circuitInfo } from './circuitInfo.ts';
 import { formatCountdown, nextRace } from './countdown.ts';
 import { html, setHtml } from './html.ts';
 import { describe, seasonSection } from './page.ts';
@@ -42,6 +44,7 @@ import {
   titleBlock,
   type ViewState,
 } from './templates.ts';
+import { weatherPreview } from './weather.ts';
 
 const BASE = import.meta.env.BASE_URL;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -52,6 +55,8 @@ interface State {
   manifest: Manifest | null;
   record: RaceRecord;
   track: TrackShape | null;
+  weekend: Weekend | null;
+  weatherZone: string;
   view: ViewState;
   viewer: Viewer | null;
   navToken: number;
@@ -114,6 +119,17 @@ function loadTrack(id: string | null): Promise<TrackShape | null> {
   return trackCache.get(id)!;
 }
 
+async function loadWeekend(id: string): Promise<Weekend | null> {
+  try {
+    const parsed = parseWith(Weekend, await fetchJson(`${BASE}data/weekends/${encodeURIComponent(id)}.json`));
+    return parsed.ok && parsed.value.raceId === id && !weekendProblems(parsed.value).length
+      ? parsed.value
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 /* ------------------------------------------------------------------ rendering */
 
 function renderRace(animate: boolean) {
@@ -128,6 +144,8 @@ function renderRace(animate: boolean) {
   setHtml($('#r-source'), titleBlock(r));
   if (state.manifest) setHtml($('#r-season'), seasonSection(state.manifest, r));
   setHtml($('#r-data'), dataTable(r));
+  setHtml($('#r-circuit-info'), circuitInfo(r, state.track, BASE));
+  setHtml($('#r-weather'), weatherPreview(state.weekend, state.weatherZone));
   renderView();
   if (animate && !reducedMotion.matches) {
     tweenFigures(figuresBefore);
@@ -145,6 +163,8 @@ function renderView() {
     b.setAttribute('aria-pressed', String(b.dataset.mode === view.mode));
   }
   ($('#r-data') as HTMLElement).hidden = view.mode !== 'data';
+  $('#r-circuit-info').hidden = view.mode !== 'circuit-info';
+  $('#r-weather').hidden = view.mode !== 'weather';
   setHtml($('#r-readout'), readout(r, track, view));
   setHtml($('#r-fallback'), fallbackVisual(r, track, view));
   for (const b of document.querySelectorAll<HTMLButtonElement>('.compound')) {
@@ -277,7 +297,7 @@ async function goTo(id: string, opts: { history: 'push' | 'replace' | 'none' }) 
   }
   try {
     const record = await loadRace(id);
-    const track = await loadTrack(record.circuit.trackId);
+    const [track, weekend] = await Promise.all([loadTrack(record.circuit.trackId), loadWeekend(id)]);
     if (token !== state.navToken) return;
     // Keep the selected tyre's weekend role (e.g. medium), not its compound number.
     const role = state.record.compounds?.find((c) => c.compound === state.view.compound)?.raceLabel;
@@ -287,6 +307,8 @@ async function goTo(id: string, opts: { history: 'push' | 'replace' | 'none' }) 
     state.view = { ...state.view, compound };
     state.record = record;
     state.track = track;
+    state.weekend = weekend;
+    state.weatherZone = 'Europe/Athens';
     renderRace(true);
     syncControls();
     updateHead();
@@ -533,6 +555,9 @@ function setupEmbedDialog() {
     copy.disabled = false;
   });
   open.addEventListener('click', () => {
+    if (state.view.mode === 'circuit-info')
+      dialog.querySelector<HTMLInputElement>('input[name="embed-panel"][value="circuit-info"]')!.checked =
+        true;
     update();
     dialog.showModal();
   });
@@ -579,6 +604,7 @@ export async function start() {
     raceId?: string;
     record?: unknown;
     track?: unknown;
+    weekend?: unknown;
     notFound?: boolean;
   };
   const rec = parseWith(RaceRecord, boot.record);
@@ -587,7 +613,13 @@ export async function start() {
   }
   const trk = boot.track ? parseWith(TrackSchema, boot.track) : null;
 
+  const wkd = parseWith(Weekend, boot.weekend);
   state = {
+    weekend:
+      wkd.ok && wkd.value.raceId === (rec.ok ? rec.value.id : null) && !weekendProblems(wkd.value).length
+        ? wkd.value
+        : null,
+    weatherZone: 'Europe/Athens',
     manifest: null,
     record: rec.ok ? rec.value : (undefined as unknown as RaceRecord),
     track: trk?.ok ? trk.value : null,
@@ -595,6 +627,13 @@ export async function start() {
     viewer: null,
     navToken: 0,
   };
+  $('#r-weather').addEventListener('change', (event) => {
+    const select = event.target as HTMLSelectElement;
+    if (select.id !== 'weather-timezone' || !state.weekend) return;
+    state.weatherZone = select.value === state.weekend.timeZone ? select.value : 'Europe/Athens';
+    setHtml($('#r-weather'), weatherPreview(state.weekend, state.weatherZone));
+    $('#weather-timezone').focus();
+  });
   bindEvents();
   setupEmbedDialog();
 
@@ -614,6 +653,7 @@ export async function start() {
       state.record = await loadRace(race.id).catch(() => undefined as unknown as RaceRecord);
       state.track = state.record ? await loadTrack(state.record.circuit.trackId) : null;
       if (state.record) {
+        state.weekend = await loadWeekend(state.record.id);
         renderRace(false);
         updateHead();
       }

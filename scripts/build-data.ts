@@ -18,6 +18,7 @@ import {
   TrackShape,
 } from '../src/domain/schema.ts';
 import { compareLatest, pickLatest } from '../src/domain/selection.ts';
+import { Weekend, weekendProblems } from '../src/domain/weekend.ts';
 import { type Json, mergeRecord } from './lib/merge.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -112,6 +113,14 @@ export async function buildData({
     else rounds.set(key, r.id);
   }
 
+  const weekends = new Map<string, Weekend>();
+  for (const [id, file] of await jsonFiles(path.join(DATA, 'weekends'))) {
+    const parsed = parseWith(Weekend, await readJson(file));
+    if (parsed.ok && parsed.value.raceId === id && !weekendProblems(parsed.value).length)
+      weekends.set(id, parsed.value);
+    else problems.push(`weekend ${id}: ${parsed.ok ? 'invalid dates or schedule' : parsed.error}`);
+  }
+
   // Tracks
   const trackFiles = await jsonFiles(path.join(DATA, 'tracks'));
   const tracks = new Map<string, TrackShape>();
@@ -163,9 +172,13 @@ export async function buildData({
   await rm(OUT, { recursive: true, force: true });
   await mkdir(path.join(OUT, 'races'), { recursive: true });
   await mkdir(path.join(OUT, 'tracks'), { recursive: true });
+  await mkdir(path.join(OUT, 'weekends'), { recursive: true });
   await writeFile(path.join(OUT, 'manifest.json'), JSON.stringify(manifest));
   for (const r of records) await writeFile(path.join(OUT, 'races', `${r.id}.json`), JSON.stringify(r));
   for (const [id, t] of tracks) await writeFile(path.join(OUT, 'tracks', `${id}.json`), JSON.stringify(t));
+
+  for (const r of records)
+    await writeFile(path.join(OUT, 'weekends', `${r.id}.json`), JSON.stringify(weekends.get(r.id) ?? null));
 
   // Keep the published JSON Schema in step with the zod source of truth.
   await mkdir(path.join(DATA, 'schemas'), { recursive: true });
@@ -173,6 +186,7 @@ export async function buildData({
     ['race', RaceRecord],
     ['track', TrackShape],
     ['manifest', ManifestSchema],
+    ['weekend', Weekend],
   ] as const) {
     const json = z.toJSONSchema(schema, { io: 'input', unrepresentable: 'any' });
     await writeFile(path.join(DATA, 'schemas', `${name}.schema.json`), `${JSON.stringify(json, null, 2)}\n`);

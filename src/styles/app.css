@@ -1,5 +1,7 @@
 @import "./bench.css";
 @import "./season.css";
+@import "./circuit-info.css";
+@import "./weather.css";
 
 @property --v {
   syntax: "<number>";

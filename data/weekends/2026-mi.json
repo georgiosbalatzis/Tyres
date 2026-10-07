@@ -1,0 +1,66 @@
+{
+  "raceId": "2026-mi",
+  "timeZone": "America/New_York",
+  "dates": [
+    "2026-05-01",
+    "2026-05-02",
+    "2026-05-03"
+  ],
+  "sessions": [
+    {
+      "id": "fp1",
+      "start": "2026-05-01T16:00:00.000Z"
+    },
+    {
+      "id": "sprint-qualifying",
+      "start": "2026-05-01T20:30:00.000Z"
+    },
+    {
+      "id": "sprint",
+      "start": "2026-05-02T16:00:00.000Z"
+    },
+    {
+      "id": "qualifying",
+      "start": "2026-05-02T20:00:00.000Z"
+    },
+    {
+      "id": "race",
+      "start": "2026-05-03T17:00:00.000Z"
+    }
+  ],
+  "scheduleUrl": "https://www.formula1.com/en/racing/2026/miami",
+  "scheduleRetrievedAt": "2026-10-07T20:25:01.387Z",
+  "weather": {
+    "kind": "archived-forecast",
+    "retrievedAt": "2026-10-07T20:25:01.387Z",
+    "latitude": 25.957636174757287,
+    "longitude": -80.23774728155338,
+    "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=25.957636174757287&longitude=-80.23774728155338&timezone=America%2FNew_York&start_date=2026-05-01&end_date=2026-05-03&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
+    "days": [
+      {
+        "date": "2026-05-01",
+        "code": 2,
+        "highC": 32.9,
+        "lowC": 21.4,
+        "humidityPct": 68,
+        "rainChancePct": 0
+      },
+      {
+        "date": "2026-05-02",
+        "code": 3,
+        "highC": 35.1,
+        "lowC": 24.8,
+        "humidityPct": 62,
+        "rainChancePct": 3
+      },
+      {
+        "date": "2026-05-03",
+        "code": 82,
+        "highC": 28,
+        "lowC": 21.9,
+        "humidityPct": 84,
+        "rainChancePct": 46
+      }
+    ]
+  }
+}

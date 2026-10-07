@@ -16,6 +16,29 @@ const render = (panel: EmbedPanel, lang: 'el' | 'en', r = fixtureRace()) =>
   });
 
 describe('article embeds', () => {
+  it('embeds the full circuit sheet in either language, including sourced history and local flags', () => {
+    const r = fixtureRace();
+    r.circuit.trackId = 'sepang';
+    r.circuit.name = 'Sepang International Circuit';
+    r.circuit.lengthKm = 5.543;
+    r.circuit.lapRecord = { time: '1:34.080', driver: 'Sebastian Vettel', year: 2017 };
+    r.race.countryCode = 'MY';
+    const en = render('circuit-info', 'en', r);
+    expect(en).toContain('Circuit information');
+    expect(en).toContain('First Grand Prix');
+    expect(en).toContain('1999');
+    expect(en).toContain('5.543');
+    expect(en).toContain('Sebastian Vettel (2017)');
+    expect(en).toContain('/Tyres/images/flags/my.svg');
+    expect(en).toContain('Circuit history: Formula 1');
+    expect(en).toContain('Track outline not available yet.');
+    expect(en).not.toMatch(/<script|Πρώτο|Στοιχεία|Δεν δόθηκε/);
+    const el = render('circuit-info', 'el', r);
+    expect(el).toContain('Πρώτο Grand Prix');
+    expect(el).toContain('5,543');
+    expect(el).toContain('Ιστορικό πίστας: Formula 1');
+  });
+
   it('builds stable, language-scoped paths', () => {
     expect(embedPath('/Tyres/', 'el', { season: 2026, slug: 'sepang' }, 'demands')).toBe(
       '/Tyres/embed/el/2026/sepang/demands/',

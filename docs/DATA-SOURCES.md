@@ -112,8 +112,62 @@ f1stories.gr uses, copied from the f1StoriesPage repo into `src/assets/fonts/`. 
 
 - Pirelli / Formula 1 logos and the preview infographic artwork.
 - Hot-linked Pirelli images.
-- Formula1.com, FIA timing, or any paid API.
+- FIA timing or any paid API.
 - Scraped prose beyond short factual extracts.
+
+## 6. Circuit history and country flags
+
+The **Στοιχεία πίστας** tab adds the first Formula 1 World Championship Grand Prix
+at each published venue. `data/reference/circuit-history.json` stores the year and
+an official Formula1.com source link for every circuit, checked on 2026-10-07.
+This is the venue's championship debut, not its construction year or its first
+non-championship race. Monaco is therefore 1950; Sepang is 1999. History is keyed
+by `trackId`, so an event hosted outside its namesake country uses the host
+circuit's history. Other facts remain those published in the selected Pirelli
+preview, including historical lap records; current Formula1.com values do not
+overwrite earlier previews. Unknown history renders as “Δεν δόθηκε”.
+
+Flags are local SVGs from [flag-icons](https://github.com/lipis/flag-icons), under
+the MIT license retained in `public/images/flags/LICENSE`. The flag uses the
+selected record's host country. No flag CDN or data API is requested at runtime.
+Circuit geometry retains the existing centre-line-only source and limitations;
+the new sheet does not fabricate sectors, turn numbers, or a start/finish line.
+
+## 7. Weekend schedules and weather (checked 2026-10-07)
+
+`npm run weekend:update` runs only at build time. It keeps separate snapshots in
+`data/weekends/{raceId}.json`, leaving Pirelli records and human statuses untouched.
+
+- **Sessions:** official [Formula1.com race pages](https://www.formula1.com/en/racing/2026),
+  from SportsEvent JSON-LD `subEvent.name` / `startDate`. Both standard and Sprint
+  formats are recognised. Session years, unique identifiers, complete five-session
+  formats, consecutive local days and the selected record's date are checked;
+  session times are never derived from race-start offsets. Official sessions define
+  the three local days, resolving the Canada graphic's four-day date range without
+  changing the supplied Pirelli facts.
+- **Weather:** [Open-Meteo Forecast API](https://open-meteo.com/en/docs), up to 16 days
+  ahead, and [Historical Forecast API](https://open-meteo.com/en/docs/historical-forecast-api)
+  for completed weekends. Historical forecasts are model forecasts, not observations.
+  Each snapshot includes exact query URL, coordinates, retrieval time, forecast kind
+  and three daily readings. WMO weather codes map to labelled conditions/icons.
+- **Statistics:** `temperature_2m_max` and `temperature_2m_min` (°C),
+  `relative_humidity_2m_mean` (%) and `precipitation_probability_max` (%).
+  Humidity describes air, not track wetness; precipitation probability is distinct.
+  Null readings stay unknown. Temperature bounds and percentages are validated.
+- **Location:** WGS84 coordinates are averaged from the existing MIT-licensed
+  bacinger/f1-circuits upstream centre-line. Venue routing and IANA time zones live
+  in `data/reference/weekend-venues.json`. The host circuit determines weather
+  location, including the Bahrain event hosted at Sepang.
+- **Attribution:** Open-Meteo data is CC BY 4.0; each tab links its weather query
+  and official session schedule. F1 schedule facts are extracted without republishing
+  artwork or prose. All browser data requests remain on the site's own origin.
+
+Provider failures retain matching valid snapshots. A forecast older than 24 hours
+is labelled as stale; a weekend outside the forecast window or without usable
+weather still shows dates and any sourced sessions. If neither dates nor sessions
+are available, the tab states that the programme is unavailable. Deploys refresh
+snapshots and scheduled redeploys run every six hours; checked-in snapshots allow
+offline builds and deterministic tests.
 
 ## Data status vocabulary
 

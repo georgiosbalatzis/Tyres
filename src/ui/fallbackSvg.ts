@@ -24,14 +24,18 @@ export function trackPathD(track: TrackShape, size = 1000): { d: string; viewBox
   };
 }
 
-export function circuitSvg(track: TrackShape | null, name: string | null): SafeHtml {
+export function circuitSvg(
+  track: TrackShape | null,
+  name: string | null,
+  label = PAGE.circuitOutline(name),
+): SafeHtml {
   if (!track) {
     return html`<div class="plate" role="img" aria-label="${PAGE.noOutlineAria}">
       <p>${PAGE.noOutline}</p>
     </div>`;
   }
   const { d, viewBox } = trackPathD(track);
-  return html`<svg class="fallback-circuit" viewBox="${viewBox}" role="img" aria-label="${PAGE.circuitOutline(name)}">
+  return html`<svg class="fallback-circuit" viewBox="${viewBox}" role="img" aria-label="${label}">
     <path d="${d}" class="track-casing" />
     <path d="${d}" class="track-line" pathLength="1" />
   </svg>`;

@@ -29,7 +29,7 @@ const distanceKm = (v: number | null | undefined) =>
   v == null ? NP : new Intl.NumberFormat(T.locale, { maximumFractionDigits: 3 }).format(v);
 const compoundName = (raceLabel: string) => T.compound[raceLabel] ?? raceLabel;
 
-export const MODES = ['car', 'circuit', 'tyres', 'data'] as const;
+export const MODES = ['car', 'circuit', 'circuit-info', 'weather', 'tyres', 'data'] as const;
 export type Mode = (typeof MODES)[number];
 
 export interface ViewState {
@@ -205,6 +205,7 @@ export function carViews(active: CarView): SafeHtml {
 }
 
 export function readout(r: RaceRecord, track: TrackShape | null, s: ViewState): SafeHtml {
+  if (s.mode === 'circuit-info' || s.mode === 'weather') return html``;
   if (s.mode === 'car') {
     const view = derive(r, s.carView);
     return html`${carViews(s.carView)}
@@ -330,6 +331,7 @@ export function dataTable(r: RaceRecord): SafeHtml {
 /* ------------------------------------------------------------------ fallback visual */
 
 export function fallbackVisual(r: RaceRecord, track: TrackShape | null, s: ViewState): SafeHtml {
+  if (s.mode === 'circuit-info' || s.mode === 'weather') return html``;
   if (s.mode === 'circuit') return circuitSvg(track, r.circuit.name);
   if (s.mode === 'tyres') {
     return html`<div class="fallback-tyres" role="img" aria-label="${sortedCompounds(r)
@@ -392,6 +394,7 @@ export function embedDialog(): SafeHtml {
     ['car', T.panel.car],
     ['setup', T.panel.setup],
     ['circuit', T.panel.circuit],
+    ['circuit-info', T.panel['circuit-info']],
     ['3d', T.panel['3d']],
     ['season', T.seasonPanel],
   ] as const;

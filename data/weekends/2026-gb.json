@@ -1,0 +1,66 @@
+{
+  "raceId": "2026-gb",
+  "timeZone": "Europe/London",
+  "dates": [
+    "2026-07-03",
+    "2026-07-04",
+    "2026-07-05"
+  ],
+  "sessions": [
+    {
+      "id": "fp1",
+      "start": "2026-07-03T11:30:00.000Z"
+    },
+    {
+      "id": "sprint-qualifying",
+      "start": "2026-07-03T15:30:00.000Z"
+    },
+    {
+      "id": "sprint",
+      "start": "2026-07-04T11:00:00.000Z"
+    },
+    {
+      "id": "qualifying",
+      "start": "2026-07-04T15:00:00.000Z"
+    },
+    {
+      "id": "race",
+      "start": "2026-07-05T14:00:00.000Z"
+    }
+  ],
+  "scheduleUrl": "https://www.formula1.com/en/racing/2026/great-britain",
+  "scheduleRetrievedAt": "2026-10-07T20:25:01.387Z",
+  "weather": {
+    "kind": "archived-forecast",
+    "retrievedAt": "2026-10-07T20:25:01.387Z",
+    "latitude": 52.071824133333315,
+    "longitude": -1.0163502222222225,
+    "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=52.071824133333315&longitude=-1.0163502222222225&timezone=Europe%2FLondon&start_date=2026-07-03&end_date=2026-07-05&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
+    "days": [
+      {
+        "date": "2026-07-03",
+        "code": 3,
+        "highC": 24.8,
+        "lowC": 8.4,
+        "humidityPct": 59,
+        "rainChancePct": 0
+      },
+      {
+        "date": "2026-07-04",
+        "code": 3,
+        "highC": 25.3,
+        "lowC": 12.7,
+        "humidityPct": 68,
+        "rainChancePct": 0
+      },
+      {
+        "date": "2026-07-05",
+        "code": 3,
+        "highC": 26.1,
+        "lowC": 15,
+        "humidityPct": 70,
+        "rainChancePct": 6
+      }
+    ]
+  }
+}

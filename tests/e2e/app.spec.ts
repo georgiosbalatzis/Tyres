@@ -111,7 +111,7 @@ test('without WebGL the SVG drawing and every value remain available', async ({ 
   await expect(page.locator('#loading-3d')).toContainText('Το 3D δεν είναι διαθέσιμο');
   await expect(page.locator('.fallback-car')).toBeVisible();
   await page.getByRole('button', { name: 'Πίστα', exact: true }).click();
-  await expect(page.locator('.fallback-circuit')).toBeVisible();
+  await expect(page.locator('#r-fallback .fallback-circuit')).toBeVisible();
   await expect(page.locator('#canvas-host canvas')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
@@ -255,7 +255,7 @@ test('migrates the legacy theme key once and leaves foreign values alone', async
 
 test('article embeds keep one height at every width and load without errors', async ({ page }) => {
   const errors = trackConsole(page);
-  for (const panel of ['summary', 'compounds', 'demands', 'car', 'setup', 'circuit', '3d']) {
+  for (const panel of ['summary', 'compounds', 'demands', 'car', 'setup', 'circuit', 'circuit-info', '3d']) {
     const heights: number[] = [];
     for (const width of [300, 968]) {
       await page.setViewportSize({ width, height: 900 });

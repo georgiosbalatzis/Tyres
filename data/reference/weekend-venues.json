@@ -1,0 +1,106 @@
+{
+  "albert-park": [
+    "australia",
+    "Australia/Melbourne"
+  ],
+  "shanghai": [
+    "china",
+    "Asia/Shanghai"
+  ],
+  "suzuka": [
+    "japan",
+    "Asia/Tokyo"
+  ],
+  "miami": [
+    "miami",
+    "America/New_York"
+  ],
+  "montreal": [
+    "canada",
+    "America/Toronto"
+  ],
+  "monaco": [
+    "monaco",
+    "Europe/Monaco"
+  ],
+  "barcelona": [
+    "barcelona-catalunya",
+    "Europe/Madrid"
+  ],
+  "spielberg": [
+    "austria",
+    "Europe/Vienna"
+  ],
+  "silverstone": [
+    "great-britain",
+    "Europe/London"
+  ],
+  "spa": [
+    "belgium",
+    "Europe/Brussels"
+  ],
+  "hungaroring": [
+    "hungary",
+    "Europe/Budapest"
+  ],
+  "zandvoort": [
+    "netherlands",
+    "Europe/Amsterdam"
+  ],
+  "monza": [
+    "italy",
+    "Europe/Rome"
+  ],
+  "madring": [
+    "spain",
+    "Europe/Madrid"
+  ],
+  "baku": [
+    "azerbaijan",
+    "Asia/Baku"
+  ],
+  "sepang": [
+    "bahrain",
+    "Asia/Kuala_Lumpur"
+  ],
+  "marina-bay": [
+    "singapore",
+    "Asia/Singapore"
+  ],
+  "yas-marina": [
+    "united-arab-emirates",
+    "Asia/Dubai"
+  ],
+  "sakhir": [
+    "bahrain",
+    "Asia/Bahrain"
+  ],
+  "jeddah": [
+    "saudi-arabia",
+    "Asia/Riyadh"
+  ],
+  "imola": [
+    "emilia-romagna",
+    "Europe/Rome"
+  ],
+  "austin": [
+    "united-states",
+    "America/Chicago"
+  ],
+  "mexico-city": [
+    "mexico",
+    "America/Mexico_City"
+  ],
+  "interlagos": [
+    "brazil",
+    "America/Sao_Paulo"
+  ],
+  "las-vegas": [
+    "las-vegas",
+    "America/Los_Angeles"
+  ],
+  "lusail": [
+    "qatar",
+    "Asia/Qatar"
+  ]
+}

@@ -12,6 +12,7 @@ import {
   racePath,
   seasonEmbedPath,
 } from './src/domain/urlState.ts';
+import { Weekend } from './src/domain/weekend.ts';
 import { renderEmbed, renderSeasonEmbed } from './src/ui/embed.ts';
 import { type PageContext, renderPage } from './src/ui/page.ts';
 
@@ -37,7 +38,7 @@ const CSP = [
 // Embeds are pure HTML and CSS, except the 3D embed, which loads the viewer on request.
 const EMBED_CSP = CSP.replace("script-src 'self'", "script-src 'none'");
 const embedFile = (panel: EmbedPanel) => (panel === '3d' ? 'embed-3d.html' : 'embed.html');
-const EMBED_ROUTE = /^embed\/(el|en)\/(\d{4})\/([a-z0-9-]+)\/([a-z0-9]+)\/?$/;
+const EMBED_ROUTE = /^embed\/(el|en)\/(\d{4})\/([a-z0-9-]+)\/([a-z0-9-]+)\/?$/;
 const SEASON_ROUTE = /^embed\/(el|en)\/(\d{4})\/season\/?$/;
 
 async function seasonContext(lang: EmbedLang, season: number) {
@@ -48,7 +49,9 @@ async function seasonContext(lang: EmbedLang, season: number) {
 
 async function loadJson<T>(file: string, schema: Parameters<typeof parseWith<T>>[0]): Promise<T | null> {
   try {
-    const parsed = parseWith(schema, JSON.parse(await readFile(file, 'utf8')));
+    const json = JSON.parse(await readFile(file, 'utf8'));
+    if (json === null) return null;
+    const parsed = parseWith(schema, json);
     if (!parsed.ok) throw new Error(parsed.error);
     return parsed.value;
   } catch (err) {
@@ -66,7 +69,8 @@ async function context(raceId: string | null, pagePath: string): Promise<PageCon
   const track = record.circuit.trackId
     ? await loadJson(path.join(DATA_DIR, 'tracks', `${record.circuit.trackId}.json`), TrackShape)
     : null;
-  return { manifest, record, track, base: BASE, siteUrl: SITE_URL, path: pagePath };
+  const weekend = await loadJson(path.join(DATA_DIR, 'weekends', `${id}.json`), Weekend);
+  return { manifest, record, track, weekend, base: BASE, siteUrl: SITE_URL, path: pagePath };
 }
 
 /**

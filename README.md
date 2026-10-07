@@ -9,7 +9,7 @@ GHOST CAR. The page is in Greek and wears the site's masthead, theme and footer;
 [docs/DESIGN-SYSTEM.md](docs/DESIGN-SYSTEM.md).
 
 - Opens on the **latest Pirelli race preview** in the dataset (by publication time).
-- Every value links to its Pirelli source; missing values read "Δεν δόθηκε" (Not provided).
+- Weekend facts link to Pirelli; circuit debut years link to official Formula 1 history. Missing values read "Δεν δόθηκε" (Not provided).
 - Static site for **GitHub Pages**: no backend, no runtime calls to Pirelli.
 
 Unofficial. Not affiliated with or endorsed by Pirelli, Formula 1 or the FIA.
@@ -32,6 +32,7 @@ Useful commands:
 | `npm run check` | Lint (Biome), typecheck, unit tests, production build |
 | `npm run test:e2e` | Playwright browser tests (desktop + mobile) against the production build |
 | `npm run build` | `data:build` + `vite build` → `dist/` including `/{year}/{slug}/` pages and `404.html` |
+| `npm run weekend:update` | Refresh official F1 session schedules and Open-Meteo weather snapshots (network, build time only) |
 | `npm run preview` | Serve `dist/` locally |
 | `npm run site:check` | Network: has f1stories.gr's masthead, footer, Race Desk switcher, calendar, tokens or logo drifted from our copies? Exits 1 on a difference |
 | `npm run og` | Render a Race Desk social card per race into `dist/og/`, the generic `dist/og.png` and every panel image into `dist/img/` (needs Playwright Chromium; the deploy workflow runs it) |
@@ -62,6 +63,23 @@ npm run data:build                  # merge + validate; prints conflicts and pro
 
 `review-report.md` lists what still needs a human. In CI, the scheduled workflow opens a PR with
 generated changes and posts the report to an issue labelled `data-review`.
+
+### Weekend weather
+
+The **Καιρός τριημέρου** tab shows one column per track-local day: conditions,
+maximum/minimum air temperature in °C, mean air humidity and maximum rain chance.
+Session times default to Greece; switch to track time in the tab. Standard and
+Sprint schedules come from Formula1.com, including shifted dates when the chosen
+time zone crosses midnight. Past weekends show **archived forecasts**, not
+observed track conditions. Missing weather preserves the available schedule;
+forecasts older than 24 hours carry a visible notice.
+
+`npm run weekend:update` refreshes `data/weekends/` before `npm run build`.
+Published pages and same-origin JSON contain the data; browsers never call a
+weather service. Deploys refresh these snapshots, and a six-hour scheduled
+redeploy refreshes forecasts on `main`. Forecasts beyond the provider's 16-day
+window remain unavailable. Add future venue routing/time zones in
+`data/reference/weekend-venues.json` when needed.
 
 ### Verifying transcribed values
 
@@ -105,6 +123,13 @@ iframe snippet into the article. Choose **Image** for a PNG of the same panel
 height. Corrections to the data update every embed automatically. Details in
 `docs/ARCHITECTURE.md` → Article embeds.
 
+**Στοιχεία πίστας / Circuit information** embeds the complete circuit sheet: host
+flag and location, track map, length, first championship Grand Prix, lap record
+with driver and year, laps, race distance, and source links. Select this panel
+for either an iframe or a PNG; opening **Ενσωμάτωση** from the circuit information
+tab selects it automatically. Its route ends in `/circuit-info/` and supports
+Greek, English, and the existing `#dark` theme.
+
 ## Deployment (GitHub Pages)
 
 1. Push the repository to GitHub.
@@ -119,7 +144,7 @@ Workflows (`.github/workflows/`):
 | Workflow | Trigger | Does |
 |---|---|---|
 | `ci.yml` | push, PR | lint, typecheck, data validation, unit tests, build, Playwright |
-| `deploy.yml` | CI success on `main`, manual | build with Pages base path → `actions/deploy-pages` |
+| `deploy.yml` | CI success on `main`, every 6 h, manual | refresh schedules/weather → build with Pages base path → `actions/deploy-pages` |
 | `update-pirelli.yml` | every 6 h, manual | discover → normalise → validate → PR + review issue |
 
 PRs opened with the default `GITHUB_TOKEN` do not trigger CI automatically (GitHub rule); re-run CI
