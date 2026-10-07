@@ -13,6 +13,7 @@ import {
 } from '../../scripts/pirelli/parse.ts';
 import { isCandidateUrl, sitemapEntries } from '../../scripts/update-pirelli.ts';
 import { parseWith, RaceRecord } from '../../src/domain/schema.ts';
+import { compareLatest } from '../../src/domain/selection.ts';
 
 const FIX = path.resolve(import.meta.dirname, '../fixtures/pirelli');
 const load = (name: string) =>
@@ -127,7 +128,11 @@ describe('publishable dataset', () => {
     const { manifest, problems, records } = await buildData({ write: false });
     expect(problems).toEqual([]);
     expect(records.length).toBeGreaterThanOrEqual(6);
-    expect(manifest.latest).toBe('2026-bh');
+    const latest = manifest.years.flatMap((year) => year.races).find((race) => race.id === manifest.latest);
+    expect(latest).toBeDefined();
+    expect(
+      manifest.years.flatMap((year) => year.races).every((race) => compareLatest(latest!, race) <= 0),
+    ).toBe(true);
     expect(records.every((r) => r.validation.status !== 'fixture')).toBe(true);
   });
 });
