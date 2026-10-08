@@ -267,7 +267,17 @@ test('migrates the legacy theme key once and leaves foreign values alone', async
 
 test('article embeds keep one height at every width and load without errors', async ({ page }) => {
   const errors = trackConsole(page);
-  for (const panel of ['summary', 'compounds', 'demands', 'car', 'setup', 'circuit', 'circuit-info', '3d']) {
+  for (const panel of [
+    'summary',
+    'compounds',
+    'demands',
+    'car',
+    'setup',
+    'circuit',
+    'circuit-info',
+    'weather',
+    '3d',
+  ]) {
     const heights: number[] = [];
     for (const width of [300, 968]) {
       await page.setViewportSize({ width, height: 900 });
