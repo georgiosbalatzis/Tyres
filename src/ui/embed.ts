@@ -13,11 +13,13 @@ import type {
   TrackShape,
 } from '../domain/schema.ts';
 import { type EmbedLang, type EmbedPanel, racePath } from '../domain/urlState.ts';
+import type { Weekend } from '../domain/weekend.ts';
 import { circuitInfo } from './circuitInfo.ts';
 import { carPlanSvg, trackPathD } from './fallbackSvg.ts';
 import { escapeHtml, html, inlineJson, SafeHtml, safeUrl } from './html.ts';
 import { fmt, PAGE, STRINGS, type Strings } from './strings.ts';
 import { DEFAULT_VIEW, fallbackVisual, sortedCompounds } from './templates.ts';
+import { weatherPreview } from './weather.ts';
 
 /** The four rating-based views; pressures are official values and live in the setup panel. */
 const DEMAND_VIEWS = [
@@ -36,6 +38,7 @@ interface Ctx {
   lang: EmbedLang;
   r: RaceRecord;
   track: TrackShape | null;
+  weekend: Weekend | null;
   t: Strings;
   f: ReturnType<typeof fmt>;
 }
@@ -72,6 +75,7 @@ function axlePair(t: Strings, front: string | null, rear: string | null): SafeHt
 
 const PANELS: Record<EmbedPanel, (c: Ctx) => SafeHtml> = {
   'circuit-info': ({ r, track, base, lang }) => circuitInfo(r, track, base, lang),
+  weather: ({ weekend }) => weatherPreview(weekend),
   compounds: (c) => compoundRow(c),
 
   // Poster first: the flat drawing on the dark bench. src/embed3d.ts swaps in the 3D view on request.
@@ -174,6 +178,7 @@ const PANELS: Record<EmbedPanel, (c: Ctx) => SafeHtml> = {
 export interface EmbedContext {
   record: RaceRecord;
   track: TrackShape | null;
+  weekend?: Weekend | null;
   panel: EmbedPanel;
   lang: EmbedLang;
   base: string;
@@ -223,7 +228,16 @@ export function renderEmbed(template: string, ctx: EmbedContext): string {
   const { record: r, panel, lang } = ctx;
   const t = STRINGS[lang];
   const full = new URL(racePath('', r), ctx.siteUrl).href;
-  const c: Ctx = { full, lang, r, track: ctx.track, t, f: fmt(t), base: ctx.base };
+  const c: Ctx = {
+    full,
+    lang,
+    r,
+    track: ctx.track,
+    weekend: ctx.weekend ?? null,
+    t,
+    f: fmt(t),
+    base: ctx.base,
+  };
   const published = c.f.published(r.source.publishedAt);
   return embedDocument(template, {
     lang,

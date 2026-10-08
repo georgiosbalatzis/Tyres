@@ -555,9 +555,10 @@ function setupEmbedDialog() {
     copy.disabled = false;
   });
   open.addEventListener('click', () => {
-    if (state.view.mode === 'circuit-info')
-      dialog.querySelector<HTMLInputElement>('input[name="embed-panel"][value="circuit-info"]')!.checked =
-        true;
+    if (state.view.mode === 'circuit-info' || state.view.mode === 'weather')
+      dialog.querySelector<HTMLInputElement>(
+        `input[name="embed-panel"][value="${state.view.mode}"]`,
+      )!.checked = true;
     update();
     dialog.showModal();
   });

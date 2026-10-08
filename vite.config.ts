@@ -81,8 +81,8 @@ async function embedContext(lang: EmbedLang, season: number, slug: string, panel
   const { manifest } = await context(null, '');
   const race = manifest.years.flatMap((y) => y.races).find((r) => r.season === season && r.slug === slug);
   if (!race) return null;
-  const { record, track } = await context(race.id, '');
-  return { record, track, panel, lang, base: BASE, siteUrl: SITE_URL };
+  const { record, track, weekend } = await context(race.id, '');
+  return { record, track, weekend, panel, lang, base: BASE, siteUrl: SITE_URL };
 }
 
 function prerender(): Plugin {

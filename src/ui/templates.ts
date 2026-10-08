@@ -395,6 +395,7 @@ export function embedDialog(): SafeHtml {
     ['setup', T.panel.setup],
     ['circuit', T.panel.circuit],
     ['circuit-info', T.panel['circuit-info']],
+    ['weather', T.panel.weather],
     ['3d', T.panel['3d']],
     ['season', T.seasonPanel],
   ] as const;

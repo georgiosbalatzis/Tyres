@@ -72,6 +72,7 @@ export const EMBED_PANELS = [
   'setup',
   'circuit',
   'circuit-info',
+  'weather',
   '3d',
 ] as const;
 export type EmbedPanel = (typeof EMBED_PANELS)[number];

@@ -2,6 +2,7 @@
 @import "./bench.css";
 @import "./season.css";
 @import "./circuit-info.css";
+@import "./weather.css";
 
 /*
  * Article embeds. Rule: every row has a fixed height and never wraps (long text is clipped with an
@@ -822,4 +823,22 @@ p.e-map {
 .e[data-panel="circuit-info"] .e-source {
   overflow: visible;
   white-space: normal;
+}
+
+/* Weekend weather: script-free, so no zone picker (Athens time); days scroll sideways when narrow. */
+.e[data-panel="weather"] .e-body {
+  padding: 12px;
+}
+
+.e[data-panel="weather"] .weather-timezone,
+.e[data-panel="weather"] .weather-scroll-hint {
+  display: none;
+}
+
+.e[data-panel="weather"] .weather-header {
+  margin-bottom: 12px;
+}
+
+.e[data-panel="weather"] .weather-header h2 {
+  display: none;
 }

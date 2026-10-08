@@ -83,6 +83,7 @@ export const STRINGS: Record<EmbedLang, Strings> = {
       setup: 'Όρια ρυθμίσεων',
       circuit: 'Η πίστα',
       'circuit-info': 'Στοιχεία πίστας',
+      weather: 'Καιρός τριημέρου',
     },
     rating: {
       traction: 'Πρόσφυση',
@@ -184,6 +185,7 @@ export const STRINGS: Record<EmbedLang, Strings> = {
       setup: 'Setup limits',
       circuit: 'Circuit',
       'circuit-info': 'Circuit information',
+      weather: 'Weekend weather',
     },
     rating: {
       traction: 'Traction',
