@@ -4,6 +4,32 @@ import { BASE, SEPANG } from './data.ts';
 
 const panel = '#r-weather';
 
+test('weather embeds fit one iframe height across article widths and forecast states', async ({ page }) => {
+  for (const slug of ['sepang', 'miami', 'suzuka', 'marina-bay']) {
+    let height = 0;
+    for (const width of [300, 346, 680, 700, 701, 968]) {
+      await page.setViewportSize({ width, height: 1200 });
+      await page.goto(`${BASE}embed/el/2026/${slug}/weather/`);
+      await page.evaluate(() => document.fonts.ready);
+      const sheet = page.locator('.e');
+      const measured = await sheet.evaluate((el) => Math.ceil(el.getBoundingClientRect().height));
+      height ||= measured;
+      expect(measured, `${slug} at ${width}px`).toBe(height);
+      // The published AnalystCast article already uses a 774px iframe for Sepang's weather.
+      if (slug === 'sepang') expect(height).toBeLessThanOrEqual(774);
+      await page.setViewportSize({ width, height });
+      expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(height);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+      for (const selector of ['.weather-meta', '.weather-explanation', '.weather-sources']) {
+        expect(
+          await page.locator(selector).evaluate((el) => el.scrollHeight <= el.clientHeight),
+          `${slug} ${selector} at ${width}px`,
+        ).toBe(true);
+      }
+    }
+  }
+});
+
 test('weather tab has three daily columns, selectable time zones and standard / sprint schedules', async ({
   page,
   baseURL,

@@ -842,3 +842,71 @@ p.e-map {
 .e[data-panel="weather"] .weather-header h2 {
   display: none;
 }
+
+/* Reserve room for narrow copy and keep the page's responsive sizing out of fixed-height embeds. */
+.e[data-panel="weather"] .weather-meta {
+  height: 42px;
+}
+
+.e[data-panel="weather"] .weather-notice {
+  height: 84px;
+}
+
+.e[data-panel="weather"] .weather-scroll {
+  overflow-x: scroll;
+}
+
+.e[data-panel="weather"] .weather-days {
+  min-width: 780px;
+}
+
+.e[data-panel="weather"] .weather-day {
+  padding: 12px 16px;
+}
+
+.e[data-panel="weather"] .weather-condition {
+  min-height: 40px;
+  margin: 8px 0;
+}
+
+.e[data-panel="weather"] .weather-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.e[data-panel="weather"] .weather-measures > div,
+.e[data-panel="weather"] .weather-sessions dl > div {
+  margin-top: 8px;
+}
+
+.e[data-panel="weather"] .weather-temperature {
+  margin-bottom: 6px;
+}
+
+.e[data-panel="weather"] .weather-temperature dd {
+  font-size: 32px;
+}
+
+.e[data-panel="weather"] .weather-explanation {
+  height: 90px;
+  margin-top: 18px;
+  line-height: 18px;
+}
+
+.e[data-panel="weather"] .weather-sessions {
+  margin-top: 16px;
+  padding-top: 12px;
+}
+
+.e[data-panel="weather"] .weather-sessions h4 {
+  margin-bottom: 8px;
+}
+
+.e[data-panel="weather"] .weather-sources {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  height: 62px;
+  margin-top: 12px;
+  line-height: 18px;
+}
