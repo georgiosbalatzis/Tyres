@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import history from '../../data/reference/circuit-history.json' with { type: 'json' };
+import circuits from '../../data/reference/circuits.json' with { type: 'json' };
 import { parseWith, RaceRecord } from '../../src/domain/schema.ts';
 import { circuitInfo } from '../../src/ui/circuitInfo.ts';
 import { fixtureRace } from '../fixtures/races.ts';
@@ -35,6 +36,15 @@ describe('circuit information', () => {
     expect(out).not.toContain('circuit-flag');
     expect(out).not.toContain('Ιστορικό πίστας: Formula 1');
     expect(out).not.toContain('<svg class="fallback-circuit"');
+  });
+
+  it('has sourced debut years for every supported venue before its preview is published', () => {
+    for (const circuit of circuits.circuits) {
+      const entry = history.circuits.find((c) => c.trackId === circuit.trackId);
+      expect(entry, circuit.trackId).toBeDefined();
+      expect(entry?.sourceUrl).toMatch(/^https:\/\/www\.formula1\.com\//);
+      expect(entry?.firstGrandPrix).toBeGreaterThanOrEqual(1950);
+    }
   });
 
   it('has sourced debut years for every published venue', () => {
