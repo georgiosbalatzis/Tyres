@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-us",
+  "season": 2026,
+  "round": 18,
+  "slug": "austin",
+  "eventCode": "us",
+  "race": {
+    "name": "United States Grand Prix",
+    "officialName": null,
+    "location": "Austin, United States",
+    "countryCode": "US",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "austin",
+    "name": "Circuit of the Americas",
+    "lengthKm": 5.513,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C2"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C4"
+    }
+  ],
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "In the Land of the Cowboys",
+    "articleUrl": "https://press.pirelli.com/in-the-land-of-the-cowboys/",
+    "publishedAt": "2026-10-20T09:58:11+02:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/a99fa2d5-0d87-4574-91bb-4e2027562abe/18-us26-preview-en.jpg",
+    "retrievedAt": "2026-10-22T08:26:58Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/a99fa2d5-0d87-4574-91bb-4e2027562abe/18-us26-preview-en.jpg",
+      "retrievedAt": "2026-10-22T08:26:58Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/in-the-land-of-the-cowboys/",
+      "retrievedAt": "2026-10-22T08:26:58Z"
+    },
+    "compounds": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/in-the-land-of-the-cowboys/",
+      "retrievedAt": "2026-10-22T08:26:58Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits."
+    ]
+  }
+}

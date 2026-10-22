@@ -29,13 +29,13 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/azerbaijan",
-  "scheduleRetrievedAt": "2026-10-07T20:25:01.387Z",
+  "scheduleRetrievedAt": "2026-10-22T08:27:26.810Z",
   "weather": {
     "kind": "archived-forecast",
-    "retrievedAt": "2026-10-07T20:25:01.387Z",
-    "latitude": 40.368991569767424,
-    "longitude": 49.840965639534886,
-    "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=40.368991569767424&longitude=49.840965639534886&timezone=Asia%2FBaku&start_date=2026-09-24&end_date=2026-09-26&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
+    "retrievedAt": "2026-10-22T08:27:26.810Z",
+    "latitude": 40.368982546511624,
+    "longitude": 49.84090138372091,
+    "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=40.368982546511624&longitude=49.84090138372091&timezone=Asia%2FBaku&start_date=2026-09-24&end_date=2026-09-26&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
     "days": [
       {
         "date": "2026-09-24",
@@ -49,15 +49,15 @@
         "date": "2026-09-25",
         "code": 3,
         "highC": 24.6,
-        "lowC": 20.7,
+        "lowC": 20.6,
         "humidityPct": 82,
         "rainChancePct": 0
       },
       {
         "date": "2026-09-26",
         "code": 3,
-        "highC": 26.3,
-        "lowC": 20,
+        "highC": 26.4,
+        "lowC": 19.8,
         "humidityPct": 71,
         "rainChancePct": 0
       }

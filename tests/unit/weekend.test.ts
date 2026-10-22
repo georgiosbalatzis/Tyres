@@ -122,6 +122,7 @@ describe('weather preview', () => {
     expect(out).not.toContain('weather-sources"><a href="undefined');
     const old = structuredClone(standard);
     old.weather!.kind = 'forecast';
+    old.weather!.retrievedAt = '2026-10-08T12:00:00Z';
     expect(weatherPreview(old, 'Europe/Athens', new Date('2026-10-10T12:00:00Z')).value).toContain(
       'παλαιότερη από 24 ώρες',
     );

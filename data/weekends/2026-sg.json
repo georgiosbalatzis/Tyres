@@ -29,36 +29,36 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/singapore",
-  "scheduleRetrievedAt": "2026-10-07T20:44:55.663Z",
+  "scheduleRetrievedAt": "2026-10-22T08:27:26.810Z",
   "weather": {
-    "kind": "forecast",
-    "retrievedAt": "2026-10-07T20:44:55.663Z",
+    "kind": "archived-forecast",
+    "retrievedAt": "2026-10-22T08:27:26.810Z",
     "latitude": 1.2906839913793107,
     "longitude": 103.85800987068961,
-    "sourceUrl": "https://api.open-meteo.com/v1/forecast?latitude=1.2906839913793107&longitude=103.85800987068961&timezone=Asia%2FSingapore&start_date=2026-10-09&end_date=2026-10-11&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
+    "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=1.2906839913793107&longitude=103.85800987068961&timezone=Asia%2FSingapore&start_date=2026-10-09&end_date=2026-10-11&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
     "days": [
       {
         "date": "2026-10-09",
-        "code": 53,
-        "highC": 32.3,
-        "lowC": 24.6,
-        "humidityPct": 77,
-        "rainChancePct": 82
+        "code": 3,
+        "highC": 33.4,
+        "lowC": 26.3,
+        "humidityPct": 69,
+        "rainChancePct": 22
       },
       {
         "date": "2026-10-10",
-        "code": 81,
-        "highC": 29.4,
-        "lowC": 23.3,
-        "humidityPct": 86,
-        "rainChancePct": 89
+        "code": 80,
+        "highC": 33.2,
+        "lowC": 27,
+        "humidityPct": 73,
+        "rainChancePct": 100
       },
       {
         "date": "2026-10-11",
         "code": 80,
-        "highC": 28.8,
-        "lowC": 25.2,
-        "humidityPct": 87,
+        "highC": 31.7,
+        "lowC": 25.5,
+        "humidityPct": 80,
         "rainChancePct": 100
       }
     ]

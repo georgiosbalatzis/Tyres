@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import austin from '../../data/weekends/2026-us.json' with { type: 'json' };
 import { CALENDAR, formatCountdown, nextRace } from '../../src/ui/countdown.ts';
 
 describe('masthead countdown', () => {
@@ -10,6 +11,12 @@ describe('masthead countdown', () => {
 
   it('is null once the calendar has run out', () => {
     expect(nextRace(Date.parse('2027-01-01T00:00:00Z'))).toBeNull();
+  });
+
+  it('counts down to Austin at the published session start', () => {
+    const race = nextRace(Date.parse('2026-10-22T12:00:00Z'));
+    expect(race?.name).toBe('US GP');
+    expect(race?.start).toBe(Date.parse(austin.sessions.find((session) => session.id === 'race')!.start));
   });
 
   it('keeps the site calendar in order and complete', () => {

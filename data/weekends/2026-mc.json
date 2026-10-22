@@ -29,10 +29,10 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/monaco",
-  "scheduleRetrievedAt": "2026-10-07T20:25:01.387Z",
+  "scheduleRetrievedAt": "2026-10-22T08:27:26.810Z",
   "weather": {
     "kind": "archived-forecast",
-    "retrievedAt": "2026-10-07T20:25:01.387Z",
+    "retrievedAt": "2026-10-22T08:27:26.810Z",
     "latitude": 43.737157499999995,
     "longitude": 7.425301331250003,
     "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=43.737157499999995&longitude=7.425301331250003&timezone=Europe%2FMonaco&start_date=2026-06-05&end_date=2026-06-07&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",

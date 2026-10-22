@@ -29,10 +29,10 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/belgium",
-  "scheduleRetrievedAt": "2026-10-07T20:25:01.387Z",
+  "scheduleRetrievedAt": "2026-10-22T08:27:26.810Z",
   "weather": {
     "kind": "archived-forecast",
-    "retrievedAt": "2026-10-07T20:25:01.387Z",
+    "retrievedAt": "2026-10-22T08:27:26.810Z",
     "latitude": 50.43471801960784,
     "longitude": 5.968647300653599,
     "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=50.43471801960784&longitude=5.968647300653599&timezone=Europe%2FBrussels&start_date=2026-07-17&end_date=2026-07-19&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
@@ -48,7 +48,7 @@
       {
         "date": "2026-07-18",
         "code": 3,
-        "highC": 21.7,
+        "highC": 21.8,
         "lowC": 14.1,
         "humidityPct": 72,
         "rainChancePct": 49
@@ -56,7 +56,7 @@
       {
         "date": "2026-07-19",
         "code": 51,
-        "highC": 18.7,
+        "highC": 18.8,
         "lowC": 11.5,
         "humidityPct": 68,
         "rainChancePct": 94

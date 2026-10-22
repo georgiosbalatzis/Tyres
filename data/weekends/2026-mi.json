@@ -29,10 +29,10 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/miami",
-  "scheduleRetrievedAt": "2026-10-07T20:25:01.387Z",
+  "scheduleRetrievedAt": "2026-10-22T08:27:26.810Z",
   "weather": {
     "kind": "archived-forecast",
-    "retrievedAt": "2026-10-07T20:25:01.387Z",
+    "retrievedAt": "2026-10-22T08:27:26.810Z",
     "latitude": 25.957636174757287,
     "longitude": -80.23774728155338,
     "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=25.957636174757287&longitude=-80.23774728155338&timezone=America%2FNew_York&start_date=2026-05-01&end_date=2026-05-03&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",

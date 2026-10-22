@@ -17,7 +17,7 @@ export const CALENDAR: readonly { name: string; start: string }[] = [
   { name: 'Spanish GP', start: '2026-09-13T13:00:00Z' },
   { name: 'Azerbaijan GP', start: '2026-09-26T11:00:00Z' },
   { name: 'Singapore GP', start: '2026-10-11T12:00:00Z' },
-  { name: 'US GP', start: '2026-10-25T19:00:00Z' },
+  { name: 'US GP', start: '2026-10-25T20:00:00Z' },
   { name: 'Mexico City GP', start: '2026-11-01T20:00:00Z' },
   { name: 'São Paulo GP', start: '2026-11-08T17:00:00Z' },
   { name: 'Las Vegas GP', start: '2026-11-21T06:00:00Z' },

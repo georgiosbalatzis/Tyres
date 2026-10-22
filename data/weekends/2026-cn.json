@@ -29,10 +29,10 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/china",
-  "scheduleRetrievedAt": "2026-10-07T20:25:01.387Z",
+  "scheduleRetrievedAt": "2026-10-22T08:27:26.810Z",
   "weather": {
     "kind": "archived-forecast",
-    "retrievedAt": "2026-10-07T20:25:01.387Z",
+    "retrievedAt": "2026-10-22T08:27:26.810Z",
     "latitude": 31.340176468085115,
     "longitude": 121.2192919503546,
     "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=31.340176468085115&longitude=121.2192919503546&timezone=Asia%2FShanghai&start_date=2026-03-13&end_date=2026-03-15&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
@@ -40,15 +40,15 @@
       {
         "date": "2026-03-13",
         "code": 0,
-        "highC": 17.1,
-        "lowC": 4.2,
+        "highC": 17.2,
+        "lowC": 4.1,
         "humidityPct": 62,
         "rainChancePct": 0
       },
       {
         "date": "2026-03-14",
         "code": 1,
-        "highC": 17.9,
+        "highC": 18,
         "lowC": 6.3,
         "humidityPct": 65,
         "rainChancePct": 0
@@ -56,8 +56,8 @@
       {
         "date": "2026-03-15",
         "code": 51,
-        "highC": 18.3,
-        "lowC": 8.1,
+        "highC": 18.5,
+        "lowC": 8.2,
         "humidityPct": 72,
         "rainChancePct": 98
       }
