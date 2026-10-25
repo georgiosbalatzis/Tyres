@@ -58,7 +58,9 @@ test('opens on the latest Pirelli preview and loads the 3D view without errors',
 test('changing race updates content, URL, title and survives reload and back', async ({ page }) => {
   await page.goto(SEPANG);
   await page.locator('#race').selectOption('2026-az');
-  await expect(page).toHaveURL(`${BASE}2026/baku/`);
+  // The race data arrives at once, but the 3D view's software compile on GPU-less CI runners can hold the
+  // main thread for ~6 s right after load (seen in a CI trace); allow for it, as the season test does.
+  await expect(page).toHaveURL(`${BASE}2026/baku/`, { timeout: 15_000 });
   await expect(title(page)).toHaveText('Azerbaijan Grand Prix');
   await expect(page).toHaveTitle(
     'TYRES — Azerbaijan Grand Prix 2026: γόμες και απαιτήσεις πίστας | F1 Stories',
