@@ -156,6 +156,30 @@ standalone Pages deployment above is unchanged.
 PRs opened with the default `GITHUB_TOKEN` do not trigger CI automatically (GitHub rule); re-run CI
 from the PR or close/reopen it. Actions are pinned by commit SHA; Dependabot keeps them current.
 
+### Moved to f1-stories.gr
+
+[`pages-mode.json`](pages-mode.json) decides what `deploy.yml` publishes at `georgiosbalatzis.github.io/Tyres/`:
+
+- `"app"` (current): the app, as above.
+- `"legacy-redirects"`: `npm run build:legacy-redirects` builds the f1-stories.gr version (`build:f1stories`), then
+  [`scripts/legacy-redirects.ts`](scripts/legacy-redirects.ts) replaces each of its pages (every race, panel and embed
+  page) with one that sends readers to the same page under `https://f1-stories.gr/tyres/` with the query string and
+  hash, and links it as canonical (noindex where the f1-stories.gr page is noindex). Social cards, panel images and data
+  files stay at their old URLs. Any other old path is handled by `404.html`: the same page when it exists (any case,
+  with or without the trailing slash), otherwise the landing page. Schedules and forecasts are not refreshed in this
+  mode; the 6-hourly run rebuilds the pages so new races get one.
+
+GitHub Pages cannot send HTTP 301s; these are client-side redirects. Without JavaScript a meta refresh goes to the same
+page without the query and hash, and the page shows the link.
+
+Publishing (repository owner): check that `https://f1-stories.gr/tyres/` is live and its scheduled refresh is healthy
+(f1StoriesPage), then set `"mode": "legacy-redirects"` in a reviewed PR; CI on `main` then runs `deploy.yml`. Pages
+already deploys from GitHub Actions; the `gh-pages` branch is not served.
+
+Rollback: set `"mode": "app"` and merge. Roll this back **before** rolling f1-stories.gr back to a release without
+the tools: that release's `/tyres/` pages point to github.io, and with the redirects live here readers would be sent
+back and forth.
+
 ## Project layout
 
 ```
