@@ -11,6 +11,7 @@
     "dev": "npm run data:build && vite",
     "build": "npm run data:build && vite build",
     "build:f1stories": "node scripts/build-f1stories.ts",
+    "build:legacy-redirects": "npm run build:f1stories && node scripts/legacy-redirects.ts dist dist-legacy",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
