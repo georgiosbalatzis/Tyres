@@ -4,6 +4,7 @@
     "includes": [
       "**",
       "!dist",
+      "!dist-legacy",
       "!public/data",
       "!.cache",
       "!test-results",
