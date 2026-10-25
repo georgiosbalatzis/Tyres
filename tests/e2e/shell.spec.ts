@@ -5,12 +5,12 @@ import { BASE, publishedLatest } from './data.ts';
 /** The shared f1stories.gr shell: global nav, Race Desk switcher, signal band, sponsors and colophon. */
 
 const NAV = [
-  ['Αρχική', 'https://f1stories.gr/'],
-  ['Άρθρα', 'https://f1stories.gr/blog-module/blog/index.html'],
+  ['Αρχική', 'https://f1-stories.gr/'],
+  ['Άρθρα', 'https://f1-stories.gr/blog-module/blog/index.html'],
   ['YouTube', 'https://www.youtube.com/@f1_stories_original'],
-  ['Βαθμολογία', 'https://f1stories.gr/standings/'],
-  ['Δεδομένα', 'https://f1stories.gr/standings/?tab=tyre-pace'],
-  ['Συντάκτες', 'https://f1stories.gr/authors/'],
+  ['Βαθμολογία', 'https://f1-stories.gr/standings/'],
+  ['Δεδομένα', 'https://f1-stories.gr/standings/?tab=tyre-pace'],
+  ['Συντάκτες', 'https://f1-stories.gr/authors/'],
   ['BetCast', 'https://georgiosbalatzis.github.io/BetCastVisualisation/'],
 ];
 
@@ -86,14 +86,14 @@ test('the colophon carries sponsors, socials, legal links and the credits', asyn
     .poll(() => logos.evaluateAll((els) => els.every((i) => (i as HTMLImageElement).naturalWidth > 0)))
     .toBe(true);
   const footer = page.locator('footer.colophon');
-  await expect(footer.locator('.colophon-social a')).toHaveCount(5);
+  await expect(footer.locator('.colophon-social a')).toHaveCount(4);
   await expect(footer.getByRole('link', { name: 'Πολιτική Απορρήτου' })).toHaveAttribute(
     'href',
-    'https://f1stories.gr/privacy/privacy.html',
+    'https://f1-stories.gr/privacy/privacy.html',
   );
   await expect(footer.getByRole('link', { name: 'Όροι Χρήσης' })).toHaveAttribute(
     'href',
-    'https://f1stories.gr/privacy/terms.html',
+    'https://f1-stories.gr/privacy/terms.html',
   );
   await expect(footer).toContainText('Pirelli');
   await expect(footer).toContainText('CC BY 4.0');

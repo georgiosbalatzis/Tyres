@@ -19,8 +19,8 @@ const SITE_NAV = `<div class="blog-nav-links" id="nav-links">
   <a href="https://www.youtube.com/@f1_stories_original" target="_blank" rel="noopener" class="blog-nav-link"> YouTube</a>
 </div><div class="blog-nav-right">`;
 const OUR_NAV = `<div class="site-nav-links" id="nav-links" popover>
-  <a href="https://f1stories.gr/">Αρχική</a>
-  <a href="https://f1stories.gr/standings/">Βαθμολογία</a>
+  <a href="https://f1-stories.gr/">Αρχική</a>
+  <a href="https://f1-stories.gr/standings/">Βαθμολογία</a>
   <a href="https://www.youtube.com/@f1_stories_original" target="_blank" rel="noopener">YouTube</a>
 </div>`;
 
@@ -40,9 +40,9 @@ describe('site drift: links', () => {
     const site = `<nav class="footer-index"><a href="/standings/">Βαθμολογία</a><a href="https://x.test/" target="_blank">YouTube ↗</a></nav>
       <div class="social-media"><a href="https://fb.test/" aria-label="FB"><svg/></a><a href="{{footerEmailHref}}" aria-label="Email"><svg/></a></div>
       <div class="footer-links"><a href="/privacy/privacy.html" class="footer-link">Πολιτική</a><span>|</span><button>Cookies</button></div>`;
-    const ours = `<nav class="colophon-links"><a href="https://f1stories.gr/standings/">Βαθμολογία</a><a href="https://x.test/">YouTube ↗</a></nav>
+    const ours = `<nav class="colophon-links"><a href="https://f1-stories.gr/standings/">Βαθμολογία</a><a href="https://x.test/">YouTube ↗</a></nav>
       <div class="colophon-social"><a href="https://fb.test/"><svg/><span>FB</span></a><a href="mailto:a@b.c"><svg/></a></div>
-      <div class="colophon-legal"><a href="https://f1stories.gr/privacy/privacy.html">Πολιτική</a></div>`;
+      <div class="colophon-legal"><a href="https://f1-stories.gr/privacy/privacy.html">Πολιτική</a></div>`;
     const a = footerLinks(site, false);
     const b = footerLinks(ours, true);
     expect(diffLinks(a.index, b.index)).toBeNull();
@@ -54,7 +54,7 @@ describe('site drift: links', () => {
   it('reads the Race Desk switcher', () => {
     const page = `<nav class="race-desk-nav" aria-label="Race Desk" lang="en"><a href="/standings/" aria-current="page">THE GRID</a><a href="https://t.test/">TELEMETRY</a></nav>`;
     expect(switcher(page).map((l) => l.label)).toEqual(['THE GRID', 'TELEMETRY']);
-    expect(switcher(page)[0]!.href).toBe('https://f1stories.gr/standings/');
+    expect(switcher(page)[0]!.href).toBe('https://f1-stories.gr/standings/');
   });
 
   it('our real index.html lists the four Race Desk products, TYRES last', async () => {

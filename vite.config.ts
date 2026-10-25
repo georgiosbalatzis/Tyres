@@ -23,6 +23,19 @@ import { type PageContext, renderPage } from './src/ui/page.ts';
 const BASE = (process.env.BASE_PATH ?? '/').replace(/\/?$/, '/');
 const SITE_URL = (process.env.SITE_URL ?? `http://localhost:5173${BASE}`).replace(/\/?$/, '/');
 const DATA_DIR = path.resolve(import.meta.dirname, 'public/data');
+/**
+ * `npm run build:f1stories` serves TYRES at f1-stories.gr/tyres/, next to the site and the other tools, so the
+ * shell's publisher links become same-origin. Standalone builds keep the absolute URLs in index.html.
+ */
+const SAME_ORIGIN = process.env.F1STORIES_BUILD === 'true';
+const SAME_ORIGIN_LINKS: [string, string][] = [
+  ['href="https://f1-stories.gr/', 'href="/'],
+  ['href="https://georgiosbalatzis.github.io/f1-telemetry-dashboard/"', 'href="/telemetry/"'],
+  ['href="https://georgiosbalatzis.github.io/ghostcar/"', 'href="/ghostcar/"'],
+  ['href="https://georgiosbalatzis.github.io/BetCastVisualisation/"', 'href="/betcast/"'],
+];
+const shellLinks = (html: string) =>
+  SAME_ORIGIN ? SAME_ORIGIN_LINKS.reduce((out, [from, to]) => out.replaceAll(from, to), html) : html;
 
 const CSP = [
   "default-src 'self'",
@@ -123,7 +136,8 @@ function prerender(): Plugin {
     },
     transformIndexHtml: {
       order: 'post',
-      async handler(html, ctx) {
+      async handler(source, ctx) {
+        const html = shellLinks(source);
         const file = path.basename(ctx.path);
         if (file === 'embed.html' || file === 'embed-3d.html') {
           if (isBuild) {
@@ -222,7 +236,8 @@ export default defineConfig({
       },
     },
     assetsInlineLimit: 0,
-    sourcemap: true,
+    // The f1-stories.gr artifact ships no source maps; the standalone Pages build keeps them.
+    sourcemap: !SAME_ORIGIN,
     // The Three.js viewer (with GLTFLoader) is a deliberately isolated lazy chunk (~178 KB gzip).
     chunkSizeWarningLimit: 700,
   },

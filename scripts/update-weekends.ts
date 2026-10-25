@@ -12,7 +12,7 @@ const now = new Date();
 async function get(url: string) {
   const res = await fetch(url, {
     signal: AbortSignal.timeout(30000),
-    headers: { 'User-Agent': 'F1Stories-Tyres/1.0 (+https://f1stories.gr)' },
+    headers: { 'User-Agent': 'F1Stories-Tyres/1.0 (+https://f1-stories.gr)' },
   });
   if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
   return res;
