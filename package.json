@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "npm run data:build && vite",
     "build": "npm run data:build && vite build",
+    "build:f1stories": "node scripts/build-f1stories.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",

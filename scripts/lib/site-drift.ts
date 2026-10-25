@@ -2,7 +2,7 @@
  * Pure parsers and comparisons for `npm run site:check`: what f1stories.gr publishes (nav, footer, Race Desk
  * switcher, next-race calendar, colour tokens) against what this app copied. No network here, so it is unit-tested.
  */
-export const SITE = 'https://f1stories.gr';
+export const SITE = 'https://f1-stories.gr';
 
 export interface Link {
   label: string;

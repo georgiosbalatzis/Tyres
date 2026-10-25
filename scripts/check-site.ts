@@ -1,5 +1,5 @@
 /**
- * Has f1stories.gr changed since this app copied its shell? The masthead, footer, Race Desk switcher, next-race
+ * Has f1-stories.gr changed since this app copied its shell? The masthead, footer, Race Desk switcher, next-race
  * calendar and colour tokens are copied, not imported (separate deployments), so this is how drift gets noticed.
  * Needs network. Exit code 1 when something differs.
  *
@@ -59,7 +59,7 @@ const deskDiff = diffLinks(strip(siteDesk), strip(ourDesk));
 if (deskDiff) problems.push(`Race Desk switcher differs from the site's (update index.html):\n${deskDiff}`);
 else if (!siteDesk.some((l) => l.label === 'TYRES'))
   problems.push(
-    "f1stories.gr's Race Desk switcher does not list TYRES yet. Expected until the TYRES switcher PR merges in f1StoriesPage (Phase 10 of docs/REDESIGN-GUIDE.md).",
+    "f1-stories.gr's Race Desk switcher does not list TYRES yet. Expected until the TYRES switcher PR merges in f1StoriesPage (Phase 10 of docs/REDESIGN-GUIDE.md).",
   );
 
 // 4. Next-race calendar behind the masthead countdown.
@@ -83,12 +83,12 @@ problems.push(
 const hash = (b: Buffer) => createHash('sha256').update(b).digest('hex');
 const live = Buffer.from(await (await get(`${SITE}/images/logo-nav.webp`)).arrayBuffer());
 if (hash(live) !== hash(await readFile(path.join(ROOT, 'public/logo-nav.webp'))))
-  problems.push('The nav logo changed: copy f1stories.gr/images/logo-nav.webp to public/logo-nav.webp.');
+  problems.push('The nav logo changed: copy f1-stories.gr/images/logo-nav.webp to public/logo-nav.webp.');
 
 if (problems.length) {
-  console.error(`f1stories.gr and this app have drifted:\n- ${problems.join('\n- ')}`);
+  console.error(`f1-stories.gr and this app have drifted:\n- ${problems.join('\n- ')}`);
   process.exit(1);
 }
 console.log(
-  'site:check — masthead, footer, Race Desk switcher, calendar, tokens and logo all match f1stories.gr.',
+  'site:check — masthead, footer, Race Desk switcher, calendar, tokens and logo all match f1-stories.gr.',
 );

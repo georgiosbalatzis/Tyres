@@ -32,6 +32,7 @@ Useful commands:
 | `npm run check` | Lint (Biome), typecheck, unit tests, production build |
 | `npm run test:e2e` | Playwright browser tests (desktop + mobile) against the production build |
 | `npm run build` | `data:build` + `vite build` → `dist/` including `/{year}/{slug}/` pages and `404.html` |
+| `npm run build:f1stories` | The build f1StoriesPage assembles at `https://f1-stories.gr/tyres/`: base `/tyres/`, canonical `SITE_URL`, same-origin site and tool links, no source maps, then `og` (needs Playwright's Chromium) |
 | `npm run weekend:update` | Refresh official F1 session schedules and Open-Meteo weather snapshots (network, build time only) |
 | `npm run preview` | Serve `dist/` locally |
 | `npm run site:check` | Network: has f1stories.gr's masthead, footer, Race Desk switcher, calendar, tokens or logo drifted from our copies? Exits 1 on a difference |
@@ -146,6 +147,11 @@ Workflows (`.github/workflows/`):
 | `ci.yml` | push, PR, manual / data updater dispatch | lint, typecheck, data validation, unit tests, build, Playwright |
 | `deploy.yml` | CI success on `main`, every 6 h, manual | refresh schedules/weather → build with Pages base path → `actions/deploy-pages` |
 | `update-pirelli.yml` | every 6 h, manual | discover → normalise → validate → PR + branch CI + review issue |
+
+f1StoriesPage can also publish TYRES at `https://f1-stories.gr/tyres/` (`scripts/deployment/sources.json`
+there): it builds a reviewed, pinned commit of this repository with `npm run build:f1stories`, takes `data/`
+from `main` (recorded by commit and digest) and runs `weekend:update` first, as `deploy.yml` does here. The
+standalone Pages deployment above is unchanged.
 
 PRs opened with the default `GITHUB_TOKEN` do not trigger CI automatically (GitHub rule); re-run CI
 from the PR or close/reopen it. Actions are pinned by commit SHA; Dependabot keeps them current.
