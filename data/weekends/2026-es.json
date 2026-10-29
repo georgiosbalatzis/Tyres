@@ -29,10 +29,10 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/spain",
-  "scheduleRetrievedAt": "2026-10-22T08:27:26.810Z",
+  "scheduleRetrievedAt": "2026-10-29T16:57:37.743Z",
   "weather": {
     "kind": "archived-forecast",
-    "retrievedAt": "2026-10-22T08:27:26.810Z",
+    "retrievedAt": "2026-10-29T16:57:37.743Z",
     "latitude": 40.47276043103447,
     "longitude": -3.6214318793103453,
     "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=40.47276043103447&longitude=-3.6214318793103453&timezone=Europe%2FMadrid&start_date=2026-09-11&end_date=2026-09-13&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
@@ -50,7 +50,7 @@
         "code": 0,
         "highC": 31.3,
         "lowC": 16,
-        "humidityPct": 31,
+        "humidityPct": 32,
         "rainChancePct": 0
       },
       {

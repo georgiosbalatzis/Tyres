@@ -29,10 +29,10 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/azerbaijan",
-  "scheduleRetrievedAt": "2026-10-22T08:27:26.810Z",
+  "scheduleRetrievedAt": "2026-10-29T16:57:37.743Z",
   "weather": {
     "kind": "archived-forecast",
-    "retrievedAt": "2026-10-22T08:27:26.810Z",
+    "retrievedAt": "2026-10-29T16:57:37.743Z",
     "latitude": 40.368982546511624,
     "longitude": 49.84090138372091,
     "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=40.368982546511624&longitude=49.84090138372091&timezone=Asia%2FBaku&start_date=2026-09-24&end_date=2026-09-26&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",

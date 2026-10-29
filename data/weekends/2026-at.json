@@ -29,10 +29,10 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/austria",
-  "scheduleRetrievedAt": "2026-10-22T08:27:26.810Z",
+  "scheduleRetrievedAt": "2026-10-29T16:57:37.743Z",
   "weather": {
     "kind": "archived-forecast",
-    "retrievedAt": "2026-10-22T08:27:26.810Z",
+    "retrievedAt": "2026-10-29T16:57:37.743Z",
     "latitude": 47.22337259259258,
     "longitude": 14.762043333333333,
     "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=47.22337259259258&longitude=14.762043333333333&timezone=Europe%2FVienna&start_date=2026-06-26&end_date=2026-06-28&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
@@ -57,8 +57,8 @@
         "date": "2026-06-28",
         "code": 3,
         "highC": 33.6,
-        "lowC": 18.2,
-        "humidityPct": 55,
+        "lowC": 17.9,
+        "humidityPct": 56,
         "rainChancePct": 58
       }
     ]

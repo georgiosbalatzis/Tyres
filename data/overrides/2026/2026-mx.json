@@ -1,0 +1,95 @@
+{
+  "race": {
+    "officialName": "Formula 1 Gran Premio de la Ciudad de México 2026",
+    "startDate": "2026-10-30",
+    "endDate": "2026-11-01"
+  },
+  "circuit": {
+    "name": "Autódromo Hermanos Rodríguez",
+    "lengthKm": 4.304,
+    "laps": 71,
+    "raceDistanceKm": 305.354,
+    "lapRecord": {
+      "time": "1:17.774",
+      "driver": "Valtteri Bottas",
+      "year": 2021
+    },
+    "pitStopLoss": {
+      "seconds": 22,
+      "kind": "average"
+    }
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
+  ],
+  "characteristics": {
+    "traction": 3,
+    "braking": 3,
+    "tyreStress": 2,
+    "asphaltAbrasion": 2,
+    "asphaltGrip": 2,
+    "lateral": 2,
+    "trackEvolution": 5
+  },
+  "setup": {
+    "minimumStartingPressurePsi": {
+      "front": 25.5,
+      "rear": 24.5
+    },
+    "expectedRunningPressurePsi": {
+      "front": 26.5,
+      "rear": 25.5
+    },
+    "camberLimitDeg": {
+      "front": -3,
+      "rear": -1.75
+    }
+  },
+  "provenance": {
+    "event": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8f9e0575-3135-4177-8692-1abf0421008d/19-mx26-preview-en.jpg",
+      "retrievedAt": "2026-10-29T16:57:22Z",
+      "note": "Round from the media file name; dates from the graphic header."
+    },
+    "circuit": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8f9e0575-3135-4177-8692-1abf0421008d/19-mx26-preview-en.jpg",
+      "retrievedAt": "2026-10-29T16:57:22Z"
+    },
+    "compounds": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8f9e0575-3135-4177-8692-1abf0421008d/19-mx26-preview-en.jpg",
+      "retrievedAt": "2026-10-29T16:57:22Z"
+    },
+    "characteristics": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8f9e0575-3135-4177-8692-1abf0421008d/19-mx26-preview-en.jpg",
+      "retrievedAt": "2026-10-29T16:57:22Z"
+    },
+    "setup": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8f9e0575-3135-4177-8692-1abf0421008d/19-mx26-preview-en.jpg",
+      "retrievedAt": "2026-10-29T16:57:22Z",
+      "note": "Pirelli marks pressures as subject to change after FP2."
+    }
+  },
+  "validation": {
+    "status": "transcribed",
+    "notes": [
+      "Transcribed from the official preview graphic by an AI-assisted pass on 2026-10-29; awaiting human confirmation.",
+      "Expected stabilised running pressures are published as lower bounds (front ≥26.5 psi, rear ≥25.5 psi); pressures are subject to changes after FP2."
+    ]
+  }
+}

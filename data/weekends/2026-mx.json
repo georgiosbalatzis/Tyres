@@ -1,0 +1,66 @@
+{
+  "raceId": "2026-mx",
+  "timeZone": "America/Mexico_City",
+  "dates": [
+    "2026-10-30",
+    "2026-10-31",
+    "2026-11-01"
+  ],
+  "sessions": [
+    {
+      "id": "fp1",
+      "start": "2026-10-30T18:30:00.000Z"
+    },
+    {
+      "id": "fp2",
+      "start": "2026-10-30T22:00:00.000Z"
+    },
+    {
+      "id": "fp3",
+      "start": "2026-10-31T17:30:00.000Z"
+    },
+    {
+      "id": "qualifying",
+      "start": "2026-10-31T21:00:00.000Z"
+    },
+    {
+      "id": "race",
+      "start": "2026-11-01T20:00:00.000Z"
+    }
+  ],
+  "scheduleUrl": "https://www.formula1.com/en/racing/2026/mexico",
+  "scheduleRetrievedAt": "2026-10-29T16:57:37.743Z",
+  "weather": {
+    "kind": "forecast",
+    "retrievedAt": "2026-10-29T16:57:37.743Z",
+    "latitude": 19.402752029702963,
+    "longitude": -99.0897637128713,
+    "sourceUrl": "https://api.open-meteo.com/v1/forecast?latitude=19.402752029702963&longitude=-99.0897637128713&timezone=America%2FMexico_City&start_date=2026-10-30&end_date=2026-11-01&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
+    "days": [
+      {
+        "date": "2026-10-30",
+        "code": 45,
+        "highC": 25.4,
+        "lowC": 15.1,
+        "humidityPct": 60,
+        "rainChancePct": 37
+      },
+      {
+        "date": "2026-10-31",
+        "code": 3,
+        "highC": 27.6,
+        "lowC": 12.4,
+        "humidityPct": 52,
+        "rainChancePct": 0
+      },
+      {
+        "date": "2026-11-01",
+        "code": 2,
+        "highC": 27.6,
+        "lowC": 13.1,
+        "humidityPct": 54,
+        "rainChancePct": 2
+      }
+    ]
+  }
+}
