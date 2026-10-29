@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-mx",
+  "season": 2026,
+  "round": 19,
+  "slug": "mexico-city",
+  "eventCode": "mx",
+  "race": {
+    "name": "Mexican Grand Prix",
+    "officialName": null,
+    "location": "Mexico City, Mexico",
+    "countryCode": "MX",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "mexico-city",
+    "name": "Autódromo Hermanos Rodríguez",
+    "lengthKm": null,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
+  ],
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Mexico, new asphalt and the softest compound trio",
+    "articleUrl": "https://press.pirelli.com/mexico-new-asphalt-and-the-softest-compound-trio/",
+    "publishedAt": "2026-10-28T14:55:03+01:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/8f9e0575-3135-4177-8692-1abf0421008d/19-mx26-preview-en.jpg",
+    "retrievedAt": "2026-10-29T13:15:15Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8f9e0575-3135-4177-8692-1abf0421008d/19-mx26-preview-en.jpg",
+      "retrievedAt": "2026-10-29T13:15:15Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/mexico-new-asphalt-and-the-softest-compound-trio/",
+      "retrievedAt": "2026-10-29T13:15:15Z"
+    },
+    "compounds": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/mexico-new-asphalt-and-the-softest-compound-trio/",
+      "retrievedAt": "2026-10-29T13:15:15Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, circuit length."
+    ]
+  }
+}
