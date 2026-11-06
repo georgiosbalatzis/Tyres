@@ -1,10 +1,13 @@
 name: Pirelli data update
 
-# Polite scheduled discovery of new Pirelli F1 previews. Changes arrive as a pull request for
-# human review; fields that only exist in the preview graphic are reported, never invented.
+# Polite scheduled discovery of new Pirelli F1 previews. Changes arrive as a pull request that is
+# merged automatically once CI passes; fields that only exist in the preview graphic are reported,
+# never invented, and stay "Not provided" until a human transcribes them into data/overrides.
 on:
   schedule:
-    - cron: '17 */6 * * *'
+    # Wed + Thu 23:59 Athens (EET, UTC+2); 00:59 the next day during EEST. f1StoriesPage's
+    # tyres-pin workflow picks the merge up two hours later.
+    - cron: '59 21 * * 3,4'
   workflow_dispatch:
     inputs:
       since:
@@ -25,11 +28,11 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     permissions:
       actions: write # explicitly dispatch CI for bot-created data PRs
       contents: write # push the data/pirelli-update branch
-      pull-requests: write # open/update the review PR
+      pull-requests: write # open/update and merge the data PR
       issues: write # post the review report
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -105,12 +108,28 @@ jobs:
               --title "Pirelli data update" --body "$body"
           fi
           echo 'changed=true' >> "$GITHUB_OUTPUT"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      - name: Run CI on the updated data branch
+      - name: Run CI on the updated data branch and merge when it passes
         if: ${{ steps.data-pr.outputs.changed == 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run ci.yml --ref data/pirelli-update
+          SHA: ${{ steps.data-pr.outputs.sha }}
+        run: |
+          set -euo pipefail
+          branch=data/pirelli-update
+          gh workflow run ci.yml --ref "$branch"
+          run=""
+          for _ in $(seq 1 30); do
+            sleep 10
+            run=$(gh run list --workflow ci.yml --branch "$branch" --event workflow_dispatch --commit "$SHA" \
+              --limit 1 --json databaseId -q '.[0].databaseId // empty')
+            [[ -n "$run" ]] && break
+          done
+          [[ -n "$run" ]] || { echo "CI run for $SHA not found"; exit 1; }
+          # A failing CI fails this job and leaves the PR open for review.
+          gh run watch "$run" --interval 30 --exit-status > /dev/null
+          gh pr merge "$branch" --merge --delete-branch --match-head-commit "$SHA"
 
       - name: Post review report to tracking issue
         if: ${{ hashFiles('review-report.md') != '' }}

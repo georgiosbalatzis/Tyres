@@ -146,7 +146,7 @@ Workflows (`.github/workflows/`):
 |---|---|---|
 | `ci.yml` | push, PR, manual / data updater dispatch | lint, typecheck, data validation, unit tests, build, Playwright |
 | `deploy.yml` | CI success on `main`, every 6 h, manual | refresh schedules/weather → build with Pages base path → `actions/deploy-pages` |
-| `update-pirelli.yml` | every 6 h, manual | discover → normalise → validate → PR + branch CI + review issue |
+| `update-pirelli.yml` | Wed + Thu 21:59 UTC, manual | discover → normalise → validate → PR + branch CI → merge on green + review issue |
 
 f1StoriesPage can also publish TYRES at `https://f1-stories.gr/tyres/` (`scripts/deployment/sources.json`
 there): it builds a reviewed, pinned commit of this repository with `npm run build:f1stories`, takes `data/`
