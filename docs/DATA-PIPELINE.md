@@ -93,7 +93,7 @@ says the record is awaiting review.
 
 ## Automation
 
-`.github/workflows/update-pirelli.yml` runs every 6 hours (and on demand):
+`.github/workflows/update-pirelli.yml` runs Wednesday and Thursday at 23:59 Athens (21:59 UTC) and on demand:
 update → build data → test. If `data/` changed it pushes branch
 `data/pirelli-update` and opens/updates a PR. It then explicitly dispatches `CI`
 on that branch with `gh workflow run ci.yml --ref data/pirelli-update`, using
@@ -101,7 +101,7 @@ on that branch with `gh workflow run ci.yml --ref data/pirelli-update`, using
 triggers, which may be suppressed or require approval. `CI` supports manual
 `workflow_dispatch` as well as push and PR events; its runtime permissions stay
 read-only. Dispatching branch CI never deploys that unmerged branch: deployment
-from CI remains restricted to successful push runs on `main`.
+from CI remains restricted to successful push runs on `main`. When that CI run passes, the job merges the PR (`--match-head-commit`); a failing run leaves it open. f1StoriesPage's `tyres-pin` workflow then bumps its Tyres pin and deploys.
 
 Browser tests read the served manifest and race record for home-page, fallback,
 current-round and status assertions. Checks of known circuit facts, compounds,
