@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-br",
+  "season": 2026,
+  "round": 19,
+  "slug": "interlagos",
+  "eventCode": "br",
+  "race": {
+    "name": "Brazilian Grand Prix",
+    "officialName": null,
+    "location": "São Paulo, Brazil",
+    "countryCode": "BR",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "interlagos",
+    "name": "Autódromo José Carlos Pace",
+    "lengthKm": null,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
+  ],
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "Pirelli brings the softer trio back to Interlagos",
+    "articleUrl": "https://press.pirelli.com/pirelli-brings-the-softer-trio-back-to-interlagos/",
+    "publishedAt": "2026-11-03T15:05:47+01:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/53c68200-d47d-47d9-b900-95c026a386d7/19-br26-preview-en.jpg",
+    "retrievedAt": "2026-11-06T06:57:35Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/53c68200-d47d-47d9-b900-95c026a386d7/19-br26-preview-en.jpg",
+      "retrievedAt": "2026-11-06T06:57:35Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/pirelli-brings-the-softer-trio-back-to-interlagos/",
+      "retrievedAt": "2026-11-06T06:57:35Z"
+    },
+    "compounds": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/pirelli-brings-the-softer-trio-back-to-interlagos/",
+      "retrievedAt": "2026-11-06T06:57:35Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, circuit length."
+    ]
+  }
+}

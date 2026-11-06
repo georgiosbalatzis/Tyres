@@ -29,10 +29,10 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/canada",
-  "scheduleRetrievedAt": "2026-10-29T16:57:37.743Z",
+  "scheduleRetrievedAt": "2026-11-06T13:41:43.843Z",
   "weather": {
     "kind": "archived-forecast",
-    "retrievedAt": "2026-10-29T16:57:37.743Z",
+    "retrievedAt": "2026-11-06T13:41:43.843Z",
     "latitude": 45.50438480392158,
     "longitude": -73.52642202941176,
     "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=45.50438480392158&longitude=-73.52642202941176&timezone=America%2FToronto&start_date=2026-05-22&end_date=2026-05-24&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
@@ -50,15 +50,15 @@
         "code": 3,
         "highC": 21.5,
         "lowC": 8.4,
-        "humidityPct": 40,
+        "humidityPct": 39,
         "rainChancePct": 1
       },
       {
         "date": "2026-05-24",
         "code": 61,
-        "highC": 16.8,
+        "highC": 16.5,
         "lowC": 11.2,
-        "humidityPct": 75,
+        "humidityPct": 76,
         "rainChancePct": 61
       }
     ]
