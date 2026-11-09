@@ -97,6 +97,7 @@ do not republish calendar descriptions (copyrighted prose).
 | Format | GeoJSON LineString, WGS84 lon/lat, one file per layout (`my-1999`, `az-2016`, `es-2026`, …) |
 | Caveats | Upstream states the initial data came from a community Google My Maps layer. No per-point elevation, no sector boundaries, no guaranteed race direction or start/finish index. We therefore show **no sectors and no direction arrows**. |
 | Import | `npm run track:import -- <upstream-id> <track-id>` projects to local metres and simplifies (see DATA-PIPELINE.md) |
+| Added 2026-11-09 | `las-vegas` from `us-2023` (upstream file commit `928c645e6d92b81cc6f68ba01eadd5926178f792`), `lusail` from `qa-2004` (`54d2ad3d1cbe7a122b7e55698da350988e569adf`), imported from master `8094e957b8d6aa8b9f4510c93968556cccd30e02` |
 
 Fallback if a layout is missing upstream: OpenStreetMap `highway=raceway` ways
 (ODbL — requires attribution and share-alike for the derived database; keep
