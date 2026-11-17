@@ -81,9 +81,12 @@ problems.push(
 
 // 6. The nav logo.
 const hash = (b: Buffer) => createHash('sha256').update(b).digest('hex');
-const live = Buffer.from(await (await get(`${SITE}/images/logo-nav.webp`)).arrayBuffer());
-if (hash(live) !== hash(await readFile(path.join(ROOT, 'public/logo-nav.webp'))))
-  problems.push('The nav logo changed: copy f1-stories.gr/images/logo-nav.webp to public/logo-nav.webp.');
+for (const theme of ['light', 'dark']) {
+  const name = `f1s-header-${theme}.svg`;
+  const live = Buffer.from(await (await get(`${SITE}/images/brand/${name}`)).arrayBuffer());
+  if (hash(live) !== hash(await readFile(path.join(ROOT, 'public/brand', name))))
+    problems.push(`The nav logo changed: copy f1-stories.gr/images/brand/${name} to public/brand/${name}.`);
+}
 
 if (problems.length) {
   console.error(`f1-stories.gr and this app have drifted:\n- ${problems.join('\n- ')}`);
