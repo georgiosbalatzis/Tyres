@@ -65,9 +65,6 @@
   white-space: nowrap;
   text-decoration: none;
 }
-.wordmark-dot {
-  color: var(--c-signal);
-}
 .site-nav-links {
   align-self: stretch;
   gap: 22.4px;
