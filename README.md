@@ -198,5 +198,5 @@ tests/       unit/ (Vitest), e2e/ (Playwright), fixtures/
 - Tyre and circuit data: Pirelli Motorsport press area (facts only, always linked).
 - Circuit outlines: bacinger/f1-circuits, MIT — `data/tracks/LICENSE-f1-circuits.md`.
 - Typefaces: IBM Plex Sans and Barlow Condensed, SIL Open Font Licence 1.1 — `src/assets/fonts/LICENSE-*-OFL.txt`.
-- F1 Stories logo (`public/logo-nav.webp`): F1 Stories' own mark, from the f1StoriesPage repo.
+- F1 Stories raster wordmarks, icons and default social image (`public/brand/`): the authentic F1 Stories brand kit.
 - 3D car: “Low Poly-F1” by salasilma13, CC BY 4.0 (Sketchfab) — `public/models/LICENSE-f1car.txt`; the same model the F1 Stories ghostcar uses. Tyres are procedural (`src/three/tyre.ts`); `src/three/car.ts` is the fallback car.

@@ -111,7 +111,9 @@ export function renderPage(template: string, ctx: PageContext): string {
   const title = ctx.notFound ? PAGE.seo.notFoundTitle : PAGE.seo.title(r.race.name, r.season);
   const description = describe(r);
   // Per-race card rendered at deploy time by scripts/og-images.ts; the generic image covers the 404 page.
-  const ogImage = ctx.notFound ? `${siteUrl}og.png` : `${siteUrl}og/${r.season}/${r.slug}.png`;
+  const ogImage = ctx.notFound
+    ? `${siteUrl}brand/f1s-og-default.jpg`
+    : `${siteUrl}og/${r.season}/${r.slug}.png`;
   const ogAlt = ctx.notFound ? PAGE.seo.ogAltGeneric : PAGE.seo.ogAlt(r.race.name, r.season);
   const event =
     r.race.startDate && r.race.endDate
@@ -137,7 +139,7 @@ export function renderPage(template: string, ctx: PageContext): string {
     <meta property="og:url" content="${canonical}" />
     <meta property="og:image" content="${ogImage}" />
     <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:height" content="${ctx.notFound ? 600 : 630}" />
     <meta property="og:image:alt" content="${ogAlt}" />
     <meta name="twitter:card" content="summary_large_image" />
     ${event ? html`<script type="application/ld+json">${new SafeHtml(inlineJson(event))}</script>` : ''}`;
