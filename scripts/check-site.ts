@@ -82,7 +82,7 @@ problems.push(
 // 6. The nav logo.
 const hash = (b: Buffer) => createHash('sha256').update(b).digest('hex');
 for (const theme of ['light', 'dark']) {
-  const name = `f1s-header-${theme}.svg`;
+  const name = `f1s-header-${theme}.webp`;
   const live = Buffer.from(await (await get(`${SITE}/images/brand/${name}`)).arrayBuffer());
   if (hash(live) !== hash(await readFile(path.join(ROOT, 'public/brand', name))))
     problems.push(`The nav logo changed: copy f1-stories.gr/images/brand/${name} to public/brand/${name}.`);

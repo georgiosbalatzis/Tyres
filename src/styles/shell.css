@@ -35,7 +35,7 @@
 .brand {
   display: flex;
   align-items: center;
-  flex: 0 1 auto;
+  flex: 0 1 182px;
   min-width: 0;
   gap: 8.8px;
   min-height: 44px;
@@ -43,9 +43,10 @@
   text-decoration: none;
 }
 .brand img {
-  width: 100%;
-  max-width: 213.56px;
+  width: auto;
+  max-width: 100%;
   height: auto;
+  max-height: 36px;
 }
 .brand-dark,
 :root[data-theme="dark"] .brand-light {
@@ -261,10 +262,11 @@
     font-size: 23.2px;
   }
   .brand {
+    flex-basis: 152px;
     gap: 7.2px;
   }
   .brand img {
-    max-width: 177.97px;
+    max-height: 30px;
   }
   .site-nav-right {
     gap: 2.4px;

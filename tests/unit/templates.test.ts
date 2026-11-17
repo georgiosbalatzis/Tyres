@@ -150,7 +150,7 @@ describe('document head', () => {
     const out = renderPage(template, ctx(true));
     expect(out).toContain('<title>Η σελίδα δεν βρέθηκε | TYRES | F1 Stories</title>');
     expect(out).toContain('<meta name="robots" content="noindex" />');
-    expect(out).toContain('https://x.test/Tyres/og.png');
+    expect(out).toContain('https://x.test/Tyres/brand/f1s-og-default.jpg');
     expect(out).toContain('Αυτή η σελίδα δεν υπάρχει.');
     expect(out).not.toContain('rel="canonical"');
   });

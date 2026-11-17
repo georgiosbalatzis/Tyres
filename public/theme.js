@@ -22,7 +22,7 @@
   const apply = (theme) => {
     root.dataset.theme = theme;
     const icon = document.querySelector('[data-brand-icon]');
-    if (icon) icon.href = icon.href.replace(/f1s-micro-(light|dark)\.svg/, `f1s-micro-${theme}.svg`);
+    if (icon) icon.href = icon.href.replace(/favicon-(light|dark)-32\.png/, `favicon-${theme}-32.png`);
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', BG[theme]);
     for (const b of document.querySelectorAll('[data-theme-toggle]'))
       b.setAttribute('aria-pressed', String(theme === 'dark'));
