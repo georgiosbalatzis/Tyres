@@ -1,11 +1,11 @@
 // Mirrors the fallback calendar in f1StoriesPage/scripts/shared-nav.js ("Next Race Countdown"); update both together,
 // `npm run site:check` reports drift. Names stay as the site writes them ("Singapore GP"). No network: static only.
 export const CALENDAR: readonly { name: string; start: string }[] = [
-  { name: 'Australian GP', start: '2026-03-08T05:00:00Z' },
+  { name: 'Australian GP', start: '2026-03-08T04:00:00Z' },
   { name: 'Chinese GP', start: '2026-03-15T07:00:00Z' },
   { name: 'Japanese GP', start: '2026-03-29T05:00:00Z' },
   { name: 'Miami GP', start: '2026-05-03T20:00:00Z' },
-  { name: 'Canadian GP', start: '2026-05-24T18:00:00Z' },
+  { name: 'Canadian GP', start: '2026-05-24T20:00:00Z' },
   { name: 'Monaco GP', start: '2026-06-07T13:00:00Z' },
   { name: 'Catalunya GP', start: '2026-06-14T13:00:00Z' },
   { name: 'Austrian GP', start: '2026-06-28T13:00:00Z' },
@@ -16,12 +16,13 @@ export const CALENDAR: readonly { name: string; start: string }[] = [
   { name: 'Italian GP', start: '2026-09-06T13:00:00Z' },
   { name: 'Spanish GP', start: '2026-09-13T13:00:00Z' },
   { name: 'Azerbaijan GP', start: '2026-09-26T11:00:00Z' },
+  { name: 'Bahrain GP in Malaysia', start: '2026-10-04T07:00:00Z' },
   { name: 'Singapore GP', start: '2026-10-11T12:00:00Z' },
   { name: 'US GP', start: '2026-10-25T20:00:00Z' },
   { name: 'Mexico City GP', start: '2026-11-01T20:00:00Z' },
   { name: 'São Paulo GP', start: '2026-11-08T17:00:00Z' },
-  { name: 'Las Vegas GP', start: '2026-11-21T06:00:00Z' },
-  { name: 'Qatar GP', start: '2026-11-29T14:00:00Z' },
+  { name: 'Las Vegas GP', start: '2026-11-22T04:00:00Z' },
+  { name: 'Qatar GP', start: '2026-11-29T16:00:00Z' },
   { name: 'Abu Dhabi GP', start: '2026-12-06T13:00:00Z' },
 ];
 
