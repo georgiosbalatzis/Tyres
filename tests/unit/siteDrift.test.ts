@@ -66,10 +66,10 @@ describe('site drift: links', () => {
 describe('site drift: calendar', () => {
   it('parses the site calendar, including escaped names', () => {
     const js = `{ name: 'S\\u00e3o Paulo GP', flag: '\\u{1F1E7}\\u{1F1F7}', date: '2026-11-08T17:00:00Z' },
-      { name: 'Qatar GP',      flag: '\\u{1F1F6}\\u{1F1E6}', date: '2026-11-29T14:00:00Z' }`;
+      { name: 'Qatar GP',      flag: '\\u{1F1F6}\\u{1F1E6}', date: '2026-11-29T16:00:00Z' }`;
     expect(siteCalendar(js)).toEqual([
       { name: 'São Paulo GP', start: '2026-11-08T17:00:00Z' },
-      { name: 'Qatar GP', start: '2026-11-29T14:00:00Z' },
+      { name: 'Qatar GP', start: '2026-11-29T16:00:00Z' },
     ]);
   });
 

@@ -21,7 +21,7 @@ describe('masthead countdown', () => {
 
   it('keeps the site calendar in order and complete', () => {
     const starts = CALENDAR.map((r) => Date.parse(r.start));
-    expect(CALENDAR.length).toBe(22);
+    expect(CALENDAR.length).toBe(23);
     expect(starts).toEqual([...starts].sort((a, b) => a - b));
     expect(CALENDAR.some((r) => r.name === 'São Paulo GP')).toBe(true);
   });
