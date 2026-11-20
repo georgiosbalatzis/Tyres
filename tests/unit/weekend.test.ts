@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { parseSessions, parseWeather } from '../../scripts/lib/weekend-sources.ts';
+import venues from '../../data/reference/weekend-venues.json' with { type: 'json' };
+import { parseSessions, parseWeather, WEATHER_HOLD } from '../../scripts/lib/weekend-sources.ts';
 import { localDate, Weekend, weatherCondition, weekendProblems } from '../../src/domain/weekend.ts';
 import { weatherPreview } from '../../src/ui/weather.ts';
 
@@ -32,11 +33,17 @@ describe('weekend sources and data', () => {
   });
 
   it('has three sourced days and complete schedules for every published snapshot', () => {
+    const heldSlugs = [...WEATHER_HOLD].map((id) => venues[id as keyof typeof venues][0]);
     for (const file of readdirSync('data/weekends')) {
       const w = Weekend.parse(JSON.parse(readFileSync(`data/weekends/${file}`, 'utf8')));
       expect(weekendProblems(w), file).toEqual([]);
       expect(w.scheduleUrl).toMatch(/^https:\/\/www\.formula1\.com\/en\/racing\//);
       expect(w.scheduleRetrievedAt).not.toBeNull();
+      // Held venues publish their schedule without any weather block.
+      if (heldSlugs.some((slug) => w.scheduleUrl?.endsWith(`/${slug}`))) {
+        expect(w.weather, file).toBeNull();
+        continue;
+      }
       expect(w.weather?.days).toHaveLength(3);
       expect(w.weather?.sourceUrl).toContain('open-meteo.com/v1/forecast');
     }

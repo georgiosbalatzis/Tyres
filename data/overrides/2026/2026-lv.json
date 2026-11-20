@@ -1,0 +1,96 @@
+{
+  "race": {
+    "officialName": "Formula 1 Heineken Las Vegas Grand Prix 2026",
+    "startDate": "2026-11-20",
+    "endDate": "2026-11-22"
+  },
+  "circuit": {
+    "name": "Las Vegas Strip Circuit",
+    "lengthKm": 6.201,
+    "laps": 50,
+    "raceDistanceKm": 309.958,
+    "lapRecord": {
+      "time": "1:33.365",
+      "driver": "Max Verstappen",
+      "year": 2025
+    },
+    "pitStopLoss": {
+      "seconds": 21,
+      "kind": "average"
+    }
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C3"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C4"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C5"
+    }
+  ],
+  "characteristics": {
+    "traction": 2,
+    "braking": 3,
+    "tyreStress": 4,
+    "asphaltAbrasion": 2,
+    "asphaltGrip": 1,
+    "lateral": 2,
+    "trackEvolution": 5
+  },
+  "setup": {
+    "minimumStartingPressurePsi": {
+      "front": 27.5,
+      "rear": 28
+    },
+    "expectedRunningPressurePsi": {
+      "front": 28,
+      "rear": 28.5
+    },
+    "camberLimitDeg": {
+      "front": -3,
+      "rear": -1.75
+    }
+  },
+  "provenance": {
+    "event": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8cbeddbc-9500-4ce4-b1e2-cd451b31157f/21-lv26-preview.jpg",
+      "retrievedAt": "2026-11-20T07:30:53Z",
+      "note": "Round from the media file name; dates from the graphic header."
+    },
+    "circuit": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8cbeddbc-9500-4ce4-b1e2-cd451b31157f/21-lv26-preview.jpg",
+      "retrievedAt": "2026-11-20T07:30:53Z"
+    },
+    "compounds": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8cbeddbc-9500-4ce4-b1e2-cd451b31157f/21-lv26-preview.jpg",
+      "retrievedAt": "2026-11-20T07:30:53Z"
+    },
+    "characteristics": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8cbeddbc-9500-4ce4-b1e2-cd451b31157f/21-lv26-preview.jpg",
+      "retrievedAt": "2026-11-20T07:30:53Z"
+    },
+    "setup": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8cbeddbc-9500-4ce4-b1e2-cd451b31157f/21-lv26-preview.jpg",
+      "retrievedAt": "2026-11-20T07:30:53Z",
+      "note": "Pirelli marks pressures as subject to change after FP2."
+    }
+  },
+  "validation": {
+    "status": "transcribed",
+    "notes": [
+      "Transcribed from the official preview graphic by an AI-assisted pass on 2026-11-20; awaiting human confirmation.",
+      "Expected stabilised running pressures are published as lower bounds (front ≥28.0 psi, rear ≥28.5 psi); pressures are subject to changes after FP2.",
+      "Pirelli's infographic file name omits the usual -en suffix (21-lv26-preview.jpg)."
+    ]
+  }
+}

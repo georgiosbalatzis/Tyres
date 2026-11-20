@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-lv",
+  "season": 2026,
+  "round": 21,
+  "slug": "las-vegas",
+  "eventCode": "lv",
+  "race": {
+    "name": "Las Vegas Grand Prix",
+    "officialName": null,
+    "location": "Las Vegas, United States",
+    "countryCode": "US",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "las-vegas",
+    "name": "Las Vegas Strip Circuit",
+    "lengthKm": null,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": null,
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "The night-time challenge of Las Vegas",
+    "articleUrl": "https://press.pirelli.com/the-night-time-challenge-of-las-vegas/",
+    "publishedAt": "2026-11-16T12:38:21+01:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/8cbeddbc-9500-4ce4-b1e2-cd451b31157f/21-lv26-preview.jpg",
+    "retrievedAt": "2026-11-20T07:30:53Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/8cbeddbc-9500-4ce4-b1e2-cd451b31157f/21-lv26-preview.jpg",
+      "retrievedAt": "2026-11-20T07:30:53Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/the-night-time-challenge-of-las-vegas/",
+      "retrievedAt": "2026-11-20T07:30:53Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, circuit length, compounds."
+    ]
+  }
+}

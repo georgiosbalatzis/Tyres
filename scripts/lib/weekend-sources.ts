@@ -1,6 +1,9 @@
 import * as z from 'zod/mini';
 import { SESSION_IDS, type SessionId, WeatherDay } from '../../src/domain/weekend.ts';
 
+// Weather rights are unresolved; remove an entry after clearance to activate requests.
+export const WEATHER_HOLD = new Set(['las-vegas', 'lusail']);
+
 const names: Record<string, SessionId> = {
   'Practice 1': 'fp1',
   'Practice 2': 'fp2',

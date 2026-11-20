@@ -1,0 +1,34 @@
+{
+  "raceId": "2026-lv",
+  "timeZone": "America/Los_Angeles",
+  "dates": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+  ],
+  "sessions": [
+    {
+      "id": "fp1",
+      "start": "2026-11-20T00:30:00.000Z"
+    },
+    {
+      "id": "fp2",
+      "start": "2026-11-20T04:00:00.000Z"
+    },
+    {
+      "id": "fp3",
+      "start": "2026-11-21T00:30:00.000Z"
+    },
+    {
+      "id": "qualifying",
+      "start": "2026-11-21T04:00:00.000Z"
+    },
+    {
+      "id": "race",
+      "start": "2026-11-22T04:00:00.000Z"
+    }
+  ],
+  "scheduleUrl": "https://www.formula1.com/en/racing/2026/las-vegas",
+  "scheduleRetrievedAt": "2026-11-20T07:31:33.278Z",
+  "weather": null
+}
