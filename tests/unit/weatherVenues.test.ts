@@ -2,8 +2,6 @@ import path from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { RaceRecord } from '../../src/domain/schema.ts';
 import { Weekend, weekendProblems } from '../../src/domain/weekend.ts';
-import { PAGE } from '../../src/ui/strings.ts';
-import { weatherPreview } from '../../src/ui/weather.ts';
 import { fixtureRace } from '../fixtures/races.ts';
 
 const CASES = [
@@ -78,7 +76,9 @@ async function runWeekendUpdate(
   vi.useFakeTimers({ toFake: ['Date'], now: new Date(now) });
   const writes = new Map<string, string>();
   const requests: string[] = [];
-  vi.doMock('../../scripts/build-data.ts', () => ({ buildData: async () => ({ records: [record] }) }));
+  vi.doMock('../../scripts/build-data.ts', () => ({
+    buildData: async () => ({ records: [record] }),
+  }));
   vi.doMock('node:fs/promises', async (original) => {
     const fs = await original<typeof import('node:fs/promises')>();
     return {
@@ -105,11 +105,16 @@ function officialResponses(c: Case) {
       return new Response(
         `<script type="application/ld+json">${JSON.stringify({
           '@type': 'SportsEvent',
-          subEvent: c.starts.map((startDate, i) => ({ name: `${NAMES[i]} - ${c.grandPrix}`, startDate })),
+          subEvent: c.starts.map((startDate, i) => ({
+            name: `${NAMES[i]} - ${c.grandPrix}`,
+            startDate,
+          })),
         })}</script>`,
       );
     if (url.includes('bacinger'))
-      return Response.json({ features: [{ geometry: { coordinates: c.coordinates } }] });
+      return Response.json({
+        features: [{ geometry: { coordinates: c.coordinates } }],
+      });
     if (url.includes('open-meteo.com'))
       return Response.json({
         daily: {
@@ -134,33 +139,19 @@ afterEach(() => {
 
 describe.each(CASES)('$trackId circuit', (c) => {
   it.each([
-    ['inside the forecast window', '2099-11-10T12:00:00Z'],
-    ['after the completed weekend', '2099-11-25T12:00:00Z'],
-  ])('holds weather requests %s while writing the schedule', async (_label, now) => {
-    const warn = vi.spyOn(console, 'warn');
+    ['inside the forecast window', '2099-11-10T12:00:00Z', 'forecast'],
+    ['after the completed weekend', '2099-11-25T12:00:00Z', 'archived-forecast'],
+  ])('requests weather %s while writing the schedule', async (_label, now, kind) => {
     const { requests, weekend } = await runWeekendUpdate(raceFor(c), officialResponses(c), { now });
-    expect(requests).toEqual([`https://www.formula1.com/en/racing/2099/${c.f1Slug}`]);
-    expect(openMeteoCalls(requests)).toEqual([]);
-    expect(requests.filter((url) => url.includes('bacinger'))).toEqual([]);
-    expect(warn).not.toHaveBeenCalled();
-    warn.mockRestore();
+    expect(requests).toContain(
+      `https://raw.githubusercontent.com/bacinger/f1-circuits/master/circuits/${c.upstreamId}.geojson`,
+    );
+    expect(openMeteoCalls(requests)).toHaveLength(1);
     expect(weekend).not.toBeNull();
     expect(weekendProblems(weekend!)).toEqual([]);
-    expect(weekend).toMatchObject({ timeZone: c.timeZone, dates: c.dates, weather: null });
+    expect(weekend).toMatchObject({ timeZone: c.timeZone, dates: c.dates });
     expect(weekend!.sessions).toHaveLength(5);
-    expect(weekend!.scheduleRetrievedAt).not.toBeNull();
-    expect(weatherPreview(weekend!, c.timeZone).value).toContain(PAGE.weather.noForecast);
+    expect(weekend!.weather?.kind).toBe(kind);
+    expect(weekend!.weather?.days).toHaveLength(3);
   });
-});
-
-it('still requests weather for an unheld venue', async () => {
-  const c = CASES[0];
-  const record = raceFor(c);
-  record.circuit.trackId = 'miami';
-  const { requests, weekend } = await runWeekendUpdate(record, officialResponses(c));
-  expect(requests).toContain(
-    'https://raw.githubusercontent.com/bacinger/f1-circuits/master/circuits/us-2022.geojson',
-  );
-  expect(openMeteoCalls(requests)).toHaveLength(1);
-  expect(weekend?.weather?.kind).toBe('forecast');
 });

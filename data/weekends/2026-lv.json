@@ -29,6 +29,38 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/las-vegas",
-  "scheduleRetrievedAt": "2026-11-20T07:31:33.278Z",
-  "weather": null
+  "scheduleRetrievedAt": "2026-11-20T08:46:30.083Z",
+  "weather": {
+    "kind": "forecast",
+    "retrievedAt": "2026-11-20T08:46:30.083Z",
+    "latitude": 36.11643097,
+    "longitude": -115.16571201000002,
+    "sourceUrl": "https://api.open-meteo.com/v1/forecast?latitude=36.11643097&longitude=-115.16571201000002&timezone=America%2FLos_Angeles&start_date=2026-11-19&end_date=2026-11-21&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",
+    "days": [
+      {
+        "date": "2026-11-19",
+        "code": 63,
+        "highC": 14.2,
+        "lowC": 8.9,
+        "humidityPct": 55,
+        "rainChancePct": 36
+      },
+      {
+        "date": "2026-11-20",
+        "code": 3,
+        "highC": 15.2,
+        "lowC": 5,
+        "humidityPct": 45,
+        "rainChancePct": 4
+      },
+      {
+        "date": "2026-11-21",
+        "code": 3,
+        "highC": 14.9,
+        "lowC": 2.8,
+        "humidityPct": 34,
+        "rainChancePct": 0
+      }
+    ]
+  }
 }
