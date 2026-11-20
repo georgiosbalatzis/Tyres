@@ -111,7 +111,8 @@ export function parseArticle(html: string, url: string): ParsedArticle {
   };
 }
 
-const INFOGRAPHIC = /^(\d{1,2})-([a-z]{2,3})(\d{2})-preview-en\.(?:jpe?g|png)$/;
+// Pirelli sometimes drops the "-en" suffix (2026 Las Vegas: 21-lv26-preview.jpg).
+const INFOGRAPHIC = /^(\d{1,2})-([a-z]{2,3})(\d{2})-preview(?:-en)?\.(?:jpe?g|png)$/;
 
 /** The three-signal preview rule (see docs/DATA-SOURCES.md). Returns null for anything that is not an F1 race preview. */
 export function previewSignals(a: ParsedArticle): PreviewSignals | null {

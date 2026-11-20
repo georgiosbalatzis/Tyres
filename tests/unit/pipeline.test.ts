@@ -44,6 +44,20 @@ describe('Pirelli article parser (fixtures from press.pirelli.com)', () => {
     expect(previewSignals(load('az26-race'))).toBeNull(); // race report: same keywords, no preview infographic
   });
 
+  it('accepts an infographic without the -en suffix (2026 Las Vegas)', () => {
+    const a = {
+      ...load('az26-preview'),
+      keywords: ['Formula 1', '2026 Las Vegas Grand Prix'],
+      media: [{ filename: '21-lv26-preview.jpg', url: 'https://example.test/21-lv26-preview.jpg' }],
+    };
+    expect(previewSignals(a)).toMatchObject({
+      season: 2026,
+      round: 21,
+      eventCode: 'lv',
+      grandPrix: 'Las Vegas Grand Prix',
+    });
+  });
+
   it('extracts compounds from both phrasings used by Pirelli', () => {
     expect(compoundsFromText(load('bh26-preview').paragraphs)?.map((c) => c.compound)).toEqual([
       'C2',

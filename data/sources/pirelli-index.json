@@ -1442,8 +1442,9 @@
     },
     "https://press.pirelli.com/the-night-time-challenge-of-las-vegas/": {
       "lastmod": "2026-11-16",
-      "kind": "other",
-      "checkedAt": "2026-11-19T02:52:01Z"
+      "kind": "preview",
+      "id": "2026-lv",
+      "checkedAt": "2026-11-20T07:30:53Z"
     },
     "https://press.pirelli.com/the-one-stop-strategy-rewards-antonelli-in-the-first-race-at-the-madring/": {
       "lastmod": "2026-09-14",
@@ -1520,6 +1521,11 @@
       "lastmod": "2026-10-03",
       "kind": "other",
       "checkedAt": "2026-10-06T06:29:50Z"
+    },
+    "https://press.pirelli.com/wet-las-vegas-russell-leads-the-way-on-intermediates/": {
+      "lastmod": "2026-11-20",
+      "kind": "other",
+      "checkedAt": "2026-11-20T07:30:53Z"
     },
     "https://press.pirelli.com/with-pirelli-gonzalez-and-uriarte-win-record-breaking-moto2-and-moto3-races-at-mugello/": {
       "lastmod": "2026-06-01",

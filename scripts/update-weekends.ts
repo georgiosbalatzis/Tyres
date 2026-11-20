@@ -4,12 +4,10 @@ import path from 'node:path';
 import venues from '../data/reference/weekend-venues.json' with { type: 'json' };
 import { localDate, Weekend, weekendProblems } from '../src/domain/weekend.ts';
 import { buildData } from './build-data.ts';
-import { parseSessions, parseWeather } from './lib/weekend-sources.ts';
+import { parseSessions, parseWeather, WEATHER_HOLD } from './lib/weekend-sources.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'data/weekends');
-// Weather rights are unresolved; remove an entry after clearance to activate requests.
-const WEATHER_HOLD = new Set(['las-vegas', 'lusail']);
 const now = new Date();
 async function get(url: string) {
   const res = await fetch(url, {
