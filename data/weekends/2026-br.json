@@ -29,10 +29,10 @@
     }
   ],
   "scheduleUrl": "https://www.formula1.com/en/racing/2026/brazil",
-  "scheduleRetrievedAt": "2026-11-20T07:31:33.278Z",
+  "scheduleRetrievedAt": "2026-11-20T08:46:30.083Z",
   "weather": {
     "kind": "archived-forecast",
-    "retrievedAt": "2026-11-20T07:31:33.278Z",
+    "retrievedAt": "2026-11-20T08:46:30.083Z",
     "latitude": -23.700953163742682,
     "longitude": -46.69804186549709,
     "sourceUrl": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=-23.700953163742682&longitude=-46.69804186549709&timezone=America%2FSao_Paulo&start_date=2026-11-06&end_date=2026-11-08&daily=weather_code%2Ctemperature_2m_max%2Ctemperature_2m_min%2Crelative_humidity_2m_mean%2Cprecipitation_probability_max",

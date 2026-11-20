@@ -4,7 +4,7 @@ import path from 'node:path';
 import venues from '../data/reference/weekend-venues.json' with { type: 'json' };
 import { localDate, Weekend, weekendProblems } from '../src/domain/weekend.ts';
 import { buildData } from './build-data.ts';
-import { parseSessions, parseWeather, WEATHER_HOLD } from './lib/weekend-sources.ts';
+import { parseSessions, parseWeather } from './lib/weekend-sources.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'data/weekends');
@@ -59,7 +59,12 @@ for (let i = 0; i < records.length; i += 3) {
           (r.race.endDate && Math.abs(Date.parse(dates[2]!) - Date.parse(r.race.endDate)) > 86400000)
         )
           throw new Error('Official schedule does not match this weekend');
-        const candidate = { ...w, sessions, dates, scheduleRetrievedAt: now.toISOString() };
+        const candidate = {
+          ...w,
+          sessions,
+          dates,
+          scheduleRetrievedAt: now.toISOString(),
+        };
         const problems = weekendProblems(candidate);
         if (problems.length) throw new Error(problems.join('; '));
         Object.assign(w, candidate);
@@ -76,54 +81,54 @@ for (let i = 0; i < records.length; i += 3) {
         console.warn(`${r.id}: no weekend dates available`);
         return;
       }
-      if (!WEATHER_HOLD.has(r.circuit.trackId ?? '')) {
-        try {
-          const today = localDate(now.toISOString(), timeZone);
-          if (w.dates[0]! <= offset(today, 15) && w.dates[2]! <= offset(today, 15)) {
-            const track = JSON.parse(
-              await readFile(path.join(ROOT, 'data/tracks', `${r.circuit.trackId}.json`), 'utf8'),
-            );
-            const geo = (await (
-              await get(
-                `https://raw.githubusercontent.com/bacinger/f1-circuits/master/circuits/${track.source.upstreamId}.geojson`,
-              )
-            ).json()) as { features: { geometry: { coordinates: number[][] } }[] };
-            const points = geo.features[0]?.geometry.coordinates;
-            if (
-              !points?.length ||
-              points.some((p) => p.length < 2 || !Number.isFinite(p[0]) || !Number.isFinite(p[1]))
+      try {
+        const today = localDate(now.toISOString(), timeZone);
+        if (w.dates[0]! <= offset(today, 15) && w.dates[2]! <= offset(today, 15)) {
+          const track = JSON.parse(
+            await readFile(path.join(ROOT, 'data/tracks', `${r.circuit.trackId}.json`), 'utf8'),
+          );
+          const geo = (await (
+            await get(
+              `https://raw.githubusercontent.com/bacinger/f1-circuits/master/circuits/${track.source.upstreamId}.geojson`,
             )
-              throw new Error('Invalid circuit coordinates');
-            const longitude = points.reduce((sum, p) => sum + p[0]!, 0) / points.length;
-            const latitude = points.reduce((sum, p) => sum + p[1]!, 0) / points.length;
-            const historical = w.dates[2]! < today;
-            const endpoint = historical
-              ? 'https://historical-forecast-api.open-meteo.com/v1/forecast'
-              : 'https://api.open-meteo.com/v1/forecast';
-            const query = new URLSearchParams({
-              latitude: String(latitude),
-              longitude: String(longitude),
-              timezone: timeZone,
-              start_date: w.dates[0]!,
-              end_date: w.dates[2]!,
-              daily:
-                'weather_code,temperature_2m_max,temperature_2m_min,relative_humidity_2m_mean,precipitation_probability_max',
-            });
-            w.weather = {
-              kind: historical ? 'archived-forecast' : 'forecast',
-              retrievedAt: now.toISOString(),
-              latitude,
-              longitude,
-              sourceUrl: `${endpoint}?${query}`,
-              days: parseWeather(await (await get(`${endpoint}?${query}`)).json(), w.dates),
-            };
-          }
-        } catch (err) {
-          failures++;
-          console.warn(`${r.id}: ${(err as Error).message}`);
-          // Preserve a valid dated snapshot on transient outages. The UI marks stale forecasts.
-          if (previous?.weather && previous.dates.join() === w.dates.join()) w.weather = previous.weather;
+          ).json()) as {
+            features: { geometry: { coordinates: number[][] } }[];
+          };
+          const points = geo.features[0]?.geometry.coordinates;
+          if (
+            !points?.length ||
+            points.some((p) => p.length < 2 || !Number.isFinite(p[0]) || !Number.isFinite(p[1]))
+          )
+            throw new Error('Invalid circuit coordinates');
+          const longitude = points.reduce((sum, p) => sum + p[0]!, 0) / points.length;
+          const latitude = points.reduce((sum, p) => sum + p[1]!, 0) / points.length;
+          const historical = w.dates[2]! < today;
+          const endpoint = historical
+            ? 'https://historical-forecast-api.open-meteo.com/v1/forecast'
+            : 'https://api.open-meteo.com/v1/forecast';
+          const query = new URLSearchParams({
+            latitude: String(latitude),
+            longitude: String(longitude),
+            timezone: timeZone,
+            start_date: w.dates[0]!,
+            end_date: w.dates[2]!,
+            daily:
+              'weather_code,temperature_2m_max,temperature_2m_min,relative_humidity_2m_mean,precipitation_probability_max',
+          });
+          w.weather = {
+            kind: historical ? 'archived-forecast' : 'forecast',
+            retrievedAt: now.toISOString(),
+            latitude,
+            longitude,
+            sourceUrl: `${endpoint}?${query}`,
+            days: parseWeather(await (await get(`${endpoint}?${query}`)).json(), w.dates),
+          };
         }
+      } catch (err) {
+        failures++;
+        console.warn(`${r.id}: ${(err as Error).message}`);
+        // Preserve a valid dated snapshot on transient outages. The UI marks stale forecasts.
+        if (previous?.weather && previous.dates.join() === w.dates.join()) w.weather = previous.weather;
       }
       const parsed = Weekend.parse(w);
       const problems = weekendProblems(parsed);
