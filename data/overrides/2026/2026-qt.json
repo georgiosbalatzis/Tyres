@@ -1,0 +1,97 @@
+{
+  "round": 22,
+  "race": {
+    "officialName": "Formula 1 Qatar Airways Qatar Grand Prix 2026",
+    "startDate": "2026-11-27",
+    "endDate": "2026-11-29"
+  },
+  "circuit": {
+    "name": "Lusail International Circuit",
+    "lengthKm": 5.419,
+    "laps": 57,
+    "raceDistanceKm": 308.611,
+    "lapRecord": {
+      "time": "1:22.384",
+      "driver": "Lando Norris",
+      "year": 2024
+    },
+    "pitStopLoss": {
+      "seconds": 26.5,
+      "kind": "average"
+    }
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C1"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C2"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C3"
+    }
+  ],
+  "characteristics": {
+    "traction": 3,
+    "braking": 3,
+    "tyreStress": 5,
+    "asphaltAbrasion": 2,
+    "asphaltGrip": 4,
+    "lateral": 5,
+    "trackEvolution": 4
+  },
+  "setup": {
+    "minimumStartingPressurePsi": {
+      "front": 29,
+      "rear": 27.5
+    },
+    "expectedRunningPressurePsi": {
+      "front": 30,
+      "rear": 28.5
+    },
+    "camberLimitDeg": {
+      "front": -2.75,
+      "rear": -1.5
+    }
+  },
+  "provenance": {
+    "event": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/652889f6-81b1-4924-89a0-c571c083d7c0/09-qt26-preview-en.jpg",
+      "retrievedAt": "2026-11-26T22:05:00Z",
+      "note": "Pirelli's media file is named 09-qt26 (colliding with 09-gb26); round 22 follows from the 2026 F1 calendar order (Las Vegas 21, Qatar 22, Abu Dhabi 23). Dates from the graphic header."
+    },
+    "circuit": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/652889f6-81b1-4924-89a0-c571c083d7c0/09-qt26-preview-en.jpg",
+      "retrievedAt": "2026-11-26T22:05:00Z"
+    },
+    "compounds": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/652889f6-81b1-4924-89a0-c571c083d7c0/09-qt26-preview-en.jpg",
+      "retrievedAt": "2026-11-26T22:05:00Z"
+    },
+    "characteristics": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/652889f6-81b1-4924-89a0-c571c083d7c0/09-qt26-preview-en.jpg",
+      "retrievedAt": "2026-11-26T22:05:00Z"
+    },
+    "setup": {
+      "method": "infographic-transcription",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/652889f6-81b1-4924-89a0-c571c083d7c0/09-qt26-preview-en.jpg",
+      "retrievedAt": "2026-11-26T22:05:00Z",
+      "note": "Pirelli marks pressures as subject to change after FP2."
+    }
+  },
+  "validation": {
+    "status": "transcribed",
+    "notes": [
+      "Transcribed from the official preview graphic by an AI-assisted pass on 2026-11-26; awaiting human confirmation.",
+      "Expected stabilised running pressures are published as lower bounds (front ≥30.0 psi, rear ≥28.5 psi); pressures are subject to changes after FP2.",
+      "Pirelli's infographic file name uses 09-qt26 instead of 22-qt26; round overridden to 22."
+    ]
+  }
+}
