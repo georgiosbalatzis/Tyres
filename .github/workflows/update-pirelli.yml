@@ -5,9 +5,9 @@ name: Pirelli data update
 # never invented, and stay "Not provided" until a human transcribes them into data/overrides.
 on:
   schedule:
-    # Wed + Thu 23:59 Athens (EET, UTC+2); 00:59 the next day during EEST. f1StoriesPage's
-    # tyres-pin workflow picks the merge up two hours later.
-    - cron: '59 21 * * 3,4'
+    # Mon–Thu 23:59 Athens (EET, UTC+2); 00:59 the next day during EEST. Pirelli routinely publishes
+    # race previews on Monday or Tuesday; f1StoriesPage's tyres-pin workflow picks the merge up two hours later.
+    - cron: '59 21 * * 1,2,3,4'
   workflow_dispatch:
     inputs:
       since:
@@ -67,6 +67,13 @@ jobs:
           fi
           node scripts/update-pirelli.ts "${args[@]}"
 
+      - name: Refresh weekend schedule and weather for new previews
+        run: |
+          set -euo pipefail
+          if [[ -n "$(git status --porcelain -- data/generated/)" ]]; then
+            npm run weekend:update
+          fi
+
       - name: Validate
         run: |
           npm run data:build
@@ -97,7 +104,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -C "$branch"
-          git add data/generated data/sources data/schemas
+          git add data/generated data/sources data/schemas data/weekends
           git commit -m "data: Pirelli preview update $(date -u +%Y-%m-%dT%H:%MZ)"
           git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$branch"
           body=$'Automated Pirelli discovery. Generated records only — `data/overrides/` is never touched by automation.\n\nFields that Pirelli publishes only in the preview graphic are left empty and shown as “Not provided”. See the review report in the run summary.'

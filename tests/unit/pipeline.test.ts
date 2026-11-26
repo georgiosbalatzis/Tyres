@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { buildData } from '../../scripts/build-data.ts';
+import { buildData, calendarRoundForWeekend } from '../../scripts/build-data.ts';
 import { mergeRecord } from '../../scripts/lib/merge.ts';
 import { normalize } from '../../scripts/pirelli/normalize.ts';
 import {
@@ -155,5 +155,17 @@ describe('override audit', () => {
   it('reports a null override that hides a value Pirelli has since published', () => {
     const { conflicts } = mergeRecord({ circuit: { laps: 56 } }, { circuit: { laps: null } });
     expect(conflicts.map((c) => c.path)).toEqual(['circuit.laps']);
+  });
+});
+
+describe('calendar round reconciliation', () => {
+  it('resolves official round numbers from weekend dates, tolerating UTC midnight shifts', () => {
+    expect(calendarRoundForWeekend(2026, ['2026-11-06', '2026-11-07', '2026-11-08'])).toBe(20);
+    // Las Vegas local race day is Sat 2026-11-21 while UTC start is Sun 2026-11-22T04:00Z.
+    expect(calendarRoundForWeekend(2026, ['2026-11-19', '2026-11-20', '2026-11-21'])).toBe(21);
+    expect(calendarRoundForWeekend(2026, ['2026-11-27', '2026-11-28', '2026-11-29'])).toBe(22);
+    expect(calendarRoundForWeekend(2026, ['2026-12-04', '2026-12-05', '2026-12-06'])).toBe(23);
+    expect(calendarRoundForWeekend(2025, ['2025-12-05', '2025-12-06', '2025-12-07'])).toBeNull();
+    expect(calendarRoundForWeekend(2026, undefined)).toBeNull();
   });
 });

@@ -19,10 +19,35 @@ import {
 } from '../src/domain/schema.ts';
 import { compareLatest, pickLatest } from '../src/domain/selection.ts';
 import { Weekend, weekendProblems } from '../src/domain/weekend.ts';
+import { CALENDAR } from '../src/ui/countdown.ts';
 import { type Json, mergeRecord } from './lib/merge.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const DATA = path.join(ROOT, 'data');
+const DAY_MS = 86400000;
+
+/**
+ * Resolve a race's 1-based season round from its official weekend dates against the season calendar.
+ * Matches within ±1 day to tolerate UTC midnight shifts (e.g. Las Vegas Saturday night local → Sunday UTC).
+ * Returns null when the season is not in the calendar or the match is not unique.
+ */
+export function calendarRoundForWeekend(
+  season: number,
+  weekendDates: readonly string[] | undefined,
+  calendar: readonly { name: string; start: string }[] = CALENDAR,
+): number | null {
+  const raceDate = weekendDates?.[weekendDates.length - 1];
+  if (!raceDate) return null;
+  const raceDayMs = Date.parse(raceDate);
+  if (!Number.isFinite(raceDayMs)) return null;
+  const seasonRaces = calendar.filter((entry) => Number(entry.start.slice(0, 4)) === season);
+  const matches: number[] = [];
+  for (let i = 0; i < seasonRaces.length; i++) {
+    const startDayMs = Date.parse(seasonRaces[i]!.start.slice(0, 10));
+    if (Number.isFinite(startDayMs) && Math.abs(startDayMs - raceDayMs) <= DAY_MS) matches.push(i + 1);
+  }
+  return matches.length === 1 ? matches[0]! : null;
+}
 
 async function jsonFiles(dir: string): Promise<Map<string, string>> {
   const found = new Map<string, string>();
@@ -53,11 +78,13 @@ export async function buildData({
   const problems: string[] = [];
   const warnings: string[] = [];
   const records: RaceRecord[] = [];
+  const overriddenRounds = new Set<string>();
 
   for (const id of ids) {
     try {
       const g = generated.has(id) ? await readJson(generated.get(id)!) : undefined;
       const o = overrides.has(id) ? await readJson(overrides.get(id)!) : undefined;
+      if (o && typeof o === 'object' && !Array.isArray(o) && 'round' in o) overriddenRounds.add(id);
       const { value, conflicts } = mergeRecord(g, o);
       for (const c of conflicts) {
         warnings.push(
@@ -101,6 +128,27 @@ export async function buildData({
     } else seen.set(key, r.id);
   }
 
+  const weekends = new Map<string, Weekend>();
+  for (const [id, file] of await jsonFiles(path.join(DATA, 'weekends'))) {
+    const parsed = parseWith(Weekend, await readJson(file));
+    if (parsed.ok && parsed.value.raceId === id && !weekendProblems(parsed.value).length)
+      weekends.set(id, parsed.value);
+    else problems.push(`weekend ${id}: ${parsed.ok ? 'invalid dates or schedule' : parsed.error}`);
+  }
+
+  // Reconcile mis-numbered upstream Pirelli filenames (e.g. 09-qt26 for R22) against the official season calendar
+  // when no manual override explicitly sets the round.
+  for (const r of records) {
+    if (overriddenRounds.has(r.id)) continue;
+    const calRound = calendarRoundForWeekend(r.season, weekends.get(r.id)?.dates);
+    if (calRound != null && calRound !== r.round) {
+      warnings.push(
+        `${r.id}: round ${r.round ?? 'null'} corrected to ${calRound} from official season calendar (mis-numbered upstream media file)`,
+      );
+      r.round = calRound;
+    }
+  }
+
   // Two races claiming the same round usually means a mis-numbered media file upstream.
   const rounds = new Map<string, string>();
   for (const r of records) {
@@ -111,14 +159,6 @@ export async function buildData({
         `${r.id}: round ${r.round} also used by ${rounds.get(key)} — check the source and set "round" in an override`,
       );
     else rounds.set(key, r.id);
-  }
-
-  const weekends = new Map<string, Weekend>();
-  for (const [id, file] of await jsonFiles(path.join(DATA, 'weekends'))) {
-    const parsed = parseWith(Weekend, await readJson(file));
-    if (parsed.ok && parsed.value.raceId === id && !weekendProblems(parsed.value).length)
-      weekends.set(id, parsed.value);
-    else problems.push(`weekend ${id}: ${parsed.ok ? 'invalid dates or schedule' : parsed.error}`);
   }
 
   // Tracks
