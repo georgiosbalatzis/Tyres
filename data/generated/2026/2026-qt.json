@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-qt",
+  "season": 2026,
+  "round": 9,
+  "slug": "lusail",
+  "eventCode": "qt",
+  "race": {
+    "name": "Qatar Grand Prix",
+    "officialName": null,
+    "location": "Lusail, Qatar",
+    "countryCode": "QA",
+    "startDate": null,
+    "endDate": null
+  },
+  "circuit": {
+    "trackId": "lusail",
+    "name": "Lusail International Circuit",
+    "lengthKm": null,
+    "laps": null,
+    "raceDistanceKm": null,
+    "lapRecord": null,
+    "pitStopLoss": null
+  },
+  "compounds": [
+    {
+      "raceLabel": "hard",
+      "compound": "C1"
+    },
+    {
+      "raceLabel": "medium",
+      "compound": "C2"
+    },
+    {
+      "raceLabel": "soft",
+      "compound": "C3"
+    }
+  ],
+  "characteristics": {
+    "traction": null,
+    "braking": null,
+    "tyreStress": null,
+    "asphaltAbrasion": null,
+    "asphaltGrip": null,
+    "lateral": null,
+    "trackEvolution": null
+  },
+  "setup": {
+    "minimumStartingPressurePsi": null,
+    "expectedRunningPressurePsi": null,
+    "camberLimitDeg": null
+  },
+  "source": {
+    "publisher": "Pirelli",
+    "articleTitle": "In Qatar with the hardest tyre compounds in the range",
+    "articleUrl": "https://press.pirelli.com/in-qatar-with-the-hardest-tyre-compounds-in-the-range/",
+    "publishedAt": "2026-11-24T09:58:11+01:00",
+    "previewAssetUrl": "https://content.presspage.com/uploads/2363/652889f6-81b1-4924-89a0-c571c083d7c0/09-qt26-preview-en.jpg",
+    "retrievedAt": "2026-11-26T03:50:00Z"
+  },
+  "provenance": {
+    "event": {
+      "method": "media-filename",
+      "sourceUrl": "https://content.presspage.com/uploads/2363/652889f6-81b1-4924-89a0-c571c083d7c0/09-qt26-preview-en.jpg",
+      "retrievedAt": "2026-11-26T03:50:00Z",
+      "note": "Season and Grand Prix from article JSON-LD keywords; round and event code from the infographic file name."
+    },
+    "circuit": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/in-qatar-with-the-hardest-tyre-compounds-in-the-range/",
+      "retrievedAt": "2026-11-26T03:50:00Z"
+    },
+    "compounds": {
+      "method": "article-text",
+      "sourceUrl": "https://press.pirelli.com/in-qatar-with-the-hardest-tyre-compounds-in-the-range/",
+      "retrievedAt": "2026-11-26T03:50:00Z"
+    }
+  },
+  "validation": {
+    "status": "needs-review",
+    "notes": [
+      "Automatically ingested. Not yet entered from the official graphic: race dates, laps, race distance, lap record, pit-stop loss, characteristic ratings, starting pressures, camber limits, circuit length."
+    ]
+  }
+}
